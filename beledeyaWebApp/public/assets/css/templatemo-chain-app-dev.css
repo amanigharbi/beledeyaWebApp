@@ -1113,13 +1113,21 @@ Services Style
 .fourth-service:hover .icon {
   background-image: url(../images/service-icon-hover-04.png);
 }
+.five-service .icon {
+  background-image: url(../images/service-icon-05.png);
+}
+.six-service .icon {
+  background-image: url(../images/service-icon-06.png);
 
+}
 .service-item:hover {
   background-image: url(../images/service-bg.jpg);
   background-position: right top;
   background-repeat: no-repeat;
   background-size: cover;
 }
+.test {
+  margin-left: 25%;}
 
 
 

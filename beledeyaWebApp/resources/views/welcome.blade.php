@@ -11,7 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
 
-    <title>Chain App Dev - App Landing Page HTML5 Template</title>
+    <title>commune menzel abderrahmen</title>
+    <link rel = "icon" href = 
+        "{{ asset('assets/images/logo.png') }}" 
+                type = "image/x-icon">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -54,14 +57,14 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                            <li class="scroll-to-section"><a href="#top" class="active">Accueil</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#about">About</a></li>
-                            <li class="scroll-to-section"><a href="#pricing">Pricing</a></li>
-                            <li class="scroll-to-section"><a href="#newsletter">Newsletter</a></li>
+                            <li class="scroll-to-section"><a href="#pricing">Documents</a></li>
+                            <li class="scroll-to-section"><a href="#newsletter">Réclamations</a></li>
+                            <li class="scroll-to-section"><a href="#about">A propos</a></li>
                             <li>
                                 <div class="gradient-button"><a id="modal_trigger" href="#modal"><i
-                                            class="fa fa-sign-in-alt"></i> Sign In Now</a></div>
+                                            class="fa fa-sign-in-alt"></i> Se connecter</a></div>
                             </li>
                         </ul>
                         <a class='menu-trigger'>
@@ -173,18 +176,17 @@
                                 data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h2 class="text-light">Get The Latest App From App Stores</h2>
-                                        <p class=" text-light">Chain App Dev is an app landing page HTML5 template
-                                            based on Bootstrap v5.1.3
-                                            CSS layout provided by TemplateMo, a great website to download free CSS
-                                            templates.</p>
+                                        <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel Abderrahmen</h2>
+                                        <p class=" text-light">Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située
+                                             à une soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte. Elle fait partie
+                                             de l'agglomération de Bizerte dont elle n'est séparée que de quelques kilomètres...</p>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="white-button first-button scroll-to-section">
-                                            <a href="#contact">Free Quote <i class="fab fa-apple"></i></a>
+                                            <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
                                         </div>
                                         <div class="white-button scroll-to-section">
-                                            <a href="#contact">Free Quote <i class="fab fa-google-play"></i></a>
+                                            <a href="#contact">contact <i class="fab fa-google-play"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -206,16 +208,79 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h4>Amazing <em>Services &amp; Features</em> for you</h4>
+                        <h4>La commune de <em>MENZEL ABDERRAHMAN </em> met à votre </h4><h4> disposition une variété des <em>services</em> en ligne.</h4>
                         <img src="{{ asset('assets/images/heading-line-dec.png') }}" alt="">
-                        <p>If you need the greatest collection of HTML templates for your business, please visit <a
-                                rel="nofollow" href="https://www.toocss.com/" target="_blank">TooCSS</a> Blog. If you
-                            need to have a contact form PHP script, go to <a href="https://templatemo.com/contact"
-                                target="_parent">our contact page</a> for more information.</p>
+                        <p>Dans le cadre d'instaurer une administration électronique , moderne et interactive.</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="service-item first-service">
+                  <div class="icon"></div>
+                  <h4>Espace des Réclamations</h4>
+                  <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="service-item second-service">
+                  <div class="icon"></div>
+                  <h4>Accés aux documents administratifs</h4>
+                  <p>You are allowed to use the Chain App Dev HTML template. Feel free to modify or edit this layout.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="service-item third-service">
+                  <div class="icon"></div>
+                  <h4>Permis de construction</h4>
+                  <p>If this template is beneficial for your work, please support us <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">a little via PayPal</a>. Thank you.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="service-item fourth-service">
+                  <div class="icon"></div>
+                  <h4>Taxe locative</h4>
+                  <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-3 test">
+                <div class="service-item five-service">
+                  <div class="icon"></div>
+                  <h4>Higiène</h4>
+                  <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="service-item six-service">
+                  <div class="icon"></div>
+                  <h4>Branchement au réseaux publics</h4>
+                  <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
+                  <div class="text-button">
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
     </div>
     <div class="chatFloat">
         <div class="fabs">
@@ -239,52 +304,43 @@
             <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
         </div>
     </div>
-    <footer id="newsletter">
+    <footer id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-widget">
-                        <h4>Contact Us</h4>
-                        <p>Rio de Janeiro - RJ, 22795-008, Brazil</p>
-                        <p><a href="#">010-020-0340</a></p>
-                        <p><a href="#">info@company.co</a></p>
+                        <h4>Nos contacts</h4>
+                        <p>Rue El Mongi Slim 7035 menzel abdel rahmen</p>
+                        <p><a href="#">Tel (+216) 72 570 125/ (+216) 72 571 29</a></p>
+                        <p><a href="#">Fax (+216) 72 570 125</a></p>
+                        <p><a href="#">communemenzelabderrahmen@gmail.com</a></p>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="footer-widget">
-                        <h4>About Us</h4>
-                        <ul>
-                            <li><a href="#">Home</a></li>
+                        <h4>A propos</h4>
+                            <li><a href="#">Accueil</a></li>
                             <li><a href="#">Services</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Pricing</a></li>
+                            <li><a href="#">Documents</a></li>
+                            <li><a href="#">Réclamations</a></li>
                         </ul>
-                        <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Pricing</a></li>
-                        </ul>
+                     
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <div class="footer-widget">
-                        <h4>Useful Links</h4>
+                        <h4>Liens Utiles</h4>
                         <ul>
-                            <li><a href="#">Free Apps</a></li>
-                            <li><a href="#">App Engine</a></li>
-                            <li><a href="#">Programming</a></li>
-                            <li><a href="#">Development</a></li>
-                            <li><a href="#">App News</a></li>
+                            <li><a href="https://www.tunisie.gov.tn/index.php?lang=french">Portail du gouvernement Tunisien</a></li>
+                            <li><a href="https://www.interieur.gov.tn/">Ministère de l'Intérieur Tunisien</a></li>
+                            <li><a href="https://www.cpscl.com.tn/">Caisses des prêts et de soutien des collectivités Locales</a></li>
+                            <li><a href="https://www.emploi.nat.tn/fo/Fr/global.php">Agence Nationale pour l'Emploi et le Travail</a></li>
+                            <li><a href="https://www.cfad.tn/">Centre de Formation et d'Appui à la Décentralisation</a></li>
                         </ul>
-                        <ul>
-                            <li><a href="#">App Dev Team</a></li>
-                            <li><a href="#">Digital Web</a></li>
-                            <li><a href="#">Normal Apps</a></li>
-                        </ul>
+                    
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="footer-widget">
                         <h4>About Our Company</h4>
                         <div class="logo">
@@ -296,7 +352,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
-                        <p>Copyright © 2022 Chain App Dev Company. All Rights Reserved.
+                        <p>Copyright © 2022 Amani Gharbi. All Rights Reserved.
                         </p>
                     </div>
                 </div>
