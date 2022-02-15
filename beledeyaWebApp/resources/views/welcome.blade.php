@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-chain-app-dev.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
 
 </head>
 
@@ -172,7 +173,7 @@
                                 data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h2>Get The Latest App From App Stores</h2>
+                                        <h2 class="text-light">Get The Latest App From App Stores</h2>
                                         <p class=" text-light">Chain App Dev is an app landing page HTML5 template
                                             based on Bootstrap v5.1.3
                                             CSS layout provided by TemplateMo, a great website to download free CSS
@@ -216,7 +217,28 @@
             </div>
         </div>
     </div>
+    <div class="chatFloat">
+        <div class="fabs">
+            <div class="chat">
+                <div class="chat_header text-center">
+                    <div class="chat_option">
+                        <span id="chat_head">ChatBot</span>
+                    </div>
+                </div>
+                <div class="chat_body chat_login">
+                    <p>We make it simple and seamless for businesses and people to talk to each other. Ask us anything
+                    </p>
+                </div>
 
+                <div class="fab_field">
+                    <a id="fab_send" class="fab"><i class="fa fa-microphone"></i></a>
+                    <textarea id="chatSend" name="chat_message" placeholder="Send a message"
+                        class="chat_field chat_message"></textarea>
+                </div>
+            </div>
+            <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
+        </div>
+    </div>
     <footer id="newsletter">
         <div class="container">
             <div class="row">
@@ -291,6 +313,7 @@
     <script src="{{ asset('assets/js/imagesloaded.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
 </body>
 
 </html>
