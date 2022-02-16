@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    <!-- Scripts -->
+    <script src="{{ asset('../js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
+
+    <!-- Styles -->
+    <link href="{{ asset('../css/app.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <title>commune menzel abderrahmen</title>
+    <link rel = "icon" href = 
+        "{{ asset('../assets/images/logo.png') }}" 
+                type = "image/x-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('../vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('../assets/css/templatemo-chain-app-dev.css') }}">
+    <link rel="stylesheet" href="{{ asset('../assets/css/animated.css') }}">
+    <link rel="stylesheet" href="{{ asset('../assets/css/owl.css') }}">
+
+</head>
+<body>
+    <div id="app">
+        
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="{{ asset('../assets/images/logo.png') }}" alt="Chain App Dev">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="#top" class="active">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="#pricing">Documents</a></li>
+                            <li class="scroll-to-section"><a href="#newsletter">Réclamations</a></li>
+                            <li class="scroll-to-section"><a href="#about">A propos</a></li>
+                            <li>
+                                <div class="gradient-button"><a id="modal_trigger" href="{{ route('login') }}"><i
+                                            class="fa fa-sign-in-alt"></i> Se connecter</a></div>
+                            </li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav> --}}
+        <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-14">
+                        <div class="row">
+                            <div class="col-lg-6 align-self-center  text-light">
+                                <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
+                                    data-wow-delay="1s">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel Abderrahmen</h2>
+                                            <p class=" text-light">Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située
+                                                 à une soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte. Elle fait partie
+                                                 de l'agglomération de Bizerte dont elle n'est séparée que de quelques kilomètres...</p>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="white-button first-button scroll-to-section">
+                                                <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
+                                            </div>
+                                            <div class="white-button scroll-to-section">
+                                                <a href="#contact">contact <i class="fab fa-google-play"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+        <!-- Scripts -->
+        <script src="{{ asset('../vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('../vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/owl-carousel.js') }}"></script>
+        <script src="{{ asset('../assets/js/animation.js') }}"></script>
+        <script src="{{ asset('../assets/js/imagesloaded.js') }}"></script>
+        <script src="{{ asset('../assets/js/popup.js') }}"></script>
+        <script src="{{ asset('../assets/js/custom.js') }}"></script>
+        <script src="{{ asset('../assets/js/chat.js') }}"></script>
+</body>
+</html>

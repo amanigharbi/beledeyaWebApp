@@ -1,11 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<<div class="fadeIn login-bg" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    <div class="container">
+        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
+                            data-wow-delay="1s">
+                                <div class="card w-50 m-auto auth">
+            
+                <div class="card-header"><h1 class="text-center">Reset Password</h1></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
@@ -62,4 +64,5 @@
         </div>
     </div>
 </div>
+
 @endsection

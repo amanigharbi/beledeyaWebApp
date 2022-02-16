@@ -413,7 +413,7 @@ header
 .background-header .main-nav .nav li:last-child a:hover,
 .header-area .main-nav .nav li:nth-child(6) a:hover,
 .background-header .main-nav .nav li:nth-child(6) a:hover {
-  color: #fff !important;
+  color: #d73b3b !important;
 }
 
 .header-area .main-nav .nav li a {
@@ -945,6 +945,49 @@ Banner Style
   z-index: 1;
 }
 
+.login-bg{
+  background-image: url(../images/login-bg.png) !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.auth{
+  background-color: transparent !important;
+  padding-top:15%;
+  border: none;
+  color: white !important;
+}
+
+.auth h1{
+  font-weight: bold;
+  color: white;
+}
+
+.social-media{
+  padding-bottom: 35%;
+}
+
+.social-media i{
+  color: #d73b3b;
+  background-color: white;
+  padding: 10%;
+  font-size: xx-large;
+  border-radius: 50%;
+}
+
+.auth input{
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  margin-bottom: 2%;
+}
+
+.auth input::placeholder{
+  color: white;
+  opacity: 0.7;
+  text-align: center;
+}
+
 .main-banner .left-content {
   margin-right: 15px;
 }
@@ -1085,34 +1128,26 @@ Services Style
   background-image: url(../images/service-icon-01.png);
 }
 
-.first-service:hover .icon {
-  background-image: url(../images/service-icon-hover-01.png);
-}
+
 
 .second-service .icon {
   background-image: url(../images/service-icon-02.png);
 }
 
-.second-service:hover .icon {
-  background-image: url(../images/service-icon-hover-02.png);
-}
+
 
 
 .third-service .icon {
   background-image: url(../images/service-icon-03.png);
 }
 
-.third-service:hover .icon {
-  background-image: url(../images/service-icon-hover-03.png);
-}
+
 
 .fourth-service .icon {
   background-image: url(../images/service-icon-04.png);
 }
 
-.fourth-service:hover .icon {
-  background-image: url(../images/service-icon-hover-04.png);
-}
+
 .five-service .icon {
   background-image: url(../images/service-icon-05.png);
 }
@@ -1764,6 +1799,10 @@ PopUp
   background: #f14b4b;
   color: #fff;
   transition: all .3s;
+}
+
+.btn:active{
+  background: #f14b4b;
 }
 
 .btn_red {
