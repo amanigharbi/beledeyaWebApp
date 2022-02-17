@@ -74,12 +74,12 @@
                                   {{auth::user()->name}}
                                 </a>
                                 <ul class="dropdown-menu   text-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                  <li><a class="dropdown-item" href="#"> Profile</a></li>
-                                  <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                  <li><a class="dropdown-item" href="#"> <i class="fa fa-user"> Profile</i></a></li>
+                                  <li><a class="dropdown-item " href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                                  document.getElementById('logout-form').submit();">
+                                                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt">
                                      {{ __('Logout') }}
-                                 </a></li>
+                                                  </i></a></li>
                                 </ul>
                               </li>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -32,3 +32,18 @@ Route::group(['middleware' => ['auth', 'verifyEmail']], function () {
 Route::get('/verifyEmail', 'UserController@showVerifyEmail')->name('verifyEmail');
 Route::get('/newCode', 'UserController@sendNewCode')->name('newCode');
 Route::post('/verifyEmail', 'UserController@validEmailCode')->name('verifyEmail');
+
+
+
+
+/**
+ * Socialite
+ */
+
+//Google
+Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+
+//Facebook
+Route::get('auth/facebook', 'Auth\LoginController@redirectToFacebook');
+Route::get('auth/facebook/callback', 'Auth\LoginController@handleFacebookCallback');
