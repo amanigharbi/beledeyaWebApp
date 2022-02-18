@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Socialite;
+
 use Auth;
 use Exception;
 use App\User;
+use Laravel\Socialite\Facades\Socialite;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -57,8 +59,6 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
-            dd('ok');
-
             $finduser = User::where('social_id', $user->id)->first();
 
             if ($finduser) {
@@ -69,7 +69,7 @@ class LoginController extends Controller
                 $exists = User::where('email', $user->email)->count();
 
                 if ($exists > 0) {
-                    return redirect('/login')->with('alert_err', __('main.emailExists'));
+                    return redirect('/login')->with('alert_err', 'Email already exists');
                 }
 
                 $newUser = User::create([
@@ -78,6 +78,8 @@ class LoginController extends Controller
                     'social_id' => $user->id,
                     'social' => "Google",
                     'password' => Hash::make(Str::random(20)),
+                    'email_verified_at' => Carbon::now()->timestamp,
+                    'emailConfirmed' => 'true',
                 ]);
 
                 Auth::login($newUser);
@@ -98,7 +100,6 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-
             $finduser = User::where('social_id', $user->id)->first();
 
             if ($finduser) {
@@ -109,7 +110,7 @@ class LoginController extends Controller
                 $exists = User::where('email', $user->email)->count();
 
                 if ($exists > 0) {
-                    return redirect('/login')->with('alert_err', __('main.emailExists'));
+                    return redirect('/login')->with('alert_err', 'Email already exists');
                 }
 
                 $newUser = User::create([
@@ -118,6 +119,8 @@ class LoginController extends Controller
                     'social_id' => $user->id,
                     'social' => "Facebook",
                     'password' => Hash::make(Str::random(20)),
+                    'email_verified_at' => Carbon::now()->timestamp,
+                    'emailConfirmed' => true,
                 ]);
 
                 Auth::login($newUser);
