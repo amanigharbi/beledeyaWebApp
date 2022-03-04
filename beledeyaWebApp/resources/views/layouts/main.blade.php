@@ -101,9 +101,15 @@
     <div class="chatFloat">
         <div class="fabs">
             <div class="chat">
-                <div class="chat_header text-center">
+            
+                <div class="chat_header">
+                
+                <div class="chatbox__image--header">
+                    <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                </div>               
                     <div class="chat_option">
-                        <span id="chat_head">ChatBot</span>
+                        <span id="chat_head  text-center">VoiceBot</span>
+                        <p class="chatbox__description--header">Hi. Ask us anything,we will help you</p>
                     </div>
                 </div>
                 <div class="chat_body chat_login">
@@ -168,7 +174,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
-                        <p>Copyright © 2022 Amani Gharbi. All Rights Reserved.
+                        <p>Copyright © 2022 Beledeya Menzel Abd Rahmen. All Rights Reserved.
                         </p>
                     </div>
                 </div>

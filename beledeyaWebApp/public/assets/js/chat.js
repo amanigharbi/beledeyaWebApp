@@ -1,3 +1,10 @@
+//initialization variable
+var SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+var recognition = new SpeechRecognition();
+var language = "";
+audioChunks = [];
+
+
 hideChat(0);
 
 $('#prime').click(function () {
