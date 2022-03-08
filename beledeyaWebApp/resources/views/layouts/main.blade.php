@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-chain-app-dev.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
 
 </head>
 
@@ -98,7 +98,7 @@
     </header>
     <!-- ***** Header Area End ***** -->
     @yield('content')
-    <div class="chatFloat">
+    <!-- <div class="chatFloat">
         <div class="fabs">
             <div class="chat">
             
@@ -125,7 +125,37 @@
             </div>
             <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
         </div>
+    </div> -->
+    <div class="container">
+    <div class="chatbox">
+        <div class="chatbox__support">
+            <div class="chatbox__header">
+                <div class="chatbox__image--header">
+                    <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                </div>
+                <div class="chatbox__content--header">
+                    <h4 class="chatbox__heading--header">Chat support</h4>
+                    <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+                    
+                </div>
+            </div>
+            <div class="chatbox__messages">
+                <div>
+           
+                   
+                </div>
+            </div>
+            <div class="chatbox__footer">
+               
+            <input type="text" placeholder="Write a message...">
+                <button id="button"  class="chatbox__send--footer send__button"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <div class="chatbox__button">
+            <button><img src="{{ asset('assets/images/chatbox-icon.svg') }}" /></button>
+        </div>
     </div>
+</div>
     <footer id="contact">
         <div class="container">
             <div class="row">
@@ -191,7 +221,7 @@
     <script src="{{ asset('assets/js/imagesloaded.js') }}"></script>
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-    <script src="{{ asset('assets/js/chat.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
 
 </html>
