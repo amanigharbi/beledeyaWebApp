@@ -34,7 +34,7 @@ function modifyLanguage(lang) {
             readOutLoud(mess0);
             break;
         case "français":
-            mess1 = "Salut. je suis Sam. comment puis-je vous aider?";
+            mess1 = "Salut. je m`appelle Sam. comment puis-je vous aider?";
             let msg02 = { name: "welcome_Sam", message: mess1 };
             messages.push(msg02);
             updateChatText(chatBox);
@@ -99,13 +99,13 @@ function onSendButton(chatbox) {
         messages.push(msg1);
         updateChatText(chatbox);
 
-        fetch("http://localhost:5050/predict", {
+        fetch("http://127.0.0.1:5050/predict", {
             method: "POST",
             body: JSON.stringify({ message: textField }),
-            // mode:"no-cors",
+            mode:"cors",
             headers: {
                 "Content-Type": "application/json",
-                // "Access-Control-Allow-Origin":"*"
+                "Access-Control-Allow-Origin":"127.0.0.1"
             },
         })
             .then((response) => response.json())
@@ -165,7 +165,7 @@ function updateChatText(chatbox) {
                       `<div class="messages__item messages__item--visitor" onClick="modifyLanguage('arabe')">` +
                       "arabe" +
                       `</div>`+
-                      `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `')">` + item.message + `</div>`;
+                      `<div class="messages__item messages__item--visitor" onClick="readOutLoud( '` + item.message + `')">` + item.message + `</div>`;
                       break;
                     case "welcome_Sam":
                         html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `')">` + item.message + `</div>`;

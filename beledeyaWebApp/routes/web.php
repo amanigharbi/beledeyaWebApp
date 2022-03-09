@@ -11,9 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'middleware' => ['api', 'cors'],
+    'prefix' => 'api',
+], function ($router) {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
+
+
+
 Auth::routes();
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
