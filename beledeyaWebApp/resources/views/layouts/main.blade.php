@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+    
+
 
 </head>
 
@@ -222,6 +224,7 @@
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+  
 </body>
 
 </html>
