@@ -1,3 +1,7 @@
+/**
+ * initialisation des variables necessaires
+ * declaraction de speechRecognition
+ */
 var SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
 var language = "";
@@ -18,11 +22,16 @@ messages = new Array();
 state = false;
 
 const { openButton, chatBox, sendButton } = args;
-
+//ajouter les evenements des boutons 
 openButton.addEventListener("click", () => toggleState(chatBox));
-
 sendButton.addEventListener("click", () => onSendButton(chatBox));
-
+/**
+ * 
+ * fonctin modifyLanguage nous permet de changer la langue on a 3 bouton francais / anglais/arabe
+ * si on click sur arabe la langue devienne arabe et le robot parle en arabe
+ * si on click sur francais la langue devienne francais et le robot parle en francais
+ * si on click sur anglais la langue devienne anglais et le robot parle en anglais
+ */
 function modifyLanguage(lang) {
     language = lang;
     console.log("language " + language);
@@ -52,6 +61,12 @@ function modifyLanguage(lang) {
             readOutLoud("choisir une langue", "lang-chose","chat");
     }
 }
+/**
+ * 
+ * la fonction toggleState c'est celui qu'on va mettre les actions selon statys de chatbox (ouvert/fermé)
+ * Si ouvert on va questionner l'utilisateur de langue désiré
+ * sinon on va vider tous
+ */
 function toggleState(chatbox) {
     this.state = !this.state;
 
@@ -71,7 +86,15 @@ function toggleState(chatbox) {
         }
     }
 }
-
+/**
+ * 
+ * onSendButton(chatbox) nous permet d'envoyer les messages
+ * la première chose c'est de définir la langue de recognition selon la langue séléctionné par user
+ * aprés user parle et on récupère le message
+ * envoyer ce message sous forme json au api flask pour récupérer la réponse retourner en json depuis python
+ * (en utilisant fetch)
+ * a chaque fois on enregistre le message dans le tableau messages qu'on va le récupère après  
+ */
 function onSendButton(chatbox) {
     switch (language) {
         case "anglais":
@@ -117,7 +140,11 @@ function onSendButton(chatbox) {
             .catch(console.error);
     };
 }
-
+/**
+ * cette fonction permet le rebot de lire le message 
+ * on prend a chaque fois la langue selon language sélectionné
+ * selon l id et l'actor pour distinguer les messages de rebot et de user en plus chaque partie
+ */
 function readOutLoud(message, id, actor) {
     var speech = new SpeechSynthesisUtterance();
     div = document.getElementById(id);
@@ -204,7 +231,9 @@ function readOutLoud(message, id, actor) {
         div.innerHTML = `<a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span>`;
     };
 }
-
+/** 
+ * cette fonction nous permet de modifier la partie de chatbot (design) 
+ */
 function updateChatText(chatbox) {
     var html = "";
     messages

@@ -100,34 +100,6 @@
     </header>
     <!-- ***** Header Area End ***** -->
     @yield('content')
-    <!-- <div class="chatFloat">
-        <div class="fabs">
-            <div class="chat">
-            
-                <div class="chat_header">
-                
-                <div class="chatbox__image--header">
-                    <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
-                </div>               
-                    <div class="chat_option">
-                        <span id="chat_head  text-center">VoiceBot</span>
-                        <p class="chatbox__description--header">Hi. Ask us anything,we will help you</p>
-                    </div>
-                </div>
-                <div class="chat_body chat_login">
-                    <p>We make it simple and seamless for businesses and people to talk to each other. Ask us anything
-                    </p>
-                </div>
-
-                <div class="fab_field">
-                    <a id="fab_send" class="fab"><i class="fa fa-microphone"></i></a>
-                    <textarea id="chatSend" name="chat_message" placeholder="Send a message"
-                        class="chat_field chat_message"></textarea>
-                </div>
-            </div>
-            <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
-        </div>
-    </div> -->
     <div class="container">
     <div class="chatbox">
         <div class="chatbox__support">
