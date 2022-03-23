@@ -278,4 +278,21 @@
     margin-left: 20px;
     
 }
+#a_operator{
+    margin-left: auto;
+    color: black;
+    font-size: x-small;
+    margin-top: 2%;
+    margin-right: 2%;
+
+}
+#a_visitor{
+    float: right;
+    margin-right: auto;
+   margin-top: 10%;
+   margin-left: 5%;
+    color: black;
+    font-size: x-small;
+
+}
 

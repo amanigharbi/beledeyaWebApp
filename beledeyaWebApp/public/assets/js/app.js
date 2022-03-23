@@ -13,6 +13,9 @@ button.addEventListener("click", (start) => {
 var id = 1;
 var chatRepId = 1;
 var test="";
+var now = new Date();
+var heure   = now.getHours();
+var minute  = now.getMinutes();
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -256,14 +259,18 @@ function updateChatText(chatbox) {
                         `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` +
                         item.message +
                         `','lang-chose','chat')" id="lang-chose"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">Lire</span></div>`;
-                    break;
+                        html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
+                        break;
                 case "welcome_Sam":
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-1','chat')" id="chat-1"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
+                    html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
                     break;
                     case "Sam":
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
+                    html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
                     break;
                 case "User":
+                    html += `  <p  id="a_operator"> Moi ` +heure+`:`+minute+ ` ✓ </p>`
                     html += `<div class="messages__item messages__item--operator" onClick="readOutLoud('` + item.message + `','speech-` + id + `','user')" id="speech-` + id + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
                     id++;
                     break;
