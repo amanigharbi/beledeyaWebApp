@@ -12,9 +12,7 @@
         rel="stylesheet">
 
     <title>commune menzel abderrahmen</title>
-    <link rel = "icon" href = 
-        "{{ asset('assets/images/logo.png') }}" 
-                type = "image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -26,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-    
+
 
 
 </head>
@@ -59,35 +57,39 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="{{route('welcome')}}#top" class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="{{route('home')}}#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="{{route('documents')}}">Documents</a></li>
-                            <li class="scroll-to-section"><a href="{{route('reclamation')}}">Réclamations</a></li>
-                            <li class="scroll-to-section"><a href="{{route('taxes')}}">Taxes locatives</a></li>
-                            <li class="scroll-to-section"><a href="{{route('about')}}">A propos</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('welcome') }}#top"
+                                    class="active">Accueil</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('home') }}#services">Services</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('documents') }}">Documents</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('reclamation') }}">Réclamations</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('taxes') }}">Taxes locatives</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('about') }}">A propos</a></li>
 
-                            @if(!auth::user())
-                            <li>
-                                <div class="gradient-button"><a id="modal_trigger" href="{{ route('login') }}"><i
-                                            class="fa fa-sign-in-alt"></i> Se connecter</a></div>
-                            </li>
+                            @if (!auth::user())
+                                <li>
+                                    <div class="gradient-button"><a id="modal_trigger" href="{{ route('login') }}"><i
+                                                class="fa fa-sign-in-alt"></i> Se connecter</a></div>
+                                </li>
                             @else
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  {{auth::user()->name}}
-                                </a>
-                                <ul class="dropdown-menu   text-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                  <li><a class="dropdown-item" href="#"> <i class="fa fa-user"> Profile</i></a></li>
-                                  <li><a class="dropdown-item " href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt">
-                                     {{ __('Logout') }}
-                                                  </i></a></li>
-                                </ul>
-                              </li>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
+                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ Str::length(auth::user()->name) > 8 ? Str::substr(auth::user()->name, 0, 5) . '...' : auth::user()->name }}
+                                    </a>
+                                    <ul class="dropdown-menu   text-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#"> <i class="fa fa-user">
+                                                    Profile</i></a></li>
+                                        <li><a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                  document.getElementById('logout-form').submit();"><i
+                                                    class="fa fa-sign-out-alt">
+                                                    {{ __('Logout') }}
+                                                </i></a></li>
+                                    </ul>
+                                </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             @endif
                         </ul>
                         <a class='menu-trigger'>
@@ -102,35 +104,37 @@
     <!-- ***** Header Area End ***** -->
     @yield('content')
     <div class="container">
-    <div class="chatbox">
-        <div class="chatbox__support">
-            <div class="chatbox__header">
-                <div class="chatbox__image--header">
-                    <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+        <div class="chatbox">
+            <div class="chatbox__support">
+                <div class="chatbox__header">
+                    <div class="chatbox__image--header">
+                        <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png"
+                            alt="image">
+                    </div>
+                    <div class="chatbox__content--header">
+                        <h4 class="chatbox__heading--header">Chat support</h4>
+                        <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+
+                    </div>
                 </div>
-                <div class="chatbox__content--header">
-                    <h4 class="chatbox__heading--header">Chat support</h4>
-                    <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
-                    
+                <div class="chatbox__messages">
+                    <div>
+
+
+                    </div>
+                </div>
+                <div class="chatbox__footer">
+
+                    <input type="text" placeholder="Write a message...">
+                    <button id="button" class="chatbox__send--footer send__button"><i class="fa fa-microphone"
+                            aria-hidden="true"></i></button>
                 </div>
             </div>
-            <div class="chatbox__messages">
-                <div>
-           
-                   
-                </div>
+            <div class="chatbox__button">
+                <button><img src="{{ asset('assets/images/chatbox-icon.svg') }}" /></button>
             </div>
-            <div class="chatbox__footer">
-               
-            <input type="text" placeholder="Write a message...">
-                <button id="button"  class="chatbox__send--footer send__button"><i class="fa fa-microphone" aria-hidden="true"></i></button>
-            </div>
-        </div>
-        <div class="chatbox__button">
-            <button><img src="{{ asset('assets/images/chatbox-icon.svg') }}" /></button>
         </div>
     </div>
-</div>
     <footer id="contact">
         <div class="container">
             <div class="row">
@@ -146,25 +150,29 @@
                 <div class="col-lg-2">
                     <div class="footer-widget">
                         <h4>A propos</h4>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Documents</a></li>
-                            <li><a href="#">Réclamations</a></li>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Documents</a></li>
+                        <li><a href="#">Réclamations</a></li>
                         </ul>
-                     
+
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="footer-widget">
                         <h4>Liens Utiles</h4>
                         <ul>
-                            <li><a href="https://www.tunisie.gov.tn/index.php?lang=french">Portail du gouvernement Tunisien</a></li>
+                            <li><a href="https://www.tunisie.gov.tn/index.php?lang=french">Portail du gouvernement
+                                    Tunisien</a></li>
                             <li><a href="https://www.interieur.gov.tn/">Ministère de l'Intérieur Tunisien</a></li>
-                            <li><a href="https://www.cpscl.com.tn/">Caisses des prêts et de soutien des collectivités Locales</a></li>
-                            <li><a href="https://www.emploi.nat.tn/fo/Fr/global.php">Agence Nationale pour l'Emploi et le Travail</a></li>
-                            <li><a href="https://www.cfad.tn/">Centre de Formation et d'Appui à la Décentralisation</a></li>
+                            <li><a href="https://www.cpscl.com.tn/">Caisses des prêts et de soutien des collectivités
+                                    Locales</a></li>
+                            <li><a href="https://www.emploi.nat.tn/fo/Fr/global.php">Agence Nationale pour l'Emploi et
+                                    le Travail</a></li>
+                            <li><a href="https://www.cfad.tn/">Centre de Formation et d'Appui à la Décentralisation</a>
+                            </li>
                         </ul>
-                    
+
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -197,7 +205,7 @@
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
-  
+
 </body>
 
 </html>
