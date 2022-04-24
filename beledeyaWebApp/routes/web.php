@@ -47,8 +47,13 @@ Route::get('/verifyEmail', 'UserController@showVerifyEmail')->name('verifyEmail'
 Route::get('/newCode', 'UserController@sendNewCode')->name('newCode');
 Route::post('/verifyEmail', 'UserController@validEmailCode')->name('verifyEmail');
 
+/**
+ * Admin routes
+ */
 
-
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+});
 
 /**
  * Socialite
