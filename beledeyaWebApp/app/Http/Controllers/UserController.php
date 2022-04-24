@@ -68,4 +68,7 @@ class UserController extends Controller
 
         return redirect('verifyEmail');
     }
+    public function profile(){
+        
+    }
 }

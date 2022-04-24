@@ -63,6 +63,7 @@
                             <li class="scroll-to-section"><a href="{{route('home')}}#services">Services</a></li>
                             <li class="scroll-to-section"><a href="{{route('documents')}}">Documents</a></li>
                             <li class="scroll-to-section"><a href="{{route('reclamation')}}">Réclamations</a></li>
+                            <li class="scroll-to-section"><a href="{{route('taxes')}}">Taxes locatives</a></li>
                             <li class="scroll-to-section"><a href="{{route('about')}}">A propos</a></li>
 
                             @if(!auth::user())

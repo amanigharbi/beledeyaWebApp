@@ -25,12 +25,18 @@ Route::group([
 Auth::routes();
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/reclamation', 'ReclamationController@reclamation')->name('reclamation');
+Route::post('/addReclamation', 'ReclamationController@store');
+Route::get('/documents', 'DocumentsController@index')->name('documents');
+Route::get('/about', 'HomeController@about')->name('about');
+
 
 Route::group(['middleware' => ['auth', 'verifyEmail']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/documents', 'HomeController@documents')->name('documents');
-    Route::get('/reclamation', 'HomeController@reclamation')->name('reclamation');
-    Route::get('/about', 'HomeController@about')->name('about');
+    Route::get('/taxes', 'TaxesController@index')->name('taxes');
+    Route::get('/PermisConstruction', 'PermisConstructionController@index')->name('PermisConstruction');
+    Route::get('/ReseauPublic', 'ReseauPublicController@index')->name('ReseauPublic');
+    Route::post('/addDemande', 'ReseauPublicController@store');
 });
 
 

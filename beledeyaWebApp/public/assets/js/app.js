@@ -16,6 +16,7 @@ var test="";
 var now = new Date();
 var heure   = now.getHours();
 var minute  = now.getMinutes();
+var question="";
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -115,13 +116,20 @@ function onSendButton(chatbox) {
     console.log("aaaa " + recognition.lang);
     recognition.onresult = function (e) {
         let textField = e.results[0][0].transcript;
+        let msg1 = { name: "User", message: textField };
+        messages.push(msg1);
+        updateChatText(chatbox);
+        // if (textField=="reclamation") or (textField=="ajouter reclamation")
+        // {
+        //     let msg1 = { name: "Nom", message: "comment tu t`appelle" };
+        //     messages.push(msg1);
+        //     updateChatText(chatbox);
+        // }
         if (textField === "") {
             return;
         }
 
-        let msg1 = { name: "User", message: textField };
-        messages.push(msg1);
-        updateChatText(chatbox);
+        // else{
         fetch("http://127.0.0.1:5050/predict", {
             method: "POST",
             body: JSON.stringify({ message: textField }),
@@ -142,6 +150,8 @@ function onSendButton(chatbox) {
             })
             .catch(console.error);
     };
+// }
+ 
 }
 /**
  * cette fonction permet le rebot de lire le message 
@@ -265,7 +275,7 @@ function updateChatText(chatbox) {
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-1','chat')" id="chat-1"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
                     html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
                     break;
-                    case "Sam":
+                case "Sam":
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
                     html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
                     break;
@@ -274,6 +284,10 @@ function updateChatText(chatbox) {
                     html += `<div class="messages__item messages__item--operator" onClick="readOutLoud('` + item.message + `','speech-` + id + `','user')" id="speech-` + id + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
                     id++;
                     break;
+                    // case "Nom":
+                    // html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
+                    // html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
+                    // break;
             }
         });
     const chatmessage = chatbox.querySelector(".chatbox__messages");

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
 @extends('layouts.main')
 
 @section('content')
@@ -37,11 +38,12 @@
             </div>
         </div>
     </div>
-</div><div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+</div>
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
     <div class="wrapper wrapper--w790">
         <div class="card card-5">
             <div class="card-heading">
-                <h2 class="title">Réclamations</h2>
+                <h2 class="title">Demande aux branchement au réseaux publics</h2>
             </div>
             <div class="card-body">
                 <center>   
@@ -52,7 +54,7 @@
                     {{ session('error') }}
                 @endif
             </center>
-                <form action="{{ asset('addReclamation') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ asset('addDemande') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row m-b-55">
                         <div class="name">Nom & Prénom *
@@ -103,31 +105,27 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="name">Adresse</div>
+                        <div class="name">Adresse *</div>
                         <div class="value">
                             <div class="input-group">
-                                <input class="input--style-5" type="adresse" name="adresse" value="{{ old('adresse') }}">
-                             
+                                <input class="input--style-5" type="adresse" name="adresse" value="{{ old('adresse') }}" required>
+                                @error('adresse')
+                                {{ $message }}
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="name">Type Réclamation *</div>
+                        <div class="name">Type branchement *</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
                                     <select class="form-control" name="type" value="{{ old('type') }}">
                                         <option value="" selected>Sélectionner</option>
-                                        <option value="Administration">Administration</option>
-                                        <option value="Construction Anarchique">Construction Anarchique</option>
+                                        <option value="Eau">Eau</option>
                                         <option value="Energie">Enérgie</option>
-                                        <option value="Eclairage Public">Eclairage Public</option>
-                                        <option value="Espaces Verts">Espaces Verts</option>
-                                        <option value="Mobilite">Mobilité</option>
-                                        <option value="Occupation illegale">Occupation illégale</option>
-                                        <option value="Proprete">Propreté</option>
-                                        <option value="Sante et Higiene">Santé et Higiène</option>
-                                        <option value="Autres Reclamations">Autres Réclamations</option>
+                                        
+                                        <option value="Autres branchement">Autres branchement</option>
                                     </select>
                                     @error('type')
                                     {{ $message }}
@@ -137,30 +135,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="name">Sujet Réclamation *</div>
+                        <div class="name">Description </div>
                         <div class="value">
                             <div class="input-group">
-                                <input class="input--style-5" type="sujet" name="sujet" value="{{ old('sujet') }}" required>
-                                @error('sujet')
-                                {{ $message }}
-                            @enderror
+                                <input class="input--style-5" type="description" name="description" value="{{ old('description') }}" >
+                            
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="name">Photo</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <input type="file" class="form-control-file" name="photo" value="{{ old('photo') }}">
-                              </div>
-                        </div>
+  
                      
                     </div>
-                    <div>
-                        <br>
-                        <p>Les fichiers doivent peser moins de <b>2 Mo</b>.<br>
-                            Extensions autorisées : <b>gif jpg jpeg png</b>.</p>
-                        </div>
                     <div>
                         <button class="btn btn--radius-2 btn--red" type="submit">Envoyer</button>
                     </div>
@@ -172,6 +157,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

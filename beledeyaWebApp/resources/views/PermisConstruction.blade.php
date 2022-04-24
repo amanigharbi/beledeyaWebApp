@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-
 @extends('layouts.main')
 
 @section('content')
@@ -39,28 +37,4 @@
         </div>
     </div>
 </div>
-<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-    <div class="wrapper wrapper--w790">
-<div class="card card-5">
-    <div class="card-heading">
-        <h2 class="title">Documents à télécharger</h2>
-    </div>
-    <div class="card-body">
-<table class="table">
-    <thead>
-        <tr class="bg-danger">
-            <th> Documents </th>
-        <th> Date de publication</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-
-        </tr>
-    </tbody>
-</table>
-    </div></div>
-    </div></div>
 @endsection
