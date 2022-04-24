@@ -23,6 +23,7 @@ class CreateReclamationsTable extends Migration
             $table->string('type');
             $table->string('sujet');
             $table->string('photo')->nullable();
+            $table->string('status')->default('0'); //0 -> not seen | 1 -> seen | 2 -> resolved
             $table->timestamps();
         });
     }

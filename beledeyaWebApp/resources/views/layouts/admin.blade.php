@@ -121,15 +121,16 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="index.html"
+                        <li class="sidebar-item {{ \Request::is('dashboard') ? 'selected' : '' }}"> <a
+                                class="sidebar-link sidebar-link" href="{{ asset('dashboard') }}"
                                 aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="list-divider"></li>
-                        <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Client Services</span></li>
 
-                        <li class="sidebar-item"> <a class="sidebar-link" href="ticket-list.html"
-                                aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
-                                    class="hide-menu">Ticket List
+                        <li class="sidebar-item {{ \Request::is('reclamation*') ? 'selected' : '' }}"> <a
+                                class="sidebar-link" href="{{ asset('reclamations') }}" aria-expanded="false"><i
+                                    class="icon-shield"></i><span class="hide-menu">Reclamations
                                 </span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
@@ -341,10 +342,6 @@
         </aside>
         <div class="page-wrapper">
             @yield('content')
-            <footer class="footer text-center text-muted">
-                All Rights Reserved by Adminmart. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
         </div>
     </div>
 

@@ -56,6 +56,9 @@ Route::group(
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         });
+
+        //Reclamations
+        Route::resource('/reclamations', 'ReclamationController');
     }
 );
 

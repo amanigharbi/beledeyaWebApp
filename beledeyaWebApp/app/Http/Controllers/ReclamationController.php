@@ -14,7 +14,8 @@ class ReclamationController extends Controller
      */
     public function index()
     {
-        //
+        $recs = Reclamation::all();
+        return view('admin.reclamation', compact('recs'));
     }
     public function reclamation()
     {
@@ -71,7 +72,13 @@ class ReclamationController extends Controller
      */
     public function show(reclamation $reclamation)
     {
-        //
+        if ($reclamation->status == "0") {
+            //Mark as seen
+            $reclamation->status = "1";
+            $reclamation->save();
+            $reclamation->status = "0";
+        }
+        return view('admin.reclamationPreview', compact('reclamation'));
     }
 
     /**
@@ -94,7 +101,13 @@ class ReclamationController extends Controller
      */
     public function update(Request $request, reclamation $reclamation)
     {
-        //
+        try {
+            $reclamation->status = "2";
+            $reclamation->save();
+            return back()->with('success', 'Marked as resolved');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Opss! something went wrong');
+        }
     }
 
     /**
