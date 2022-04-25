@@ -38,9 +38,10 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-        $curTime = new \DateTime();
-        $result['date']=$curTime->format("Y-m-d H:i:s");
         try {
+            $curTime = new \DateTime();
+            $result['date']=$curTime->format("Y-m-d H:i:s");
+            $result['file'] = $result['file']->store('uploads', 'public');
             Documents::create($result);
             return back()->with('success', 'Document add!');
         } catch (\Throwable $th) {
@@ -88,11 +89,11 @@ class DocumentsController extends Controller
      * @param  \App\Documents  $documents
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Documents $documents,$docID)
+    public function destroy(Documents $documents, $id)
     {
         try {
-            $documents = Documents::findOrFail($docID);
-            $documents->save();
+            $documents = Documents::findOrFail($id);
+            $documents->delete();
 
             return back()->with('success', 'Category deleted!');
         } catch (\Throwable $th) {

@@ -11,7 +11,7 @@
     @if (session('error'))
         {{ session('error') }}
     @endif
-        <form class="mt-5" action="{{ route('document.store') }}" method="POST">
+        <form class="mt-5" action="{{ route('document.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <input type="name" class="form-control" id="nametext" name="name"
@@ -66,11 +66,10 @@
                              
                               
                                     <p class="text-primary d-inline p-2">
-                                        <a class="btn btn-primary btn-sm mt-3"
-                                            href="{{ asset('delFile')}}/{{ $d->id }}"
-                                            target="_blank">Delete
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form class="trash" action="{{ route('document.destroy', $d->id) }}"
+                                            method="POST">@csrf
+                                            @method(' DELETE')<button type="submit" class="btn btn-primary btn-sm mt-3">Delete <i class="fa fa-trash"></i></button>
+                                        </form>
                                     </p>
                                 </td>
                             </tr>
