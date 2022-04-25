@@ -14,7 +14,8 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        return view('documents');
+        $doc = Documents::all();
+        return view('admin.document', compact('doc'));
     }
 
     /**
@@ -22,9 +23,10 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showAll()
     {
-        //
+        $doc = Documents::all();
+        return view('documents', compact('doc'));
     }
 
     /**
@@ -35,7 +37,15 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $result = $request->validate($this->validationRules());
+        $curTime = new \DateTime();
+        $result['date']=$curTime->format("Y-m-d H:i:s");
+        try {
+            Documents::create($result);
+            return back()->with('success', 'Document add!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Opss! something went wrong');
+        }
     }
 
     /**
@@ -78,8 +88,23 @@ class DocumentsController extends Controller
      * @param  \App\Documents  $documents
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Documents $documents)
+    public function destroy(Documents $documents,$docID)
     {
-        //
+        try {
+            $documents = Documents::findOrFail($docID);
+            $documents->save();
+
+            return back()->with('success', 'Category deleted!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Ops category not found!');
+        }
+    }
+    private function validationRules()
+    {
+        return [
+            'name' => 'required|string',
+            'file' => 'required',
+            
+        ];
     }
 }

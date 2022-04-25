@@ -10,8 +10,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Reclamations</h4>
-                        <h6 class="card-subtitle">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea doloremque,
-                            ad nobis praesentium deleniti nemo enim soluta maiores vitae nisi!
+                        <h6 class="card-subtitle">these are the list of complaints sent by the inhabitants!
                         </h6>
                         <br>
                         <div class="table-responsive">

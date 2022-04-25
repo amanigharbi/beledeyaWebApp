@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
-    <title>Adminmart Template - The Ultimate Multipurpose admin template</title>
+    <title>commune menzel abderrahmen</title>
+    <link rel="icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
     <!-- Custom CSS -->
     <link href="{{ asset('admin/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
@@ -39,26 +39,26 @@
                 <div class="navbar-header" data-logobg="skin6">
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                             class="ti-menu ti-close"></i></a>
-                    <div class="navbar-brand">
+                    <div class="navbar-brand text-center">
                         <!-- Logo icon -->
                         <a href="index.html">
-                            <b class="logo-icon">
+                            {{-- <b class="logo-icon">
                                 <!-- Dark Logo icon -->
-                                <img src="{{ asset('admin/assets/images/logo-icon.png') }}" alt="homepage"
-                                    class="dark-logo" />
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane"
+                                    class="dark-logo w-50 p-3" />
                                 <!-- Light Logo icon -->
-                                <img src="{{ asset('admin/assets/images/logo-icon.png') }}" alt="homepage"
-                                    class="light-logo" />
-                            </b>
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane"
+                                    class="light-logo w-50 p-3" />
+                            </b> --}}
                             <!--End Logo icon -->
                             <!-- Logo text -->
-                            <span class="logo-text">
+                            <span class="logo-text ">
                                 <!-- dark Logo text -->
-                                <img src="{{ asset('admin/assets/images/logo-text.png') }}" alt="homepage"
-                                    class="dark-logo" />
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane"
+                                class="dark-logo w-50 p-3" />
                                 <!-- Light Logo text -->
-                                <img src="{{ asset('admin/assets/images/logo-light-text.png') }}"
-                                    class="light-logo" alt="homepage" />
+                                <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane"
+                                class="light-logo w-50 p-3" />
                             </span>
                         </a>
                     </div>
@@ -133,9 +133,10 @@
                                     class="icon-shield"></i><span class="hide-menu">Reclamations
                                 </span></a>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">Chat</span></a></li>
+                        <li class="sidebar-item {{ \Request::is('document*') ? 'selected' : '' }}"> <a
+                            class="sidebar-link" href="{{ asset('document') }}" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Documents
+                            </span></a>
+                                </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-calendar.html"
                                 aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
                                     class="hide-menu">Calendar</span></a></li>

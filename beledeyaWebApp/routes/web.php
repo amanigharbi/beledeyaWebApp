@@ -27,7 +27,7 @@ Auth::routes();
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/reclamation', 'ReclamationController@reclamation')->name('reclamation');
 Route::post('/addReclamation', 'ReclamationController@store');
-Route::get('/documents', 'DocumentsController@index')->name('documents');
+Route::get('/documents', 'DocumentsController@showAll')->name('documents');
 Route::get('/about', 'HomeController@about')->name('about');
 
 
@@ -59,6 +59,10 @@ Route::group(
 
         //Reclamations
         Route::resource('/reclamations', 'ReclamationController');
+        //documents
+        Route::resource('/document', 'DocumentsController');
+
+  
     }
 );
 

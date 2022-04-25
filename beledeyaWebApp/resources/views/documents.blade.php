@@ -49,16 +49,31 @@
 <table class="table">
     <thead>
         <tr class="bg-danger">
-            <th> Documents </th>
+            <th>Nom de document </th>
         <th> Date de publication</th>
+        <th>Action</th>
         </tr>
     </thead>
     <tbody>
+        @foreach ($doc as $d)
         <tr>
-          <td>test</td>
-          <td>test</td>
-
+            <td>{{ $d->name }}</td>
+            <td>{{ $d->date }}</td>
+            <td>
+                @if ($d->file)
+                    <p class="text-primary d-inline p-2">
+                        <a class="btn btn-primary btn-sm mt-3"
+                            href="{{ asset('storage') }}/{{ $d->file }}"
+                            target="_blank">Preview
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </p>
+                @else
+                    <span class="badge badge-danger">Not attached</span>
+                @endif
+            </td>
         </tr>
+    @endforeach
     </tbody>
 </table>
     </div></div>

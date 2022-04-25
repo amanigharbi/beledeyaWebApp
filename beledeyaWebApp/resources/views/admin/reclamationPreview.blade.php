@@ -29,8 +29,8 @@
                         <span class="badge badge-success text-white">Resolved</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Reclamation {{ $reclamation->type }} N°:
-                    {{ $reclamation->id }}
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Reclamation N°:
+                    {{ $reclamation->id }} : {{ $reclamation->type }}
                 </h3>
             </div>
             @if ($reclamation->status != '2')

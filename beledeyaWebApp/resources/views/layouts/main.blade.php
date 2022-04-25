@@ -52,7 +52,7 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="index.html" class="logo">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="Chain App Dev">
+                            <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
