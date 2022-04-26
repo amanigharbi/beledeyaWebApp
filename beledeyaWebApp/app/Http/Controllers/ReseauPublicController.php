@@ -14,6 +14,11 @@ class ReseauPublicController extends Controller
      */
     public function index()
     {
+        $res = ReseauPublic::all();
+        return view('admin.ReseauPublic', compact('res'));
+        
+    }
+    public function showView(){
         return view('ReseauPublic');
     }
 
@@ -59,9 +64,15 @@ class ReseauPublicController extends Controller
      * @param  \App\ReseauPublic  $reseauPublic
      * @return \Illuminate\Http\Response
      */
-    public function show(ReseauPublic $reseauPublic)
+    public function show(ReseauPublic $reseau)
     {
-        //
+        if ($reseau->status == "0") {
+            //Mark as seen
+            $reseau->status = "1";
+            $reseau->save();
+            $reseau->status = "0";
+        }
+        return view('admin.reseauPublicPreview', compact('reseau'));
     }
 
     /**
@@ -84,7 +95,13 @@ class ReseauPublicController extends Controller
      */
     public function update(Request $request, ReseauPublic $reseauPublic)
     {
-        //
+        try {
+            $reseauPublic->status = "2";
+            $reseauPublic->save();
+            return back()->with('success', 'Marked as resolved');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Opss! something went wrong');
+        }
     }
 
     /**
@@ -102,6 +119,7 @@ class ReseauPublicController extends Controller
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
+            'email'=>'required',
             'cin' => 'required|numeric:8',
             'adresse' =>'required',
             'type' => 'required',

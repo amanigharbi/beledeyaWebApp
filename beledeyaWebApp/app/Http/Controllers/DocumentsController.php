@@ -95,9 +95,9 @@ class DocumentsController extends Controller
             $documents = Documents::findOrFail($id);
             $documents->delete();
 
-            return back()->with('success', 'Category deleted!');
+            return back()->with('success', 'Document deleted!');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Ops category not found!');
+            return back()->with('error', 'Ops Document not found!');
         }
     }
     private function validationRules()

@@ -34,7 +34,7 @@ Route::get('/about', 'HomeController@about')->name('about');
 Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/taxes', 'TaxesController@index')->name('taxes');
     Route::get('/PermisConstruction', 'PermisConstructionController@index')->name('PermisConstruction');
-    Route::get('/ReseauPublic', 'ReseauPublicController@index')->name('ReseauPublic');
+    Route::get('/ReseauPublics', 'ReseauPublicController@showView')->name('ReseauPublic');
     Route::post('/addDemande', 'ReseauPublicController@store');
     Route::get('/home', 'HomeController@index')->name('home');
 });
@@ -61,6 +61,8 @@ Route::group(
         Route::resource('/reclamations', 'ReclamationController');
         //documents
         Route::resource('/document', 'DocumentsController');
+        //Reseau public
+        Route::resource('/ReseauPublic', 'ReseauPublicController');
 
   
     }

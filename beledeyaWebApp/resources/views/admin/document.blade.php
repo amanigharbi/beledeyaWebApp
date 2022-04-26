@@ -50,27 +50,30 @@
                         @foreach ($doc as $d)
                             <tr>
                                 <td>{{ $d->name }}</td>
+
                                 <td>{{ $d->date }}</td>
+                             
                                 <td>
+                                    <div class="d-flex align-items-start">
                                     @if ($d->file)
-                                        <p class="text-primary d-inline p-2">
+                                        <p class="text-primary">
                                             <a class="btn btn-primary btn-sm mt-3"
                                                 href="{{ asset('storage') }}/{{ $d->file }}"
-                                                target="_blank">Preview
+                                                target="_blank" role="button">Preview
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </p>
                                     @else
                                         <span class="badge badge-danger">Not attached</span>
-                                    @endif
-                             
+                                    @endif                          
                               
-                                    <p class="text-primary d-inline p-2">
+                                    <p class="text-primary ">
                                         <form class="trash" action="{{ route('document.destroy', $d->id) }}"
                                             method="POST">@csrf
-                                            @method(' DELETE')<button type="submit" class="btn btn-primary btn-sm mt-3">Delete <i class="fa fa-trash"></i></button>
+                                            @method('DELETE')<button type="submit" class="btn btn btn-danger btn-sm mt-3">Delete <i class="fa fa-trash"></i></button>
                                         </form>
                                     </p>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
