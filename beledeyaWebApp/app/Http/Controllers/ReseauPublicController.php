@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ReseauPublic;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReseauPublicController extends Controller
@@ -15,11 +16,15 @@ class ReseauPublicController extends Controller
     public function index()
     {
         $res = ReseauPublic::all();
-        return view('admin.ReseauPublic', compact('res'));
+        $user =User::all();
+        return view('admin.ReseauPublic', compact('res','user'));
         
     }
     public function showView(){
-        return view('ReseauPublic');
+        $res = ReseauPublic::all();
+        // $user =User::where('id', $res->UserId)->get();
+        // dd($user);
+        return view('ReseauPublic', compact('res'));
     }
 
     /**
@@ -64,15 +69,15 @@ class ReseauPublicController extends Controller
      * @param  \App\ReseauPublic  $reseauPublic
      * @return \Illuminate\Http\Response
      */
-    public function show(ReseauPublic $reseau)
+    public function show(ReseauPublic $ReseauPublic)
     {
-        if ($reseau->status == "0") {
+        if ($ReseauPublic->status == "0") {
             //Mark as seen
-            $reseau->status = "1";
-            $reseau->save();
-            $reseau->status = "0";
+            $ReseauPublic->status = "1";
+            $ReseauPublic->save();
+            $ReseauPublic->status = "0";
         }
-        return view('admin.reseauPublicPreview', compact('reseau'));
+        return view('admin.reseauPublicPreview', compact('ReseauPublic'));
     }
 
     /**
@@ -124,6 +129,7 @@ class ReseauPublicController extends Controller
             'adresse' =>'required',
             'type' => 'required',
             'description' => 'string',
+            'UserId' => 'integer|required'
         ];
     }
 }

@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+      /**
+     * Database relations
+     */
+    public function ReseauPublic()
+    {
+        return $this->hasMany("App\ReseauPublic", 'UserId');
+    }
 }

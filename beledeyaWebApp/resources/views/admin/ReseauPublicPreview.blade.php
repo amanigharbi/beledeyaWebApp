@@ -16,37 +16,54 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-9 align-self-center">
-                @switch($reseau->status)
+                @switch($ReseauPublic->status)
                     @case('0')
                         <span class="badge badge-danger">New</span>
                     @break
 
                     @case('1')
-                        <span class="badge badge-warning text-white">Seen</span>
+                        <span class="badge badge-warning text-white">In progress</span>
                     @break
 
                     @case('2')
-                        <span class="badge badge-success text-white">Resolved</span>
+                        <span class="badge badge-success text-white">Accepted</span>
+                    @break
+                    @case('3')
+                        <span class="badge badge-warning text-white">Rejected</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande N°:
-                    {{ $reseau->id }} : {{ $reseau->type }}
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande N°
+                    {{ $ReseauPublic->id }} : {{ $ReseauPublic->type }}
                 </h3>
             </div>
-            {{-- @if ($reseau->status != '2')
-                <div class="col-3 align-self-center text-right">
-                    <a class="btn btn-success btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $reseau->id }}"
+            <div class="text-right d-flex align-items-start">
+            @if ($ReseauPublic->status != '2')
+                <div class="col-8 align-self-center ">
+                    <a class="btn btn-success btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form').submit();">
-                        Mark as resolved
+                        Accept
                         <i class="fa fa-check"></i>
                     </a>
-                    <form id="update-form" action="{{ route('ReseauPublic.update', $reseau->id) }}" method="POST"
+                    <form id="update-form" action="{{ route('ReseauPublic.update', $ReseauPublic->id) }}" method="POST"
                         style="display: none;">
                         @csrf @method('PATCH')
                     </form>
                 </div>
-            @endif --}}
-        </div>
+            @endif
+            @if ($ReseauPublic->status != '2')
+                <div class="col-8 align-self-center ">
+                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
+                        onclick="event.preventDefault(); document.getElementById('update-form').submit();">
+                        Reject
+                        <i class="fa fa-ban"></i>
+                    </a>
+                    <form id="update-form" action="{{ route('ReseauPublic.update', $ReseauPublic->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf @method('PATCH')
+                    </form>
+                </div>
+            @endif
+        </div></div>
         <div class="container-fluid mt-3">
             <div class="card-group">
                 <div class="card border-right">
@@ -55,8 +72,8 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Full name</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $reseau->first_name }}
-                                        {{ $reseau->last_name }}</h3>
+                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->first_name }}
+                                        {{ $ReseauPublic->last_name }}</h3>
                                 </div>
 
                             </div>
@@ -69,7 +86,7 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cin</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $reseau->cin }}</h3>
+                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->cin }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +101,7 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Email</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <p class="text-dark mt-3 font-weight-medium">{{ $reseau->email }}</p>
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->email }}</p>
                                 </div>
 
                             </div>
@@ -97,7 +114,7 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Address</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <p class="text-dark mt-3 font-weight-medium">{{ $reseau->adresse }}</p>
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->adresse }}</p>
                                 </div>
 
                             </div>
@@ -109,7 +126,7 @@
         <div class="card">
             <div class="card-body collapse show">
                 <h4 class="card-title">Descriptions</h4>
-                <p class="card-text">{{ $reseau->description }}</p>
+                <p class="card-text">{{ $ReseauPublic->description }}</p>
             </div>
         </div>
     @endsection

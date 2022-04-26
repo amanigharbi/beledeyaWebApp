@@ -22,7 +22,8 @@ class CreateReseauPublicsTable extends Migration
             $table->string('adresse');
             $table->string('type');
             $table->string('description');
-            $table->string('status')->default('0'); //0 -> not seen | 1 -> seen | 2 -> resolved
+            $table->string('status')->default('0'); //0 -> not seen | 1 -> in progress | 2 -> Accepted| 3 -> rejected
+            $table->integer('UserId');
             $table->timestamps();
         });
     }
