@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ReseauPublic;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReseauPublicController extends Controller
 {
@@ -21,9 +22,9 @@ class ReseauPublicController extends Controller
         
     }
     public function showView(){
-        $res = ReseauPublic::all();
-        // $user =User::where('id', $res->UserId)->get();
-        // dd($user);
+      
+        $res = ReseauPublic::where('UserId', Auth::user()->id)->get();
+
         return view('ReseauPublic', compact('res'));
     }
 
@@ -46,17 +47,23 @@ class ReseauPublicController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-        try {
+       
           
 
             //Check if request has email
             if (isset($request['email'])) {
                 $result['email'] = $request['email'];
             }
+           
+                $user =Auth::user();
+            $result['UserId'] = $user->id;
+            
+            
 
          
 
             ReseauPublic::create($result);
+            try {
             return back()->with('success', 'demande ajoutée!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
@@ -77,6 +84,7 @@ class ReseauPublicController extends Controller
             $ReseauPublic->save();
             $ReseauPublic->status = "0";
         }
+        
         return view('admin.reseauPublicPreview', compact('ReseauPublic'));
     }
 
@@ -129,7 +137,7 @@ class ReseauPublicController extends Controller
             'adresse' =>'required',
             'type' => 'required',
             'description' => 'string',
-            'UserId' => 'integer|required'
+          
         ];
     }
 }

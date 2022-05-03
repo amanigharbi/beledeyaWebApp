@@ -41,6 +41,6 @@ class User extends Authenticatable
      */
     public function ReseauPublic()
     {
-        return $this->hasMany("App\ReseauPublic", 'UserId');
+        return $this->hasMany("App\ReseauPublic", 'UserId',"id");
     }
 }

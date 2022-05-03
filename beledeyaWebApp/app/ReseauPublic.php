@@ -11,6 +11,7 @@ class ReseauPublic extends Model
     ];
     public function user()
     {
-        return $this->belongsTo("App\User", "UserId");
+         return $this->belongsTo("App\User", "UserId","id");
+       
     }
 }

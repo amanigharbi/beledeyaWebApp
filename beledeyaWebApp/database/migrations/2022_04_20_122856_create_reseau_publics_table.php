@@ -15,6 +15,7 @@ class CreateReseauPublicsTable extends Migration
     {
         Schema::create('reseau_publics', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('UserId');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('cin');
@@ -23,7 +24,6 @@ class CreateReseauPublicsTable extends Migration
             $table->string('type');
             $table->string('description');
             $table->string('status')->default('0'); //0 -> not seen | 1 -> in progress | 2 -> Accepted| 3 -> rejected
-            $table->integer('UserId');
             $table->timestamps();
         });
     }
