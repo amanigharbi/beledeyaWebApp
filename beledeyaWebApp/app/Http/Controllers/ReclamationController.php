@@ -19,7 +19,8 @@ class ReclamationController extends Controller
     }
     public function reclamation()
     {
-        return view('reclamation');
+        $rec = reclamation::all();
+        return view('reclamation', compact('rec'));
     }
 
     /**

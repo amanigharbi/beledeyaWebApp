@@ -173,5 +173,50 @@
     </div>
 </div>
 
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+<div class="card card-5">
+    <div class="card-heading">
+        <h2 class="title">Suivi de réclamation</h2>
+    </div>
+    <div class="card-body">
+<table class="table">
+    <thead>
+        <tr class="bg-danger">
+            <th>N° réclamation </th>
+            <th> Type </th>
+        <th> Date de publication</th>
+        <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($rec as $r)
+        <tr>
+            <td>{{ $r->id }}</td>
+            <td>{{ $r->type }}</td>
+            <td>
+                {{ $r->created_at }}
+            </td>
+            <td>
+                @switch($r->status)
+                @case('0')
+                    <span class="badge badge-danger">New</span>
+                @break
 
+                @case('1')
+                    <span class="badge badge-warning text-white">In progress</span>
+                @break
+
+                @case('2')
+                    <span class="badge badge-success text-white">finished</span>
+                @break
+                
+            @endswitch
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+    </div></div>
+    </div></div>
 @endsection
