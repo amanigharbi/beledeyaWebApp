@@ -12,11 +12,19 @@ button.addEventListener("click", (start) => {
 
 var id = 1;
 var chatRepId = 1;
-var test="";
+var test = "";
 var now = new Date();
-var heure   = now.getHours();
-var minute  = now.getMinutes();
-var question="";
+var heure = now.getHours();
+var minute = now.getMinutes();
+var nomRec = "";
+var prenomRec="";
+var cinRec="";
+var emailRec="";
+var adrRec="";
+var descRec="";
+var typeRec="";
+var numRec="";
+var v = 0;
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -45,24 +53,24 @@ function modifyLanguage(lang) {
             let msg01 = { name: "welcome_Sam", message: mess0 };
             messages.push(msg01);
             updateChatText(chatBox);
-            readOutLoud(mess0, "chat-1","chat");
+            readOutLoud(mess0, "chat-1", "chat");
             break;
         case "français":
             mess1 = "Salut. je suis Sam. comment puis-je vous aider?";
             let msg02 = { name: "welcome_Sam", message: mess1 };
             messages.push(msg02);
             updateChatText(chatBox);
-            readOutLoud(mess1, "chat-1","chat");
+            readOutLoud(mess1, "chat-1", "chat");
             break;
         case "arabe":
             mess2 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
             let msg03 = { name: "welcome_Sam", message: mess2 };
             messages.push(msg03);
             updateChatText(chatBox);
-            readOutLoud(mess2, "chat-1","chat");
+            readOutLoud(mess2, "chat-1", "chat");
             break;
         default:
-            readOutLoud("choisir une langue", "lang-chose","chat");
+            readOutLoud("choisir une langue", "lang-chose", "chat");
     }
 }
 /**
@@ -81,7 +89,7 @@ function toggleState(chatbox) {
         let msg0 = { name: "langue", message: msg };
         messages.push(msg0);
         updateChatText(chatbox);
-        readOutLoud(msg, "lang-chose","chat");
+        readOutLoud(msg, "lang-chose", "chat");
     } else {
         chatbox.classList.remove("chatbox--active");
         for (let index = 0; index < messages.length; index++) {
@@ -111,6 +119,7 @@ function onSendButton(chatbox) {
             recognition.lang = "ar-AE";
             break;
         default:
+            recognition.lang = "fr-FR";
             break;
     }
     console.log("aaaa " + recognition.lang);
@@ -119,39 +128,78 @@ function onSendButton(chatbox) {
         let msg1 = { name: "User", message: textField };
         messages.push(msg1);
         updateChatText(chatbox);
-        // if (textField=="reclamation") or (textField=="ajouter reclamation")
-        // {
-        //     let msg1 = { name: "Nom", message: "comment tu t`appelle" };
-        //     messages.push(msg1);
-        //     updateChatText(chatbox);
-        // }
-        if (textField === "") {
-            return;
+        if (textField == "réclamation")
+        {
+            switch (language) {
+                case "anglais":
+                    
+                    break;
+                case "français":
+                    let msg1 = { name: "Sam", message: "Bienvenue dans l`espace de réclamation merci d`envoyer votre nom" };
+                    messages.push(msg1);
+                    updateChatText(chatbox);
+                    readOutLoud("Bienvenue dans l`espace de réclamation merci d`envoyer votre nom", "chat-" + chatRepId, "chat");
+                    textField = "";
+                    v=1;
+                    break;
+                case "arabe":
+                   
+                    break;
+                
+            }
+           
+            
         }
+        console.log("text text text "+textField);
+        console.log("v howa "+v);
+        // if (textField === "") {
+        //     return;
+        // }
 
         // else{
-        fetch("http://127.0.0.1:5050/predict", {
-            method: "POST",
-            body: JSON.stringify({ message: textField }),
-            mode:"cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin":"127.0.0.1"
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                let msg2 = { name: "Sam", message: data };
-                messages.push(msg2);
-                chatRepId++;
-                updateChatText(chatbox);
-                readOutLoud(data, "chat-" + chatRepId,"chat");
-                textField.value = "";
-            })
-            .catch(console.error);
+        switch (v) {
+            case 0:
+                fetch("http://127.0.0.1:5050/predict", {
+                    method: "POST",
+                    body: JSON.stringify({ message: textField }),
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "127.0.0.1"
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        let msg2 = { name: "Sam", message: data };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud(data, "chat-" + chatRepId, "chat");
+                        textField.value = "";
+                    })
+                    .catch(console.error);
+                break;
+
+            case 1:
+                if(textField !== ""){
+                    console.log("msh null");
+                nomRec =textField;
+                if(nomRec.trim().length >=4){
+              console.log("Nom "+textField) 
+              let msg2 = { name: "Sam", message: "Monsieur Madame "+ nomRec +" s`il vous plait envoyer moi votre prénom" };
+              messages.push(msg2);
+              updateChatText(chatbox);
+              readOutLoud("Monsieur Madame "+ nomRec +" s`il vous plait envoyer moi votre prénom", "chat-" + chatRepId, "chat");
+              v = 2; 
+            }
+            }
+             
+                break;
+        }
+
     };
-// }
- 
+    // }
+
 }
 /**
  * cette fonction permet le rebot de lire le message 
@@ -170,26 +218,26 @@ function readOutLoud(message, id, actor) {
     switch (language) {
         case "anglais":
             speech.lang = "en-US";
-            test="play";
+            test = "play";
             break;
         case "français":
             speech.lang = "fr-FR";
-            test="Lire";
+            test = "Lire";
             break;
         case "arabe":
             speech.lang = "ar-AE";
-            test="استمع";
+            test = "استمع";
             break;
         default:
             speech.lang = "fr-FR";
-            test="Lire";
+            test = "Lire";
     }
-    console.log("test "+test);
+    console.log("test " + test);
 
 
 
-    if(actor=="chat"){
-    div.innerHTML = `<svg width="100%" height="100%" id="svg" viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
+    if (actor == "chat") {
+        div.innerHTML = `<svg width="100%" height="100%" id="svg" viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
     .path-0{
     animation:pathAnim-0 4s;
     animation-timing-function: linear;
@@ -212,8 +260,9 @@ function readOutLoud(message, id, actor) {
     d: path("M 0,400 C 0,400 0,200 0,200 C 29.866201992251654,168.9144023252261 59.73240398450331,137.82880465045218 84,161 C 108.2675960154967,184.17119534954782 126.9365860542384,261.59918372341735 145,270 C 163.0634139457616,278.40081627658265 180.52125179854318,217.7744604558784 208,192 C 235.47874820145682,166.2255395441216 272.97840675158915,175.30297445306908 299,197 C 325.02159324841085,218.69702554693092 339.56512119510046,253.01364173184533 359,266 C 378.43487880489954,278.9863582681547 402.7611084680091,270.64245861954936 425,265 C 447.2388915319909,259.35754138045064 467.39044493286303,256.41652378995707 495,226 C 522.609555067137,195.58347621004293 557.6771118005391,137.69144622062237 587,127 C 616.3228881994609,116.30855377937762 639.9011078649805,152.81769132755343 659,152 C 678.0988921350195,151.18230867244657 692.7184567395385,113.0377884691639 717,130 C 741.2815432604615,146.9622115308361 775.2250651768657,219.0311547957911 800,247 C 824.7749348231343,274.9688452042089 840.3812825529992,258.83759234767183 859,247 C 877.6187174470008,235.16240765232817 899.2498046111378,227.61847581352174 925,231 C 950.7501953888622,234.38152418647826 980.6194990024499,248.68850439824118 1004,247 C 1027.3805009975501,245.31149560175882 1044.2721993790624,227.6275065935135 1072,230 C 1099.7278006209376,232.3724934064865 1138.291703481301,254.80146922770496 1162,270 C 1185.708296518699,285.19853077229504 1194.5609866957338,293.16661649566674 1217,263 C 1239.4390133042662,232.83338350433328 1275.464349735764,164.53206478962818 1300,156 C 1324.535650264236,147.46793521037182 1337.58161436121,198.7051243458205 1359,216 C 1380.41838563879,233.2948756541795 1410.209192819395,216.64743782708973 1440,200 C 1440,200 1440,400 1440,400 Z");
     }
     }</style><defs><linearGradient id="gradient" x1="68%" y1="3%" x2="32%" y2="97%"><stop offset="5%" stop-color="#981b1bff"></stop><stop offset="95%" stop-color="#fa5d5dff"></stop></linearGradient></defs><path d="M 0,400 C 0,400 0,200 0,200 C 29.866201992251654,168.9144023252261 59.73240398450331,137.82880465045218 84,161 C 108.2675960154967,184.17119534954782 126.9365860542384,261.59918372341735 145,270 C 163.0634139457616,278.40081627658265 180.52125179854318,217.7744604558784 208,192 C 235.47874820145682,166.2255395441216 272.97840675158915,175.30297445306908 299,197 C 325.02159324841085,218.69702554693092 339.56512119510046,253.01364173184533 359,266 C 378.43487880489954,278.9863582681547 402.7611084680091,270.64245861954936 425,265 C 447.2388915319909,259.35754138045064 467.39044493286303,256.41652378995707 495,226 C 522.609555067137,195.58347621004293 557.6771118005391,137.69144622062237 587,127 C 616.3228881994609,116.30855377937762 639.9011078649805,152.81769132755343 659,152 C 678.0988921350195,151.18230867244657 692.7184567395385,113.0377884691639 717,130 C 741.2815432604615,146.9622115308361 775.2250651768657,219.0311547957911 800,247 C 824.7749348231343,274.9688452042089 840.3812825529992,258.83759234767183 859,247 C 877.6187174470008,235.16240765232817 899.2498046111378,227.61847581352174 925,231 C 950.7501953888622,234.38152418647826 980.6194990024499,248.68850439824118 1004,247 C 1027.3805009975501,245.31149560175882 1044.2721993790624,227.6275065935135 1072,230 C 1099.7278006209376,232.3724934064865 1138.291703481301,254.80146922770496 1162,270 C 1185.708296518699,285.19853077229504 1194.5609866957338,293.16661649566674 1217,263 C 1239.4390133042662,232.83338350433328 1275.464349735764,164.53206478962818 1300,156 C 1324.535650264236,147.46793521037182 1337.58161436121,198.7051243458205 1359,216 C 1380.41838563879,233.2948756541795 1410.209192819395,216.64743782708973 1440,200 C 1440,200 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="url(#gradient)" class="transition-all duration-300 ease-in-out delay-150 path-0"></path></svg>
-        `;}else{
-        div.innerHTML =`<svg width="100%" height="100%" id="svg" viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
+        `;
+    } else {
+        div.innerHTML = `<svg width="100%" height="100%" id="svg" viewBox="0 0 1440 400" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
         .path-0{
         animation:pathAnim-0 4s;
         animation-timing-function: linear;
@@ -238,10 +287,10 @@ function readOutLoud(message, id, actor) {
         }</style><path d="M 0,400 C 0,400 0,200 0,200 C 23.306299870505185,180.39922334740555 46.61259974101037,160.79844669481113 72,165 C 97.38740025898963,169.20155330518887 124.85590090646369,197.20543656816113 145,204 C 165.1440990935363,210.79456343183887 177.9637966331349,196.37980703254436 204,198 C 230.0362033668651,199.62019296745564 269.2889125609967,217.27533530166144 300,219 C 330.7110874390033,220.72466469833856 352.8805531228782,206.51885176080998 370,219 C 387.1194468771218,231.48114823919002 399.18887494749026,270.6492576550986 421,255 C 442.81112505250974,239.35074234490136 474.36394708716057,168.88411761879547 499,158 C 523.6360529128394,147.11588238120453 541.3553367038678,195.81427186971962 564,226 C 586.6446632961322,256.1857281302804 614.2147060973682,267.85879490232605 640,245 C 665.7852939026318,222.14120509767392 689.7858389066589,164.75054852097597 715,150 C 740.2141610933411,135.24945147902403 766.641938275996,163.13901101377004 788,193 C 809.358061724004,222.86098898622996 825.6464079893568,254.69340742394397 851,236 C 876.3535920106432,217.30659257605603 910.7724297665761,148.08735929045406 936,126 C 961.2275702334239,103.91264070954593 977.2638729443386,128.9571554142397 999,154 C 1020.7361270556614,179.0428445857603 1048.1720784560691,204.08401905258714 1072,205 C 1095.8279215439309,205.91598094741286 1116.047813231385,182.7067683754117 1140,182 C 1163.952186768615,181.2932316245883 1191.6366686183915,203.0889074457659 1221,207 C 1250.3633313816085,210.9110925542341 1281.4055122950485,196.93760184152455 1305,195 C 1328.5944877049515,193.06239815847545 1344.7412822014148,203.16068518813583 1366,206 C 1387.2587177985852,208.83931481186417 1413.6293588992926,204.41965740593207 1440,200 C 1440,200 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="#ffffffff" class="transition-all duration-300 ease-in-out delay-150 path-0"></path></svg>
         `;
     }
-    
+
     window.speechSynthesis.speak(speech);
     speech.onend = function (event) {
-        div.innerHTML = `<a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span>`;
+        div.innerHTML = `<a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span>`;
     };
 }
 /** 
@@ -269,25 +318,25 @@ function updateChatText(chatbox) {
                         `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` +
                         item.message +
                         `','lang-chose','chat')" id="lang-chose"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">Lire</span></div>`;
-                        html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
-                        break;
+                    html += `  <p  id="a_visitor"> Bot ` + heure + `:` + minute + `  </p>`
+                    break;
                 case "welcome_Sam":
-                    html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-1','chat')" id="chat-1"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
-                    html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
+                    html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-1','chat')" id="chat-1"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
+                    html += `  <p  id="a_visitor"> Bot ` + heure + `:` + minute + `  </p>`
                     break;
                 case "Sam":
-                    html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
-                    html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
+                    html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
+                    html += `  <p  id="a_visitor"> Bot ` + heure + `:` + minute + `  </p>`
                     break;
                 case "User":
-                    html += `  <p  id="a_operator"> Moi ` +heure+`:`+minute+ ` ✓ </p>`
-                    html += `<div class="messages__item messages__item--operator" onClick="readOutLoud('` + item.message + `','speech-` + id + `','user')" id="speech-` + id + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
+                    html += `  <p  id="a_operator"> Moi ` + heure + `:` + minute + ` ✓ </p>`
+                    html += `<div class="messages__item messages__item--operator" onClick="readOutLoud('` + item.message + `','speech-` + id + `','user')" id="speech-` + id + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
                     id++;
                     break;
-                    // case "Nom":
-                    // html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
-                    // html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
-                    // break;
+                // case "Nom":
+                // html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">`+test+`</span></div>`;
+                // html += `  <p  id="a_visitor"> Bot ` +heure+`:`+minute+ `  </p>`
+                // break;
             }
         });
     const chatmessage = chatbox.querySelector(".chatbox__messages");
