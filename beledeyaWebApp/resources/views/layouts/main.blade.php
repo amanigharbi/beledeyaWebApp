@@ -344,6 +344,7 @@
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 </body>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\reclamation;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\String_;
 
 class ReclamationController extends Controller
 {
@@ -42,6 +43,7 @@ class ReclamationController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
+        
         try {
             //Check if there's a photo
             if (isset($request['photo'])) {
@@ -57,7 +59,21 @@ class ReclamationController extends Controller
             if (isset($request['adresse'])) {
                 $result['adresse'] = $request['adresse'];
             }
+            $digits_needed=8;
 
+            $num_rec=''; // set up a blank string
+            
+            $count=0;
+            
+            while ( $count < $digits_needed ) {
+                $random_digit = mt_rand(0, 9);
+                
+                $num_rec .= $random_digit;
+                $count++;
+            }
+            
+            $result['num_rec'] = $num_rec; 
+           
             reclamation::create($result);
             return back()->with('success', 'Réclamation ajoutée!');
         } catch (\Throwable $th) {

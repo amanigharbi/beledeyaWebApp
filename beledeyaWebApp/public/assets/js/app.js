@@ -23,9 +23,9 @@ var emailRec = "";
 var adrRec = "";
 var descRec = "";
 var typeRec = "";
-var numRec = "";
+var NumRec = "";
 var v = 0;
-var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -57,6 +57,7 @@ function modifyLanguage(lang) {
             readOutLoud(mess0, "chat-1", "chat");
             break;
         case "français":
+
             mess1 = "Salut. je suis Sam. comment puis-je vous aider?";
             let msg02 = { name: "welcome_Sam", message: mess1 };
             messages.push(msg02);
@@ -99,6 +100,58 @@ function toggleState(chatbox) {
             language = "";
         }
     }
+}
+/**
+ * 
+ * function to validate email
+ */
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+ //consommation api
+ function ajoutRecVoiceBot() {
+    for (var i = 1; i < 9; i++) {
+    NumRec +=Math.floor(Math.random() * 9);;  
+    }
+     console.log(NumRec);
+   
+      var data = {
+        'nom': nomRec,
+                'prenom': prenomRec,
+                'email': emailRec,
+                'cin': cinRec,
+                'address': adrRec,
+                'type': typeRec,
+                'description': descRec,
+                'num_rec': NumRec,
+      };
+      
+var url = "http://127.0.0.1:8080/work/consommation%20api/ajoutrec.php";
+$.ajax({
+    type : 'POST',
+    url : url,
+    data : data,
+    dataType : 'JSON',
+    encode : true,
+    mode: 'no-cors',
+    headers :   {"Access-Control-Allow-Origin": "127.0.0.1",
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Headers": "*"
+},
+    success: function (response, status, xhr) {
+        let msg2 = { name: "Sam", message: "Demande de réclamation enregistré. Merci de télécharger votre décharge" };
+                                messages.push(msg2);
+                                chatRepId++;
+                                updateChatText(chatBox);
+                                readOutLoud("Demande de réclamation enregistré. Merci de télécharger votre décharge", "chat-" + chatRepId, "chat");
+                                NumRec="";
+    },
+    error: function (xhr, status, error) {
+      console.log("Something went wrong!");
+    }
+  });
+
 }
 /**
  * 
@@ -227,13 +280,13 @@ function onSendButton(chatbox) {
                 }
 
                 break;
-                case 3:
+            case 3:
                 if (textField !== "") {
                     cinRec = textField;
 
                     for (let i = 1; i < cinRec.length; i++) {
-                            cinRec = cinRec.replaceAll(' ', '');
-                           
+                        cinRec = cinRec.replaceAll(' ', '');
+
                     }
                     if (cinRec.length == 8) {
                         console.log("cin " + textField)
@@ -254,122 +307,129 @@ function onSendButton(chatbox) {
                 }
 
                 break;
-                case 4:
-                    if (textField !== "") {
-                        adrRec = textField;
- 
-                        if (typeof adrRec === 'string' && adrRec.trim().length >= 4) {
-                            console.log("adresse " + textField)
-                            let msg2 = { name: "Sam", message: "c`est quoi Votre email" };
-                            messages.push(msg2);
-                            chatRepId++;
-                            updateChatText(chatbox);
-                            readOutLoud("c`est quoi Votre email", "chat-" + chatRepId, "chat");
-                            v = 5;
-                        }
-                        else {
-                            let msg2 = { name: "Sam", message: "il y a une erreur réessayer" };
-                            messages.push(msg2);
-                            chatRepId++;
-                            updateChatText(chatbox);
-                            readOutLoud("il y a une erreur réessayer", "chat-" + chatRepId, "chat");
-                        }
+            case 4:
+                if (textField !== "") {
+                    adrRec = textField;
+
+                    if (typeof adrRec === 'string' && adrRec.trim().length >= 4) {
+                        console.log("adresse " + textField)
+                        let msg2 = { name: "Sam", message: "c`est quoi Votre email" };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud("c`est quoi Votre email", "chat-" + chatRepId, "chat");
+                        v = 5;
                     }
-    
-                    break;
-                    case 5:
-                        if (textField !== "") {
-                            emailRec = textField;
-     
-                            // if (emailRec.match(regex)) {
-                                console.log("email " + textField)
-                                let msg2 = { name: "Sam", message: "Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type" };
-                                messages.push(msg2);
-                                chatRepId++;
-                                updateChatText(chatbox);
-                                readOutLoud("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", "chat-" + chatRepId, "chat");
-                                v = 6;
-                            // }
-                            // else {
-                            //     let msg2 = { name: "Sam", message: "email non valide réessayer" };
-                            //     messages.push(msg2);
-                            //     chatRepId++;
-                            //     updateChatText(chatbox);
-                            //     readOutLoud("email non valide réessayer", "chat-" + chatRepId,
-                            //      "chat");
-                            // }
-                        }
-        
-                        break;
-                        case 6:
-                            if (textField !== "") {
-                                if (textField === '1') {
-                                    typeRec = "administration";
-                                  } else if (textField === '2') {
-                                    typeRec = "construction anarchiques";
-                                  } else if (textField === '3') {
-                                    typeRec = "Eclairage publique";
-                                  } else if (textField === '4') {
-                                    typeRec = "Energie";
-                                  } else if (textField === '5') {
-                                    typeRec = "Espaces Verts";
-                                  } else if (textField === '6') {
-                                    typeRec = "Mobilité";
-                                  } else if (textField === '7') {
-                                    typeRec = "Santé et Higiéne";
-                                  } else if (textField === '8') {
-                                    typeRec = "Autres Réclamations ";
-                                  }
-                                
-                                    console.log("type " + typeRec)
-                                    let msg2 = { name: "Sam", message: "Merci de m envoyer une petite description de votre réclamation" };
-                                    messages.push(msg2);
-                                    chatRepId++;
-                                    updateChatText(chatbox);
-                                    readOutLoud("Merci de m envoyer une petite description de votre réclamation", "chat-" + chatRepId, "chat");
-                                    v = 7;
-                                
-                             
-                            }
-            
-                            break;
-                            case 7:
-                                if (textField !== "") {
-                                    descRec = textField;
-             
-                                    if (typeof descRec === 'string' && descRec.trim().length >= 10) {
-                                        console.log("adresse " + textField)
-                                        let msg2 = { name: "Sam", message: "Demande enregistré" };
-                                        messages.push(msg2);
-                                        chatRepId++;
-                                        updateChatText(chatbox);
-                                        readOutLoud("Demande enregistré", "chat-" + chatRepId, "chat");
-                                       console.log("nom " +
-              nomRec +
-              " prenom " +
-              prenomRec +
-              " cin " +
-              cinRec +
-              " email " +
-              emailRec +
-              " adr " +
-              adrRec +
-              " type " +
-              typeRec +
-              " description " +
-              descRec);
-                                        //v = 8;
-                                    }
-                                    else {
-                                        let msg2 = { name: "Sam", message: "Dire une correcte description" };
-                                        messages.push(msg2);
-                                        chatRepId++;
-                                        updateChatText(chatbox);
-                                        readOutLoud("Dire une correcte description", "chat-" + chatRepId, "chat");
-                                    }
-                                }
-                
-                                break;
+                    else {
+                        let msg2 = { name: "Sam", message: "il y a une erreur réessayer" };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud("il y a une erreur réessayer", "chat-" + chatRepId, "chat");
+                    }
+                }
+
+                break;
+            case 5:
+                if (textField !== "") {
+
+                    for (let i = 1; i < textField.length; i++) {
+                        textField = textField.replaceAll('arobase', '@');
+                        textField = textField.replaceAll(' ', '');
+
+                    }
+                    emailRec = textField
+                    console.log('validation email ', validateEmail(emailRec))
+                    if (validateEmail(emailRec)) {
+                        console.log("email " + textField)
+                        let msg2 = { name: "Sam", message: "Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type" };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", "chat-" + chatRepId, "chat");
+                        v = 6;
+                    }
+                    else {
+                        let msg2 = { name: "Sam", message: "email non valide réessayer" };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud("email non valide réessayer", "chat-" + chatRepId,
+                            "chat");
+                    }
+                }
+
+                break;
+            case 6:
+                if (textField !== "") {
+                    if (textField === '1') {
+                        typeRec = "administration";
+                    } else if (textField === '2') {
+                        typeRec = "construction anarchiques";
+                    } else if (textField === '3') {
+                        typeRec = "Eclairage publique";
+                    } else if (textField === '4') {
+                        typeRec = "Energie";
+                    } else if (textField === '5') {
+                        typeRec = "Espaces Verts";
+                    } else if (textField === '6') {
+                        typeRec = "Mobilité";
+                    } else if (textField === '7') {
+                        typeRec = "Santé et Higiéne";
+                    } else if (textField === '8') {
+                        typeRec = "Autres Réclamations ";
+                    }
+
+                    console.log("type " + typeRec)
+                    let msg2 = { name: "Sam", message: "Merci de m envoyer une petite description de votre réclamation" };
+                    messages.push(msg2);
+                    chatRepId++;
+                    updateChatText(chatbox);
+                    readOutLoud("Merci de m envoyer une petite description de votre réclamation", "chat-" + chatRepId, "chat");
+                    v = 7;
+
+
+                }
+
+                break;
+            case 7:
+                if (textField !== "") {
+                    descRec = textField;
+
+                    if (typeof descRec === 'string' && descRec.trim().length >= 10) {
+                        // console.log("adresse " + textField)
+                        // let msg2 = { name: "Sam", message: "Demande enregistré" };
+                        // messages.push(msg2);
+                        // chatRepId++;
+                        // updateChatText(chatbox);
+                        // readOutLoud("Demande enregistré", "chat-" + chatRepId, "chat");
+                        ajoutRecVoiceBot();
+                        console.log("nom " +
+                            nomRec +
+                            " prenom " +
+                            prenomRec +
+                            " cin " +
+                            cinRec +
+                            " email " +
+                            emailRec +
+                            " adr " +
+                            adrRec +
+                            " type " +
+                            typeRec +
+                            " description " +
+                            descRec);
+                        //v = 8;
+                    }
+                    else {
+                        let msg2 = { name: "Sam", message: "Dire une correcte description" };
+                        messages.push(msg2);
+                        chatRepId++;
+                        updateChatText(chatbox);
+                        readOutLoud("Dire une correcte description", "chat-" + chatRepId, "chat");
+                    }
+                }
+
+                break;
         }
 
 

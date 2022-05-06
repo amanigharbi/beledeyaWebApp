@@ -154,7 +154,7 @@
                                 <input type="file" class="form-control-file" name="photo" value="{{ old('photo') }}">
                               </div>
                         </div>
-                     
+                    
                     </div>
                     <div>
                         <br>
