@@ -18,10 +18,11 @@ class ReclamationController extends Controller
         $recs = Reclamation::all();
         return view('admin.reclamation', compact('recs'));
     }
+    
     public function reclamation()
     {
-        $rec = reclamation::all();
-        return view('reclamation', compact('rec'));
+        $rec=null;
+        return view('reclamation',compact('rec'));
     }
 
     /**
@@ -43,7 +44,7 @@ class ReclamationController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-        
+
         try {
             //Check if there's a photo
             if (isset($request['photo'])) {
@@ -59,21 +60,21 @@ class ReclamationController extends Controller
             if (isset($request['adresse'])) {
                 $result['adresse'] = $request['adresse'];
             }
-            $digits_needed=8;
+            $digits_needed = 8;
 
-            $num_rec=''; // set up a blank string
-            
-            $count=0;
-            
-            while ( $count < $digits_needed ) {
+            $num_rec = ''; // set up a blank string
+
+            $count = 0;
+
+            while ($count < $digits_needed) {
                 $random_digit = mt_rand(0, 9);
-                
+
                 $num_rec .= $random_digit;
                 $count++;
             }
-            
-            $result['num_rec'] = $num_rec; 
-           
+
+            $result['num_rec'] = $num_rec;
+
             reclamation::create($result);
             return back()->with('success', 'Réclamation ajoutée!');
         } catch (\Throwable $th) {
@@ -96,6 +97,21 @@ class ReclamationController extends Controller
             $reclamation->status = "0";
         }
         return view('admin.reclamationPreview', compact('reclamation'));
+    }
+
+    public function check(Request $request)
+    {
+        $data = $request->validate($this->checkValid());
+            $rec = Reclamation::where([['num_rec', $data['numRec']], ['cin', $data['cin']]])->first();
+            if(!$rec){
+                
+                return back()->with('error', 'Réclamation not found');
+            }
+            return view('reclamation',compact('rec'));
+            try {
+            } catch (\Throwable $th) {
+            return back()->with('error', 'something went wrong');
+        }
     }
 
     /**
@@ -137,6 +153,7 @@ class ReclamationController extends Controller
     {
         //
     }
+
     private function validationRules()
     {
         return [
@@ -145,6 +162,14 @@ class ReclamationController extends Controller
             'cin' => 'required|numeric:8',
             'type' => 'required',
             'sujet' => 'required|string',
+        ];
+    }
+
+    private function checkValid()
+    {
+        return [
+            'cin' => 'required|numeric:8',
+            'numRec' => 'required|numeric:8',
         ];
     }
 }

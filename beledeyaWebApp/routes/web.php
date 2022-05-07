@@ -27,6 +27,7 @@ Auth::routes();
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/reclamation', 'ReclamationController@reclamation')->name('reclamation');
 Route::post('/addReclamation', 'ReclamationController@store');
+Route::get('/checkReclam', 'ReclamationController@check');
 Route::get('/documents', 'DocumentsController@showAll')->name('documents');
 Route::get('/about', 'HomeController@about')->name('about');
 
