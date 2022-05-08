@@ -63,6 +63,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
+            genPDF() ;
 
             break;
         case "arabe":
@@ -175,7 +176,48 @@ function ajoutRecVoiceBot() {
     });
 
 }
+function suiviRecVoiceBot(num_rec) {
+    var url = "http://127.0.0.1:8080/work/consommation%20api/suiviRec.php";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { 'num_rec': num_rec },
+        dataType: 'JSON',
+        encode: true,
+        mode: 'no-cors',
+        headers: {
+            "Access-Control-Allow-Origin": "127.0.0.1",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "*"
+        },
+        success: function (response, status, xhr) {
+            switch (language) {
+                case "anglais":
+                    VoiceBot("Complaint request registered. Please upload your waiver", chatBox);
+                    NumRec = "";
+                    break;
+                case "français":
+                    console.log("data ",response);
+                    console.log("data2 ",response.data);
+                    VoiceBot("la status de votre réclamation est" + response.data, chatBox);
+                    NumRec = "";
+                    break;
+                case "arabe":
+                    VoiceBot("تم تسجيل طلب الشكوى. يرجى تحميل الملخص الخاص بك", chatBox);
+                    NumRec = "";
+                    break;
 
+                default:
+                    VoiceBot("Demande de réclamation enregistré. Merci de télécharger votre décharge", chatBox);
+                    NumRec = "";
+                    break;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Something went wrong!");
+        }
+    });
+}
 function getNumLet(s) {
     switch (s) {
         case 'واحد':
@@ -199,6 +241,16 @@ function getNumLet(s) {
         case 'صفر':
             return 0;
     }
+}
+function genPDF() {
+	
+	var doc = new jsPDF();
+	
+	doc.text(20,20,'TEST Message!!');
+	doc.addPage();
+	doc.text(20,20,'TEST Page 2!');
+	doc.save('Test.pdf');
+	
 }
 /**
  * 
@@ -250,9 +302,36 @@ function onSendButton(chatbox) {
                     break;
 
             }
+           
 
 
         }
+        if ((textField == "suivi réclamation")) {
+           
+           
+                switch (language) {
+                    case "anglais":
+                        VoiceBot("Hello! please send me your last name", chatbox);
+                        textField = "";
+                        v = 8;
+                        break;
+                    case "français":
+                        VoiceBot("Salut envoyez moi le numéro de réclamation que vous voullez suivre", chatbox);
+                        textField = "";
+                        v = 8;
+                        break;
+                    case "arabe":
+                        VoiceBot("مرحبا في فضاء الشكايات من فضلك ارسل لي اسم العائلة", chatbox);
+                        textField = "";
+                        v = 8;
+                        break;
+                }
+             
+              
+        }
+        
+       
+
         // if (textField === "") {
         //     return;
         // }
@@ -620,9 +699,22 @@ function onSendButton(chatbox) {
                 }
 
                 break;
+        case 8:
+           
+            if (textField !== "") {
+                console.log("je suis la");
+                var num_rec = textField.replaceAll(' ','');
+                console.log("nummm", num_rec);
+                if (num_rec.length == 8) {
+                    suiviRecVoiceBot(num_rec);
+                }
+                else {
+                    VoiceBot("Revérifier", chatbox);
+                }
+            }
+            break;
+
         }
-
-
     };
     // }
 
