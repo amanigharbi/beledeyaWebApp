@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\reclamation;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\String_;
+use PDF;
 
 class ReclamationController extends Controller
 {
@@ -45,7 +46,6 @@ class ReclamationController extends Controller
     {
         $result = $request->validate($this->validationRules());
 
-        try {
             //Check if there's a photo
             if (isset($request['photo'])) {
                 $result['photo'] = $request['photo']->store('uploads', 'public');
@@ -75,8 +75,32 @@ class ReclamationController extends Controller
 
             $result['num_rec'] = $num_rec;
 
-            reclamation::create($result);
-            return back()->with('success', 'Réclamation ajoutée!');
+            reclamation::create($result);    
+            $data = [
+                'logo'=> 'assets/images/logo.png',
+                'adr' => $result['adresse'],
+                'nom'=> $result['last_name'] ,
+                'prenom'=> $result['first_name'] ,
+                'email'=>$result['email'],
+                'date' => date('m/d/Y'),
+                'numRec' => $result['num_rec'] ,
+                'type' => $result['type'],
+                'cin' => $result['cin'],
+                'des' => $result['sujet'],
+                
+
+                
+            ];
+              
+            $pdf = PDF::loadView('myPDF', $data);
+        
+             
+            // return back()->with('success', 'Réclamation ajoutée!');
+            return $pdf->download('reclamation.pdf');
+            //  return back()->withInput([('success'+'Réclamation ajoutée'), $pdf]);
+          
+        try {
+            
         } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
         }
@@ -113,7 +137,17 @@ class ReclamationController extends Controller
             return back()->with('error', 'something went wrong');
         }
     }
+public function generatePDF(){
+    
+    $data = [
+        'title' => 'Welcome to ItSolutionStuff.com',
+        'date' => date('m/d/Y')
+    ];
+      
+    $pdf = PDF::loadView('myPDF', $data);
 
+    return $pdf->download('itsolutionstuff.pdf');
+}
     /**
      * Show the form for editing the specified resource.
      *

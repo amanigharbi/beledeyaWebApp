@@ -30,7 +30,7 @@
                     @break
                 @endswitch
                 <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Reclamation N°:
-                    {{ $reclamation->id }} : {{ $reclamation->type }}
+                    {{ $reclamation->num_rec }} : {{ $reclamation->type }}
                 </h3>
             </div>
             @if ($reclamation->status != '2')
