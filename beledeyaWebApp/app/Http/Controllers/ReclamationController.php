@@ -137,17 +137,7 @@ class ReclamationController extends Controller
             return back()->with('error', 'something went wrong');
         }
     }
-public function generatePDF(){
-    
-    $data = [
-        'title' => 'Welcome to ItSolutionStuff.com',
-        'date' => date('m/d/Y')
-    ];
-      
-    $pdf = PDF::loadView('myPDF', $data);
 
-    return $pdf->download('itsolutionstuff.pdf');
-}
     /**
      * Show the form for editing the specified resource.
      *
