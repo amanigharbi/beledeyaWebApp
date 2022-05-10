@@ -321,7 +321,7 @@ doc.setFontSize(16)
 doc.text(105,205,'Commune de Menzel Abderrahmane')
 doc.setFontSize(10)
 doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
-doc.save("reclamation.pdf");
+doc.save(NomRec+PrenomRec+".pdf");
 }
 /**
  * 
