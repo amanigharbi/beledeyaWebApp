@@ -43,7 +43,7 @@
 
     </div>
 
-    <br><br><br>
+    <br><br><br><br><br>
     <h3> Numéro réclamation: {{ $numRec }}</h3>
     <h3> Décharge de réclamation de : {{ $type }}</h3>
     <h4 style="font-style: italic;">Monsieur/Madame {{ $nom }} {{ $prenom }} titulaire de cin
@@ -60,7 +60,7 @@
     <br><br><br>
     <h4 style="display:grid;float:right">Commune de Menzel Abderrahmane</h4>
 
-    <footer style="margin-top:55%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer>
+    <footer style="margin-top:50%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer>
 </body>
 
 </html

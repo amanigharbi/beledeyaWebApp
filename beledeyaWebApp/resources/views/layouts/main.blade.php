@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-
+   
     <style>
         .badge {
             display: inline-block;

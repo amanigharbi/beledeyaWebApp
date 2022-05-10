@@ -196,22 +196,61 @@ function suiviRecVoiceBot(num_rec) {
         success: function (response, status, xhr) {
             switch (language) {
                 case "anglais":
-                    VoiceBot("Complaint request registered. Please upload your waiver", chatBox);
-                    NumRec = "";
+                    switch(response['status']){
+                        case 0:
+                            VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your claim is delivered but not yet processed ", chatBox);
+                            break;
+                            case 1:
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is being processed ", chatBox);
+                            break;
+                            case 2:
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is resolved ", chatBox);
+                            break;
+                    }
+                    NumRec = ""; 
                     break;
                 case "français":
-                    console.log("data ",response);
-                    console.log("data2 ",response.data);
-                    VoiceBot("la status de votre réclamation est" + response.data, chatBox);
+                    console.log("data ",response['first_name']);
+                    switch(response['status']){
+                        case 0:
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatBox);
+                            break;
+                            case 1:
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatBox);
+                            break;
+                            case 2:
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatBox);
+                            break;
+                    }
                     NumRec = "";
                     break;
                 case "arabe":
-                    VoiceBot("تم تسجيل طلب الشكوى. يرجى تحميل الملخص الخاص بك", chatBox);
+                    switch(response['status']){
+                        case 0:
+                            VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatBox);
+                            break;
+                            case 1:
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" شكواك قيد المعالجة ", chatBox);
+                            break;
+                            case 2:
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم حل شكواك ", chatBox);
+                            break;
+                    }
                     NumRec = "";
                     break;
 
                 default:
-                    VoiceBot("Demande de réclamation enregistré. Merci de télécharger votre décharge", chatBox);
+                    switch(response['status']){
+                        case 0:
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatBox);
+                            break;
+                            case 1:
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatBox);
+                            break;
+                            case 2:
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatBox);
+                            break;
+                    }
                     NumRec = "";
                     break;
             }
