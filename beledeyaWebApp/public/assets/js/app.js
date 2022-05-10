@@ -179,7 +179,7 @@ function ajoutRecVoiceBot() {
     });
 
 }
-function suiviRecVoiceBot(num_rec) {
+function suiviRecVoiceBot(num_rec,chatbox) {
     var url = "http://127.0.0.1:8080/work/consommation%20api/suiviRec.php";
     $.ajax({
         type: 'POST',
@@ -197,61 +197,63 @@ function suiviRecVoiceBot(num_rec) {
             switch (language) {
                 case "anglais":
                     switch(response['status']){
-                        case 0:
-                            VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your claim is delivered but not yet processed ", chatBox);
+                        case "0":
+                            VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your claim is delivered but not yet processed ", chatbox);
                             break;
-                            case 1:
-                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is being processed ", chatBox);
+                            case "1":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is being processed ", chatbox);
                             break;
-                            case 2:
-                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is resolved ", chatBox);
+                            case "2":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your complaint is resolved ", chatbox);
                             break;
                     }
-                    NumRec = ""; 
+                     
                     break;
                 case "français":
                     console.log("data ",response['first_name']);
-                    switch(response['status']){
-                        case 0:
-                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatBox);
+                    console.log("status ",response['status']);
+                    var status = response['status'];
+                    switch(status){
+                        case "0":
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatbox);
                             break;
-                            case 1:
-                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatBox);
+                            case "1":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatbox);
                             break;
-                            case 2:
-                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatBox);
+                            case "2":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatbox);
                             break;
                     }
-                    NumRec = "";
+                   
                     break;
                 case "arabe":
                     switch(response['status']){
-                        case 0:
-                            VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatBox);
+                        case "0":
+                            VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatbox);
                             break;
-                            case 1:
-                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" شكواك قيد المعالجة ", chatBox);
+                            case "1":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" شكواك قيد المعالجة ", chatbox);
                             break;
-                            case 2:
-                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم حل شكواك ", chatBox);
+                            case "2":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم حل شكواك ", chatbox);
                             break;
                     }
-                    NumRec = "";
+                  
                     break;
 
                 default:
                     switch(response['status']){
-                        case 0:
-                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatBox);
+                        case "0":
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est delivré mais pas encore traité ", chatbox);
                             break;
-                            case 1:
-                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatBox);
+                            case "1":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est en cours de traitement ", chatbox);
                             break;
-                            case 2:
-                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatBox);
+                            case "2":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre réclamation est résolu ", chatbox);
                             break;
                     }
-                    NumRec = "";
+                    
                     break;
             }
         },
@@ -375,12 +377,13 @@ function onSendButton(chatbox) {
 
 
         }
-        if ((textField == "suivi réclamation")) {
+        if ((textField == "suivi réclamation")|| (textField == "اتباع")
+        || (textField == "check")) {
            
            
                 switch (language) {
                     case "anglais":
-                        VoiceBot("Hello! please send me your last name", chatbox);
+                        VoiceBot("Hi send me the claim number you want to track", chatbox);
                         textField = "";
                         v = 8;
                         break;
@@ -390,7 +393,7 @@ function onSendButton(chatbox) {
                         v = 8;
                         break;
                     case "arabe":
-                        VoiceBot("مرحبا في فضاء الشكايات من فضلك ارسل لي اسم العائلة", chatbox);
+                        VoiceBot("مرحبًا ، أرسل لي رقم المطالبة الذي تريد تتبعه", chatbox);
                         textField = "";
                         v = 8;
                         break;
@@ -818,11 +821,22 @@ function onSendButton(chatbox) {
         case 8:
            
             if (textField !== "") {
+                num_rec="";
+                   if (language == "arabe") {
+                    var NumRecArray = textField.split(' ');
+                    for (let i = 0; i < NumRecArray.length; i++) {
+                        num_rec = num_rec + getNumLet(NumRecArray[i]);
+                    }
+                } else {
+                    num_rec = textField.replaceAll(' ', '');
+                }
+               
+             
                 console.log("je suis la");
-                var num_rec = textField.replaceAll(' ','');
+                
                 console.log("nummm", num_rec);
                 if (num_rec.length == 8) {
-                    suiviRecVoiceBot(num_rec);
+                    suiviRecVoiceBot(num_rec,chatbox);
                 }
                 else {
                     VoiceBot("Revérifier", chatbox);
