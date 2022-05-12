@@ -62,9 +62,9 @@
 @if ( $exist_doc == true)
 <p style="color: red"> Merci d'apporter <b> ce document à la municipalité </b> accompagné <b>des documents suivants </b> pour terminer les procédures </p>
 <ul>
-    <li type="square"> test test </li>
-    <li type="square"> test test </li>
-    <li type="square"> test test </li>
+    <li type="circle"> test test </li>
+    <li type="circle"> test test </li>
+    <li type="circle"> test test </li>
 </ul>
      <footer style="margin-top:15%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
 

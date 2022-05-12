@@ -76,40 +76,59 @@ class ReclamationController extends Controller
 
             $result['num_rec'] = $num_rec;
 
-            reclamation::create($result);    
+           $reclamation= reclamation::create($result);    
             
-            $data = [
-                'logo'=> 'assets/images/logo.png',
-                'adr' => $result['adresse'],
-                'nom'=> $result['last_name'] ,
-                'prenom'=> $result['first_name'] ,
-                'email'=>$result['email'],
-                'date' => date('m/d/Y'),
-                'num' => $result['num_rec'] ,
-                'type' => $result['type'],
-                'cin' => $result['cin'],
-                'des' => $result['sujet'],
-                'h3_title' =>'Numéro réclamation: '.$result['num_rec'],
-                'p1' =>'Nous avons bien reçu votre réclamation de type '.$result['type'].' et de description'.$result['sujet'].
-                '. Nous essayons de corriger le problème dés que possible.',
-                'type_doc' => 'réclamation de : '.$result['type'],
-                'exist_doc' =>false,
-                
-
-                
-            ];
+            // $data = [
+            //     'logo'=> 'assets/images/logo.png',
+            //     'adr' => $result['adresse'],
+            //     'nom'=> $result['last_name'] ,
+            //     'prenom'=> $result['first_name'] ,
+            //     'email'=>$result['email'],
+            //     'date' => date('m/d/Y'),
+            //     'num' => $result['num_rec'] ,
+            //     'type' => $result['type'],
+            //     'cin' => $result['cin'],
+            //     'des' => $result['sujet'],
+            //     'h3_title' =>'Numéro réclamation: '.$result['num_rec'],
+            //     'p1' =>'Nous avons bien reçu votre réclamation de type '.$result['type'].' et de description'.$result['sujet'].
+            //     '. Nous essayons de corriger le problème dés que possible.',
+            //     'type_doc' => 'réclamation de : '.$result['type'],
+            //     'exist_doc' =>false,                
+            // ];
               
-            $pdf = PDF::loadView('myPDF', $data);
-
-            // return back()->with('success', 'Reclamation ajoutee et votre decharge a ete telecharg!');
-            return $pdf->download($result['last_name'].$result['first_name'].'Rec.pdf');
-            //  return back()->withInput([('success'+'Réclamation ajoutée'), $pdf]);
-          
-        
+            // $pdf = PDF::loadView('myPDF', $data);
+           //  return $pdf->download($result['last_name'].$result['first_name'].'Rec.pdf');
             
+           session(['recId' => $reclamation->id]);
+              return back()->with('success','Réclamation ajoutée');            
         } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
         }
+    }
+
+    public function down($id){
+        $reclamation=reclamation::findOrFail($id);
+         $data = [
+                'logo'=> 'assets/images/logo.png',
+                'adr' => $reclamation['adresse'],
+                'nom'=> $reclamation['last_name'] ,
+                'prenom'=> $reclamation['first_name'] ,
+                'email'=>$reclamation['email'],
+                'date' =>$reclamation['created_at'],
+                'num' => $reclamation['num_rec'] ,
+                'type' => $reclamation['type'],
+                'cin' => $reclamation['cin'],
+                'des' => $reclamation['sujet'],
+                'h3_title' =>'Numéro réclamation: '.$reclamation['num_rec'],
+                'p1' =>'Nous avons bien reçu votre réclamation de type '.$reclamation['type'].' et de description'.$reclamation['sujet'].
+                '. Nous essayons de corriger le problème dés que possible.',
+                'type_doc' => 'réclamation de : '.$reclamation['type'],
+                'exist_doc' =>false,                
+            ];
+            session(['recId' => null]);
+            $pdf = PDF::loadView('myPDF', $data);
+            return $pdf->download($reclamation['last_name'].$reclamation['first_name'].'Rec.pdf');
+
     }
 
     /**
