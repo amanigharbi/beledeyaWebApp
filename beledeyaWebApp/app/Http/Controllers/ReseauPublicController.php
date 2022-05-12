@@ -48,7 +48,7 @@ class ReseauPublicController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-
+try{
 
             //Check if request has email
             if (isset($request['email'])) {
@@ -75,37 +75,43 @@ class ReseauPublicController extends Controller
 
          
 
-            ReseauPublic::create($result);
-            $data = [
-                'logo'=> 'assets/images/logo.png',
-                'adr' => $result['adresse'],
-                'nom'=> $result['last_name'] ,
-                'prenom'=> $result['first_name'] ,
-                'email'=>$result['email'],
-                'date' => date('m/d/Y'),
-                'num' => $result['num_branch'] ,
-                'type' => $result['type'],
-                'cin' => $result['cin'],
-                'des' => $result['description'],
-                'h3_title' =>'Numéro dossier: '.$result['num_branch'],
-                'p1' =>'Nous avons bien reçu votre demande de branchement aux réseau publics de type '.$result['type'].' et de description '.$result['description'].
-                '. Nous essayons de vous répondre dès que possible.',
-                'type_doc' => 'demande de branchement aux réseau publics  de : '.$result['type'],
-                'exist_doc' => true,
-                
-
-                
-            ];
-              
-            $pdf = PDF::loadView('myPDF', $data);
-
-            // return back()->with('success', 'Reclamation ajoutee et votre decharge a ete telecharg!');
-            return $pdf->download($result['last_name'].$result['first_name'].'Demande.pdf');
-            // return back()->with('success', 'demande ajoutée!');
+            $reseauPublic=   ReseauPublic::create($result);
+            session(['recId' => $reseauPublic->id]);
+            return back()->with('success', 'demande de branchement aux réseaux publics ajoutée! télécharger votre décharge');
                
-            try {      } catch (\Throwable $th) {
+                  } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
         }
+    }
+    public function down($id){
+        $reseauPublic=ReseauPublic::findOrFail($id);
+        $data = [
+            'logo'=> 'assets/images/logo.png',
+            'adr' => $reseauPublic['adresse'],
+            'nom'=> $reseauPublic['last_name'] ,
+            'prenom'=> $reseauPublic['first_name'] ,
+            'email'=>$reseauPublic['email'],
+            'date' => $reseauPublic['created_at'],
+            'num' => $reseauPublic['num_branch'] ,
+            'type' => $reseauPublic['type'],
+            'cin' => $reseauPublic['cin'],
+            'des' => $reseauPublic['description'],
+            'h3_title' =>'Numéro dossier: '.$reseauPublic['num_branch'],
+            'p1' =>'Nous avons bien reçu votre demande de branchement aux réseau publics de type '.$reseauPublic['type'].' et de description '.$reseauPublic['description'].
+            '. Nous essayons de vous répondre dès que possible.',
+            'type_doc' => 'demande de branchement aux réseau publics  de : '.$reseauPublic['type'],
+            'exist_doc' => true,
+            
+
+            
+        ];
+        session(['resId' => null]);
+        $pdf = PDF::loadView('myPDF', $data);
+
+        return $pdf->download($reseauPublic['last_name'].$reseauPublic['first_name'].'Demande.pdf');
+            
+     
+
     }
 
     /**

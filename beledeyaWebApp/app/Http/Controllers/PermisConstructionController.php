@@ -64,20 +64,30 @@ try{
 
             $result['num_autor'] = $num_autor;
 
-            PermisConstruction::create($result);    
+           $permisConstruction= PermisConstruction::create($result);    
             
+            
+
+            session(['permisConsId' => $permisConstruction->id]);
+              return back()->with('success','Demande de batir ajoutée. Merci de télécharger votre décharge');  
+             } catch (\Throwable $th) {
+            return back()->with('error', 'Vérifier!');
+        }
+        }
+        public function down($id){
+            $permisConstruction=PermisConstruction::findOrFail($id);
             $data = [
                 'logo'=> 'assets/images/logo.png',
-                'adr' => $result['adresse'],
-                'nom'=> $result['last_name'] ,
-                'prenom'=> $result['first_name'] ,
-                'email'=>$result['email'],
-                'date' => date('m/d/Y'),
-                'num' => $result['num_autor'] ,
+                'adr' => $permisConstruction['adresse'],
+                'nom'=> $permisConstruction['last_name'] ,
+                'prenom'=> $permisConstruction['first_name'] ,
+                'email'=>$permisConstruction['email'],
+                'date' => $permisConstruction['created_at'],
+                'num' => $permisConstruction['num_autor'] ,
                 'type' => '',
-                'cin' => $result['cin'],
+                'cin' => $permisConstruction['cin'],
                 'des' => '',
-                'h3_title' =>'Numéro de demande d`autoriation de batir: '.$result['num_autor'],
+                'h3_title' =>'Numéro de demande d`autoriation de batir: '.$permisConstruction['num_autor'],
                 'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir Nous essayons de vous répondre dés que possible.',
                 'type_doc' => ' de demande d`autoriation de batir ',
                 'exist_doc' =>true,
@@ -87,13 +97,10 @@ try{
             ];
               
             $pdf = PDF::loadView('myPDF', $data);
-
-            // return back()->with('success', 'Reclamation ajoutee et votre decharge a ete telecharg!');
-            return $pdf->download($result['last_name'].$result['first_name'].'Batir.pdf');
-            //  return back()->withInput([('success'+'Réclamation ajoutée'), $pdf]);
-             } catch (\Throwable $th) {
-            return back()->with('error', 'Vérifier!');
-        }
+                session(['permisConsId' => null]);
+                $pdf = PDF::loadView('myPDF', $data);
+                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Rec.pdf');
+    
         }
     
     /**

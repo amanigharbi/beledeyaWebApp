@@ -78,31 +78,11 @@ class ReclamationController extends Controller
 
            $reclamation= reclamation::create($result);    
             
-            // $data = [
-            //     'logo'=> 'assets/images/logo.png',
-            //     'adr' => $result['adresse'],
-            //     'nom'=> $result['last_name'] ,
-            //     'prenom'=> $result['first_name'] ,
-            //     'email'=>$result['email'],
-            //     'date' => date('m/d/Y'),
-            //     'num' => $result['num_rec'] ,
-            //     'type' => $result['type'],
-            //     'cin' => $result['cin'],
-            //     'des' => $result['sujet'],
-            //     'h3_title' =>'Numéro réclamation: '.$result['num_rec'],
-            //     'p1' =>'Nous avons bien reçu votre réclamation de type '.$result['type'].' et de description'.$result['sujet'].
-            //     '. Nous essayons de corriger le problème dés que possible.',
-            //     'type_doc' => 'réclamation de : '.$result['type'],
-            //     'exist_doc' =>false,                
-            // ];
-              
-            // $pdf = PDF::loadView('myPDF', $data);
-           //  return $pdf->download($result['last_name'].$result['first_name'].'Rec.pdf');
-            
+        
            session(['recId' => $reclamation->id]);
-              return back()->with('success','Réclamation ajoutée');            
+              return back()->with('success','Réclamation ajoutée. Merci de télécharger votre décharge');            
         } catch (\Throwable $th) {
-            return back()->with('error', 'Vérifier!');
+            return back()->with('error', 'Ops!Something went wrong');
         }
     }
 

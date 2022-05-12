@@ -157,6 +157,31 @@
         </div>
     </div>
 </div>
+@if ((session('success')) && (session('resId')))
+<script>
+   swal({  title: "Good job!",
+text: "{{ Session::get('success') }}",
+icon: "success",
+button: "download pdf",
+dangerMode: true,
+
+}).then((value) => {
+open("{{asset('downPdf')}}/{{session('resId')}}");
+});
+</script>
+@endif 
+
+  
+  
+  @if (session('error'))
+  <script>
+    swal({  title: "OPS!",
+text: "{{ Session::get('error') }}",
+icon: "warning",
+dangerMode: true,
+  }); 
+</script>
+  @endif
  <div class="container register">
         <div class="row">
             <div class="col-md-3 register-left">
@@ -186,14 +211,8 @@
                             @csrf
                             <div class="row register-form">
                             
-                                @if (session('success'))
-                    @endif
-                               
-                                
-                           
-                                @if (session('error'))
-                                    {{ session('error') }}
-                                @endif
+                      
+                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="first_name" placeholder="Prénom *"

@@ -40,9 +40,10 @@ Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/PermisConstruction', 'PermisConstructionController@autorisationBatir')->name('PermisConstruction');
     Route::post('/addDemandeConst', 'PermisConstructionController@store');
     Route::get('/checkAutorisation', 'PermisConstructionController@check');
-    
+    Route::get('/downPdf/{id}', 'PermisConstructionController@down')->name('downPdf');
     Route::get('/ReseauPublics', 'ReseauPublicController@showView')->name('ReseauPublic');
     Route::post('/addDemande', 'ReseauPublicController@store');
+    Route::get('/downPdf/{id}', 'ReseauPublicController@down')->name('downPdf');
     
     Route::get('/home', 'HomeController@index')->name('home');
 });

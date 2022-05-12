@@ -156,6 +156,31 @@
         </div>
     </div>
 </div>
+@if ((session('success')) && (session('permisConsId')))
+<script>
+   swal({  title: "Good job!",
+text: "{{ Session::get('success') }}",
+icon: "success",
+button: "download pdf",
+dangerMode: true,
+
+}).then((value) => {
+open("{{asset('downPdf')}}/{{session('permisConsId')}}");
+});
+</script>
+@endif 
+
+  
+  
+  @if (session('error'))
+  <script>
+    swal({  title: "OPS!",
+text: "{{ Session::get('error') }}",
+icon: "warning",
+dangerMode: true,
+  }); 
+</script>
+  @endif
 <div class="container register">
     <div class="row">
         <div class="col-md-3 register-left">
@@ -181,16 +206,7 @@
                     role="tabpanel" aria-labelledby="home-tab">
           
                     <h3 class="register-heading">Ajouter une Demande d'autorisation de batir</h3>
-                    @if (session('success'))
-                    <div class="alert alert-success w-50 m-auto text-center">
-                        {{ session('success') }}
-                    </div>      
-                @endif
-                @if (session('error'))
-                <div class="alert alert-danger w-50 m-auto text-center">
-                    {{ session('error') }}
-                </div>      
-            @endif
+            
                     <form action="{{ asset('addDemandeConst') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row register-form">
