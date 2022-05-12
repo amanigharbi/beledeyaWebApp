@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Route;
+// use Illuminate\Routing\Route;
 
 Route::group([
     'middleware' => ['api', 'cors'],
@@ -28,16 +30,19 @@ Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/reclamation', 'ReclamationController@reclamation')->name('reclamation');
 Route::post('/addReclamation', 'ReclamationController@store');
 Route::get('/checkReclam', 'ReclamationController@check');
-Route::get('/generate-pdf', 'ReclamationController@generatePDF');
 Route::get('/documents', 'DocumentsController@showAll')->name('documents');
 Route::get('/about', 'HomeController@about')->name('about');
 
 
 Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/taxes', 'TaxesController@index')->name('taxes');
-    Route::get('/PermisConstruction', 'PermisConstructionController@index')->name('PermisConstruction');
+    Route::get('/PermisConstruction', 'PermisConstructionController@autorisationBatir')->name('PermisConstruction');
+    Route::post('/addDemandeConst', 'PermisConstructionController@store');
+    Route::get('/checkAutorisation', 'PermisConstructionController@check');
+    
     Route::get('/ReseauPublics', 'ReseauPublicController@showView')->name('ReseauPublic');
     Route::post('/addDemande', 'ReseauPublicController@store');
+    
     Route::get('/home', 'HomeController@index')->name('home');
 });
 
@@ -65,7 +70,8 @@ Route::group(
         Route::resource('/document', 'DocumentsController');
         //Reseau public
         Route::resource('/ReseauPublic', 'ReseauPublicController');
-
+        // autorisation batir
+        Route::resource('/PermisConstructions', 'PermisConstructionController');
   
     }
 );

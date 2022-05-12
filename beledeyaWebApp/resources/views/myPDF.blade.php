@@ -44,23 +44,35 @@
     </div>
 
     <br><br><br><br><br>
-    <h3> Numéro réclamation: {{ $numRec }}</h3>
-    <h3> Décharge de réclamation de : {{ $type }}</h3>
+    <h3> {{ $h3_title }}</h3>
+    <h3> Décharge de {{$type_doc}}</h3>
     <h4 style="font-style: italic;">Monsieur/Madame {{ $nom }} {{ $prenom }} titulaire de cin
         {{ $cin }}</h4>
-    <p>Nous avons bien reçu votre réclamation de type <b>{{ $type }}</b> et de description<b> {{ $des}}
-       </b>. Nous essayons de corriger le problème dés que possible.
+    <p>{{$p1}}
     </p>
     <p>
-        Vous pouvez suivre votre réclamation a travers ce numéro <b> {{ $numRec }}</b>
+        Vous pouvez suivre votre {{$type_doc}} a travers ce numéro <b> {{ $num }}</b>
         pour restez en contact de tous.</p>
     <p>Veuillez recevoir, Madame, ou Monsieur ,<b>{{ $nom }} {{ $prenom }}</b> ,
         nos salutations distinguées
     </p>
     <br><br><br>
     <h4 style="display:grid;float:right">Commune de Menzel Abderrahmane</h4>
+<br><br><br>
+@if ( $exist_doc == true)
+<p style="color: red"> Merci d'apporter <b> ce document à la municipalité </b> accompagné <b>des doncuments suivantss </b> pour terminer les procédures </p>
+<ul>
+    <li type="square"> test test </li>
+    <li type="square"> test test </li>
+    <li type="square"> test test </li>
+</ul>
+     <footer style="margin-top:15%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
 
-    <footer style="margin-top:50%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer>
-</body>
+@else
+<footer style="margin-top:40%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+  
+@endif
+
+    </body>
 
 </html

@@ -139,9 +139,10 @@
                                 </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-calendar.html"
                                 aria-expanded="false"><i data-feather="dollar-sign" class="feather-icon"></i><span class="hide-menu"> Rental taxes</span></a></li>
-                                    <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-calendar.html"
+                                    <li class="sidebar-item {{ \Request::is('PermisConstruction*') ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ asset('PermisConstructions') }}"
                                         aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu"> Building permit</span></a></li>
-                                            <li class="sidebar-item {{ \Request::is('ReseauPublic*') ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ asset('ReseauPublic') }}"
+                                            
+                                        <li class="sidebar-item {{ \Request::is('ReseauPublic*') ? 'selected' : '' }}"> <a class="sidebar-link sidebar-link" href="{{ asset('ReseauPublic') }}"
                                                 aria-expanded="false"><i data-feather="sun" class="feather-icon"></i><span class="hide-menu"> Public grid</span></a></li>
                         <li class="list-divider"></li>
                         <li class="nav-small-cap"><span class="hide-menu">Components</span></li>

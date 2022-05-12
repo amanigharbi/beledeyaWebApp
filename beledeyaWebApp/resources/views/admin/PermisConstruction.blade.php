@@ -9,32 +9,29 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Demande of public grid</h4>
-                        <h6 class="card-subtitle">these are the list of demande of public grid sent by the inhabitants!
+                        <h4 class="card-title">Demande d'autorisation de batir</h4>
+                        <h6 class="card-subtitle">these are the list of Building permit application sent by the inhabitants!
                         </h6>
                         <br>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Numéro document</th>
                                         <th scope="col">Full name</th>
                                         <th scope="col">Cin</th>
-                                        <th scope="col">Description</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($res as $r)
+                                    @foreach ($permis as $p)
                                         <tr>
-                                            <td>{{ $r->num_branch }}</td>
-                                            <td>{{ $r->first_name }} {{ $r->last_name }}</td>
-                                            <td>{{ $r->cin }}</td>
-                                            <td>{{ $r->description }}</td>
+                                            <td>{{ $p->first_name }} {{ $p->last_name }}</td>
+                                            <td>{{ $p->cin }}</td>
+                                           
                                             <td>
-                                                @switch($r->status)
+                                                @switch($p->status)
                                                     @case('0')
                                                         <span class="badge badge-danger">New</span>
                                                     @break
@@ -47,11 +44,11 @@
                                                         <span class="badge badge-success text-white">Accepted</span>
                                                     @break
                                                     @case('3')
-                                                    <span class="badge badge-success text-white">Rejected</span>
+                                                    <span class="badge badge-danger text-white">Rejected</span>
                                                 @break
                                                 @endswitch
                                             <td>
-                                                <a href="{{ asset('ReseauPublic') }}/{{ $r->id }}">
+                                                <a href="{{ asset('PermisConstructions') }}/{{ $p->id }}">
                                                     <button class="btn btn-success btn-sm"><i
                                                             class="fas fa-eye"></i></button>
                                                 </a>

@@ -13,10 +13,11 @@
             {{ session('error') }}
         </div>
     @endif
+  
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-9 align-self-center">
-                @switch($ReseauPublic->status)
+                @switch($permisConstruction->status)
                     @case('0')
                         <span class="badge badge-danger">New</span>
                     @break
@@ -32,32 +33,32 @@
                         <span class="badge badge-danger text-white">Rejected</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande N°
-                    {{ $ReseauPublic->num_branch }} : {{ $ReseauPublic->type }}
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande d'autorisation de batir N°
+                    {{ $permisConstruction->num_autor }} 
                 </h3>
             </div>
             <div class="text-right d-flex align-items-start">
-            @if (($ReseauPublic->status != '2') && ($ReseauPublic->status != '3'))
+            @if (($permisConstruction->status != '2') && ($permisConstruction->status != '3'))
                 <div class="col-8 align-self-center ">
-                    <a class="btn btn-success btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
+                    <a class="btn btn-success btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form').submit();">
                         Accept
                         <i class="fa fa-check"></i>
                     </a>
-                    <form id="update-form" action="{{ route('ReseauPublic.update', $ReseauPublic->id) }}" method="POST"
+                    <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
                         style="display: none;">
                         @csrf @method('PATCH')
                     </form>
                 </div>
             @endif
-            @if (($ReseauPublic->status != '3') && ($ReseauPublic->status != '2'))
+            @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
                 <div class="col-8 align-self-center ">
-                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
+                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
                         Reject
                         <i class="fa fa-ban"></i>
                     </a>
-                    <form id="update-form2" action="{{ route('ReseauPublic.edit', $ReseauPublic->id) }}" method="POST"
+                    <form id="update-form2" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST"
                         style="display: none;">
                         @csrf @method('GET')
                     </form>
@@ -72,8 +73,8 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Full name</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->first_name }}
-                                        {{ $ReseauPublic->last_name }}</h3>
+                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->first_name }}
+                                        {{ $permisConstruction->last_name }}</h3>
                                 </div>
 
                             </div>
@@ -86,7 +87,7 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cin</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->cin }}</h3>
+                                    <h3 class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->cin }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +102,7 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Email</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->email }}</p>
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->email }}</p>
                                 </div>
 
                             </div>
@@ -114,7 +115,35 @@
                             <div>
                                 <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Address</h6>
                                 <div class="d-inline-flex align-items-center">
-                                    <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->adresse }}</p>
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->adresse }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="card border-right">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Surface</h6>
+                                <div class="d-inline-flex align-items-center">
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->surface }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-right">
+                    <div class="card-body">
+                        <div class="d-flex d-lg-flex d-md-block align-items-center">
+                            <div>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Propriete?</h6>
+                                <div class="d-inline-flex align-items-center">
+                                    <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->prop }}</p>
                                 </div>
 
                             </div>
@@ -123,10 +152,5 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body collapse show">
-                <h4 class="card-title">Descriptions</h4>
-                <p class="card-text">{{ $ReseauPublic->description }}</p>
-            </div>
-        </div>
+        
     @endsection

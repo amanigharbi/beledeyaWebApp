@@ -210,7 +210,7 @@ function suiviRecVoiceBot(num_rec,chatbox) {
                      
                     break;
                 case "français":
-                    console.log("data ",response['first_name']);
+                    console.log("name ",response['first_name']);
                     console.log("status ",response['status']);
                     var status = response['status'];
                     switch(status){
@@ -647,7 +647,7 @@ function onSendButton(chatbox) {
                                 VoiceBot("email non valide réessayer", chatbox);
                                 break;
                             case "arabe":
-                                VoiceBot("@ البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
+                                VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
                                 break;
 
                             default:

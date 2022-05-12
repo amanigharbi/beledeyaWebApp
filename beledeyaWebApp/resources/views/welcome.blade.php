@@ -58,7 +58,7 @@
                   <h4>Espace des Réclamations</h4>
                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                   <div class="text-button">
-                    <a href="{{route('login')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -75,10 +75,10 @@
               <div class="col-lg-3">
                 <div class="service-item third-service">
                   <div class="icon"></div>
-                  <h4>Permis de construction</h4>
+                  <h4>Autorisation de batir</h4>
                   <p>If this template is beneficial for your work, please support us <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">a little via PayPal</a>. Thank you.</p>
                   <div class="text-button">
-                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                    <a href="{{route('login')}}">Accéder <i class="fa fa-arrow-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@
                   <h4>Branchement au réseaux publics</h4>
                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                   <div class="text-button">
-                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                    <a href="{{route('login')}}">Accéder <i class="fa fa-arrow-right"></i></a>
                   </div>
                 </div>
               </div>

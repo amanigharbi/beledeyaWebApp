@@ -1,5 +1,123 @@
-<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}"> --}}
+<link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet'>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+    .register {
+        background: -webkit-linear-gradient(left, #c15b5b, #ea9797);
+        margin-top: 3%;
+        padding: 3%;
+    }
 
+    .register-left {
+        text-align: center;
+        color: #fff;
+        margin-top: 4%;
+    }
+
+    .register-left input {
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        width: 60%;
+        background: #f8f9fa;
+        font-weight: bold;
+        color: #383d41;
+        margin-top: 50%;
+        margin-bottom: 3%;
+        cursor: pointer;
+    }
+
+    .register-right {
+        background: #f8f9fa;
+        border-top-left-radius: 10% 50%;
+        border-bottom-left-radius: 10% 50%;
+    }
+
+    .register-left img {
+        margin-top: 70%;
+        margin-bottom: 5%;
+        width: 25%;
+        -webkit-animation: mover 2s infinite alternate;
+        animation: mover 1s infinite alternate;
+    }
+
+    @-webkit-keyframes mover {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes mover {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-20px);
+        }
+    }
+
+    .register .register-form {
+        padding: 10%;
+        margin-top: 10%;
+    }
+
+    .btnRegister {
+        float: left;
+        margin-top: 10%;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #d2a3ab;
+        color: #fff;
+        font-weight: 600;
+        width: 50%;
+        cursor: pointer;
+    }
+
+    .register .nav-tabs {
+        margin-top: 2%;
+        margin-left: 55%;
+        border: none;
+        background: #d2a3ab;
+        border-radius: 1.5rem;
+        width: 28%;
+         /* float: left;  */
+    }
+
+    .register .nav-tabs .nav-link {
+        padding: 2%;
+        height: 34px;
+        font-weight: 600;
+        color: #fff;
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+    }
+
+    .register .nav-tabs .nav-link:hover {
+        border: none;
+    }
+
+    .register .nav-tabs .nav-link.active {
+        width: 100px;
+        color: #d2a3ab;
+        border: 2px solid #cbb2b6;
+        border-top-left-radius: 1.5rem;
+        border-bottom-left-radius: 1.5rem;
+    }
+
+    .register-heading {
+        text-align: center;
+        margin-top: 8%;
+        margin-bottom: -15%;
+        color: #495057;
+    }
+
+</style>
 @extends('layouts.main')
 
 @section('content')
@@ -39,7 +157,193 @@
         </div>
     </div>
 </div>
-<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+ <div class="container register">
+        <div class="row">
+            <div class="col-md-3 register-left">
+    <img src="https://i.ibb.co/8MsG6qZ/icon.webp" alt="eau"  />
+                <h3>Bienvenue Dans l'espace de branchement aux réseaux publics</h3>
+
+            </div>
+            <div class="col-md-9 register-right">
+
+                {{-- <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link @if ($res == null) active @endif" id="home-tab" data-toggle="tab"
+                            href="#home" role="tab" aria-controls="home" aria-selected="true">Ajouter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if ($res != null) active @endif" id="profile-tab"
+                            data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                            aria-selected="true">Suivre</a>
+                    </li>
+                </ul> --}}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade  show active  " id="home"
+                        role="tabpanel" aria-labelledby="home-tab">
+                        <h3 class="register-heading">Ajouter une demande</h3>
+
+                        <form action="{{ asset('addDemande') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row register-form">
+                            
+                                @if (session('success'))
+                    @endif
+                               
+                                
+                           
+                                @if (session('error'))
+                                    {{ session('error') }}
+                                @endif
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="first_name" placeholder="Prénom *"
+                                            value="{{ old('first_name') }}" required />
+                                        @error('first_name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="last_name" placeholder="Nom *"
+                                            value="{{ old('last_name') }}" required />
+                                        @error('last_name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="cin" placeholder="Cin *"
+                                            value="{{ old('cin') }}" required />
+                                        @error('cin')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" placeholder="Email *"
+                                            value="{{ old('email') }}" required />
+                                        @error('email')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="adresse" placeholder="Adresse "
+                                            value="{{ old('adresse') }}" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control" name="type" value="{{ old('type') }}">
+                                            <option class="hidden" selected disabled>Sélectionner Type de
+                                                branchement</option>
+                                            <option value="" selected>Sélectionner</option>
+                                            <option value="Sonede">Sonede</option>
+                                            <option value="Steg ">Steg </option>
+                                       
+                                        </select>
+                                        @error('type')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="description"
+                                            placeholder="Description de branchement *" value="{{ old('description') }}"
+                                            required />
+                                        @error('description')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <button class="btnRegister" type="submit">Ajouter</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                {{-- </div>
+                    <div class="tab-pane fade   @if ($res != null) show active @endif  " id="profile"
+                        role="tabpanel" aria-labelledby="profile-tab"> --}}
+                        <h3 class="register-heading">Suivre Demande</h3>
+                        <div class="row register-form">
+                           
+{{--                             
+                            <div class="col-md-5">
+                                <form action="{{ asset('checkReclam') }}" method="GET">
+                                    @csrf
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="numRec"
+                                        placeholder="Numéro Réclamation *" value="{{ old('numRec') }}" required />
+                                    @error('numRec')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="cin" placeholder="Numéro CIN *"
+                                        value="{{ old('cin') }}" required />
+                                    @error('cin')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+
+                                <button class="btnRegister" type="submit">Suivre</button>
+                            </form>
+                            </div> --}}
+                            <div class="col-md-12">
+
+                            
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr class="">
+                                            <th>N° demande </th>
+                                            <th> Type </th>
+                                            <th> Date de publication</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($res as $r)
+                                        <tr>
+                                            <td>{{ $r->num_branch }}</td>
+                                            <td>{{ $r->type }}</td>
+                                            <td>
+                                                {{ $r->created_at }}
+                                            </td>
+                                            <td>
+                                                @switch($r->status)
+                                                    @case('0')
+                                                        <span class="badge badge-danger">New</span>
+                                                    @break
+
+                                                    @case('1')
+                                                        <span class="badge badge-warning text-white">In progress</span>
+                                                    @break
+
+                                                    @case('2')
+                                                        <span class="badge badge-success text-white">Accepted</span>
+                                                    @break
+                                                    @case('3')
+                                                    <span class="badge badge-danger text-white">Rejected</span>
+                                                @break
+                                                @endswitch
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            
+
+                                    </div>
+                            
+                            
+                        </div>
+                        
+                    </div>
+                      
+                    </div>
+                 
+                </div>
+            </div>
+        
+
+    </div>
+{{-- <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
     <div class="wrapper wrapper--w790">
         <div class="card card-5">
             <div class="card-heading">
@@ -151,12 +455,11 @@
                     </div>
                 </form>
 
-                {{-- <img class="card-img-top" src="{{asset('storage')}}/{{$reclamation->photo}}" alt="Post image" /> --}}
 
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
     <div class="wrapper wrapper--w790">
@@ -206,4 +509,5 @@
 </table>
     </div></div>
     </div></div>
+    --}}
 @endsection

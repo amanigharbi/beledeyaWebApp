@@ -6,6 +6,7 @@ use App\reclamation;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\String_;
 use PDF;
+use Illuminate\Support\Facades\Cookie;
 
 class ReclamationController extends Controller
 {
@@ -45,7 +46,7 @@ class ReclamationController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-
+        try {
             //Check if there's a photo
             if (isset($request['photo'])) {
                 $result['photo'] = $request['photo']->store('uploads', 'public');
@@ -76,6 +77,7 @@ class ReclamationController extends Controller
             $result['num_rec'] = $num_rec;
 
             reclamation::create($result);    
+            
             $data = [
                 'logo'=> 'assets/images/logo.png',
                 'adr' => $result['adresse'],
@@ -83,23 +85,27 @@ class ReclamationController extends Controller
                 'prenom'=> $result['first_name'] ,
                 'email'=>$result['email'],
                 'date' => date('m/d/Y'),
-                'numRec' => $result['num_rec'] ,
+                'num' => $result['num_rec'] ,
                 'type' => $result['type'],
                 'cin' => $result['cin'],
                 'des' => $result['sujet'],
+                'h3_title' =>'Numéro réclamation: '.$result['num_rec'],
+                'p1' =>'Nous avons bien reçu votre réclamation de type '.$result['type'].' et de description'.$result['sujet'].
+                '. Nous essayons de corriger le problème dés que possible.',
+                'type_doc' => 'réclamation de : '.$result['type'],
+                'exist_doc' =>false,
                 
 
                 
             ];
               
             $pdf = PDF::loadView('myPDF', $data);
-        
-             
-            // return back()->with('success', 'Réclamation ajoutée!');
-            return $pdf->download('reclamation.pdf');
+
+            // return back()->with('success', 'Reclamation ajoutee et votre decharge a ete telecharg!');
+            return $pdf->download($result['last_name'].$result['first_name'].'Rec.pdf');
             //  return back()->withInput([('success'+'Réclamation ajoutée'), $pdf]);
           
-        try {
+        
             
         } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
@@ -122,8 +128,7 @@ class ReclamationController extends Controller
         }
         return view('admin.reclamationPreview', compact('reclamation'));
     }
-
-    public function check(Request $request)
+        public function check(Request $request)
     {
         $data = $request->validate($this->checkValid());
             $rec = Reclamation::where([['num_rec', $data['numRec']], ['cin', $data['cin']]])->first();

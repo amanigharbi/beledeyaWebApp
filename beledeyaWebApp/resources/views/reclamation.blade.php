@@ -23,7 +23,7 @@
         background: #f8f9fa;
         font-weight: bold;
         color: #383d41;
-        margin-top: 30%;
+        margin-top: 50%;
         margin-bottom: 3%;
         cursor: pointer;
     }
@@ -35,7 +35,7 @@
     }
 
     .register-left img {
-        margin-top: 55%;
+        margin-top: 70%;
         margin-bottom: 5%;
         width: 25%;
         -webkit-animation: mover 2s infinite alternate;
@@ -163,11 +163,10 @@
         </div>
     </div>
 
-
     <div class="container register">
         <div class="row">
             <div class="col-md-3 register-left">
-                <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+                <img src="https://i.ibb.co/TPCPq8s/rec.png" alt="rec" />
                 <h3>Bienvenue Dans l'espace Réclamation</h3>
 
             </div>
@@ -187,17 +186,22 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade @if ($rec == null) show active @endif" id="home"
                         role="tabpanel" aria-labelledby="home-tab">
+              
                         <h3 class="register-heading">Ajouter une réclamation</h3>
-
+                        @if (session('success'))
+                        <div class="alert alert-success w-50 m-auto text-center">
+                            {{ session('success') }}
+                        </div>      
+                    @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger w-50 m-auto text-center">
+                        {{ session('error') }}
+                    </div>      
+                @endif
                         <form action="{{ asset('addReclamation') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row register-form">
-                                @if (session('success'))
-                                    {{ session('success') }}
-                                @endif
-                                @if (session('error'))
-                                    {{ session('error') }}
-                                @endif
+                            
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="first_name" placeholder="Prénom *"
@@ -275,12 +279,7 @@
                     <div class="tab-pane fade  @if ($rec != null) show active @endif" id="profile"
                         role="tabpanel" aria-labelledby="profile-tab">
                         <h3 class="register-heading">Suivre Réclamation</h3>
-                        @if (session('success'))
-                        {{ session('success') }}
-                    @endif
-                    @if (session('error'))
-                        {{ session('error') }}
-                    @endif
+                   
                         <div class="row register-form">
                            
                             

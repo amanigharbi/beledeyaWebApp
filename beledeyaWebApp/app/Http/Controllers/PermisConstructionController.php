@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PermisConstruction;
 use Illuminate\Http\Request;
-
+use PDF;
 class PermisConstructionController extends Controller
 {
     /**
@@ -14,9 +14,14 @@ class PermisConstructionController extends Controller
      */
     public function index()
     {
-        return view('PermisConstruction');
+        $permis = PermisConstruction::all();
+        return view('admin.PermisConstruction', compact('permis'));
     }
-
+    public function autorisationBatir()
+    {
+        $autorisation=null;
+        return view('PermisConstruction',compact('autorisation'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -35,18 +40,78 @@ class PermisConstructionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $result = $request->validate($this->validationRules());
+               
+try{
+            //Check if request has email
+            if (isset($request['email'])) {
+                $result['email'] = $request['email'];
+            }
 
+          
+            $digits_needed = 8;
+
+            $num_autor = ''; // set up a blank string
+
+            $count = 0;
+
+            while ($count < $digits_needed) {
+                $random_digit = mt_rand(0, 9);
+
+                $num_autor .= $random_digit;
+                $count++;
+            }
+
+            $result['num_autor'] = $num_autor;
+
+            PermisConstruction::create($result);    
+            
+            $data = [
+                'logo'=> 'assets/images/logo.png',
+                'adr' => $result['adresse'],
+                'nom'=> $result['last_name'] ,
+                'prenom'=> $result['first_name'] ,
+                'email'=>$result['email'],
+                'date' => date('m/d/Y'),
+                'num' => $result['num_autor'] ,
+                'type' => '',
+                'cin' => $result['cin'],
+                'des' => '',
+                'h3_title' =>'Numéro de demande d`autoriation de batir: '.$result['num_autor'],
+                'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir Nous essayons de vous répondre dés que possible.',
+                'type_doc' => ' de demande d`autoriation de batir ',
+                'exist_doc' =>true,
+                
+
+                
+            ];
+              
+            $pdf = PDF::loadView('myPDF', $data);
+
+            // return back()->with('success', 'Reclamation ajoutee et votre decharge a ete telecharg!');
+            return $pdf->download($result['last_name'].$result['first_name'].'Batir.pdf');
+            //  return back()->withInput([('success'+'Réclamation ajoutée'), $pdf]);
+             } catch (\Throwable $th) {
+            return back()->with('error', 'Vérifier!');
+        }
+        }
+    
     /**
      * Display the specified resource.
      *
      * @param  \App\PermisConstruction  $permisConstruction
      * @return \Illuminate\Http\Response
      */
-    public function show(PermisConstruction $permisConstruction)
+    public function show(PermisConstruction $permisConstruction,$id)
     {
-        //
+        $permisConstruction = PermisConstruction::find($id);
+        if ($permisConstruction->status == "0") {
+            //Mark as seen
+            $permisConstruction->status = "1";
+            $permisConstruction->save();
+            $permisConstruction->status = "0";
+        }
+        return view('admin.PermisConstructionPreview', compact('permisConstruction'));
     }
 
     /**
@@ -55,9 +120,17 @@ class PermisConstructionController extends Controller
      * @param  \App\PermisConstruction  $permisConstruction
      * @return \Illuminate\Http\Response
      */
-    public function edit(PermisConstruction $permisConstruction)
+    public function edit(PermisConstruction $permisConstruction,$id)
     {
-        //
+        try { 
+            $permisConstruction = PermisConstruction::find($id);
+            $permisConstruction->status = "3";
+            $permisConstruction->save();
+                return back()->with('success', 'Marked as rejected');
+          
+               } catch (\Throwable $th) {
+                return back()->with('error', 'Opss! something went wrong');
+            }
     }
 
     /**
@@ -67,9 +140,19 @@ class PermisConstructionController extends Controller
      * @param  \App\PermisConstruction  $permisConstruction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PermisConstruction $permisConstruction)
-    {
-        //
+    public function update(Request $request, PermisConstruction $permisConstruction,$id)
+    {  
+        try {  
+            
+            $permisConstruction = PermisConstruction::find($id);
+            $permisConstruction->status = "2";
+            $permisConstruction->save();
+
+           
+            return back()->with('success', 'Marked as accepted');
+             } catch (\Throwable $th) {
+            return back()->with('error', 'Opss! something went wrong');
+        }
     }
 
     /**
@@ -81,5 +164,37 @@ class PermisConstructionController extends Controller
     public function destroy(PermisConstruction $permisConstruction)
     {
         //
+    }
+    public function check(Request $request)
+    {
+        $data = $request->validate($this->checkValid());
+            $autorisation = PermisConstruction::where([['num_autor', $data['num_autor']], ['cin', $data['cin']]])->first();
+            if(!$autorisation){
+                
+                return back()->with('error', 'Demande de batir not found');
+            }
+            return view('PermisConstruction',compact('autorisation'));
+            try {
+            } catch (\Throwable $th) {
+            return back()->with('error', 'something went wrong');
+        }
+    }
+    private function validationRules()
+    {
+        return [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'cin' => 'required|numeric:8',
+            'adresse' => 'required|string',
+            'prop' => 'required',
+            'surface' => 'required|string',
+        ];
+    }
+    private function checkValid()
+    {
+        return [
+            'cin' => 'required|numeric:8',
+            'num_autor' => 'required|numeric:8',
+        ];
     }
 }
