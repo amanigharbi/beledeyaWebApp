@@ -60,7 +60,7 @@
     <h4 style="display:grid;float:right">Commune de Menzel Abderrahmane</h4>
 <br><br><br>
 @if ( $exist_doc == true)
-<p style="color: red"> Merci d'apporter <b> ce document à la municipalité </b> accompagné <b>des doncuments suivantss </b> pour terminer les procédures </p>
+<p style="color: red"> Merci d'apporter <b> ce document à la municipalité </b> accompagné <b>des documents suivants </b> pour terminer les procédures </p>
 <ul>
     <li type="square"> test test </li>
     <li type="square"> test test </li>
@@ -69,7 +69,7 @@
      <footer style="margin-top:15%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
 
 @else
-<footer style="margin-top:40%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+<footer style="margin-top:35%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
   
 @endif
 

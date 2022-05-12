@@ -47,7 +47,7 @@
                                                         <span class="badge badge-success text-white">Accepted</span>
                                                     @break
                                                     @case('3')
-                                                    <span class="badge badge-success text-white">Rejected</span>
+                                                    <span class="badge badge-danger text-white">Rejected</span>
                                                 @break
                                                 @endswitch
                                             <td>

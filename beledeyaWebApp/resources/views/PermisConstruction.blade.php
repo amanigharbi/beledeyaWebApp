@@ -275,7 +275,7 @@
                             <form action="{{ asset('checkAutorisation') }}" method="GET">
                                 @csrf
                             <div class="form-group">
-                                <input type="text" class="form-control" name="numRec"
+                                <input type="text" class="form-control" name="num_autor"
                                     placeholder="Numéro Demande d'autorisation *" value="{{ old('num_autor') }}" required />
                                 @error('num_autor')
                                     {{ $message }}
