@@ -822,14 +822,16 @@ function onSendButton(chatbox) {
            
             if (textField !== "") {
                 num_rec="";
-                   if (language == "arabe") {
-                    var NumRecArray = textField.split(' ');
-                    for (let i = 0; i < NumRecArray.length; i++) {
-                        num_rec = num_rec + getNumLet(NumRecArray[i]);
-                    }
-                } else {
+        
+               // if (language == "arabe") {
+                    var NumArray = textField.split(' ');
+                    for (let i = 0; i < NumArray.length; i++) {
+                        num_rec = num_rec + getNumLet(NumArray[i]);
+                  //  }
+              //  } else {
                     num_rec = textField.replaceAll(' ', '');
-                }
+         }
+
                
              
                 console.log("je suis la");
