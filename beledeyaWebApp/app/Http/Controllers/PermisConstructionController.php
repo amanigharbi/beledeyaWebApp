@@ -89,14 +89,14 @@ try{
                 'des' => '',
                 'h3_title' =>'Numéro de demande d`autoriation de batir: '.$permisConstruction['num_autor'],
                 'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir Nous essayons de vous répondre dés que possible.',
-                'type_doc' => ' de demande d`autoriation de batir ',
+                'type_doc' => ' demande d`autoriation de batir ',
                 'exist_doc' =>true,
                 
 
                 
             ];
               
-            $pdf = PDF::loadView('myPDF', $data);
+            // $pdf = PDF::loadView('myPDF', $data);
                 session(['permisConsId' => null]);
                 $pdf = PDF::loadView('myPDF', $data);
                 return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Rec.pdf');

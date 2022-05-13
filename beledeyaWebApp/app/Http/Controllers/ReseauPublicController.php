@@ -76,7 +76,7 @@ try{
          
 
             $reseauPublic=   ReseauPublic::create($result);
-            session(['recId' => $reseauPublic->id]);
+            session(['resId' => $reseauPublic->id]);
             return back()->with('success', 'demande de branchement aux réseaux publics ajoutée! télécharger votre décharge');
                
                   } catch (\Throwable $th) {

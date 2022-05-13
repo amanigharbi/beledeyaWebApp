@@ -166,7 +166,7 @@ button: "download pdf",
 dangerMode: true,
 
 }).then((value) => {
-open("{{asset('downPdf')}}/{{session('resId')}}");
+open("{{asset('downPdfRes')}}/{{session('resId')}}");
 });
 </script>
 @endif 
@@ -530,3 +530,4 @@ dangerMode: true,
     </div></div>
     --}}
 @endsection
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

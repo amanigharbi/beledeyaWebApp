@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE html charset=UTF-8>
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" charset="UTF-8">
     <title>Reclamation</title>
     <link rel="icon" href="{{ $logo }}" type="image/x-icon">
 
