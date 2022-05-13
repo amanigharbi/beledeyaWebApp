@@ -1,17 +1,39 @@
+
 @extends('layouts.admin')
 
 @section('content')
     @if (session('success'))
-        <br>
-        <div class="alert alert-success w-50 m-auto text-center">
-            {{ session('success') }}
+        
+        
+        <div classs="container p-2">
+            <div class="row no-gutters">
+                <div class="col-lg-3 col-md-12 ml-auto">
+                    <div class="alert alert-success fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="True">&times;</span>
+                          </button>
+                         <h4 class="alert-heading">Well done!</h4>
+                          <p>   {{ session('success') }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
     @if (session('error'))
-        <br>
-        <div class="alert alert-danger w-50 m-auto text-center">
-            {{ session('error') }}
+    <div classs="container p-2">
+        <div class="row no-gutters">
+            <div class="col-lg-3 col-md-12 ml-auto">
+                <div class="alert alert-danger fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="True">&times;</span>
+                      </button>
+                     <h4 class="alert-heading">OPS!</h4>
+                      <p>   {{ session('error') }}</p>
+                </div>
+            </div>
         </div>
+    </div>
+        
     @endif
     <div class="page-breadcrumb">
         <div class="row">
@@ -22,7 +44,7 @@
                     @break
 
                     @case('1')
-                        <span class="badge badge-warning text-white">Seen</span>
+                        <span class="badge badge-warning text-white">In progress</span>
                     @break
 
                     @case('2')

@@ -38,7 +38,7 @@
                                                     @break
 
                                                     @case('1')
-                                                        <span class="badge badge-warning text-white">Seen</span>
+                                                        <span class="badge badge-warning text-white">In progress</span>
                                                     @break
 
                                                     @case('2')
