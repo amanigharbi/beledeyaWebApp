@@ -115,8 +115,8 @@
         margin-bottom: -15%;
         color: #495057;
     }
+   </style>
 
-</style>
 @extends('layouts.main')
 
 @section('content')
@@ -363,5 +363,6 @@ dangerMode: true,
     
 
 </div>
+
 @endsection
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

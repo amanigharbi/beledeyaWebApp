@@ -2,6 +2,12 @@
 <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet'>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     .register {
         background: -webkit-linear-gradient(left, #c15b5b, #ea9797);
@@ -15,7 +21,7 @@
         margin-top: 4%;
     }
 
-    .register-left input {
+    .register-left button {
         border: none;
         border-radius: 1.5rem;
         padding: 2%;
@@ -23,8 +29,8 @@
         background: #f8f9fa;
         font-weight: bold;
         color: #383d41;
-        margin-top: 50%;
-        margin-bottom: 3%;
+        margin-top: 5%;
+        margin-bottom: 45%;
         cursor: pointer;
     }
 
@@ -117,7 +123,62 @@
         color: #495057;
     }
 
+    .table-wrapper {
+        background: #fff;
+        padding: 20px 25px;
+        margin: 30px 0;
+  border-radius:1px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.247);
+    }
+ .table-title {        
+  padding-bottom: 15px;
+     background: linear-gradient(40deg, #b41232, #ff056d) !important;
+  color: #fff;
+  padding: 16px 30px;
+  margin: -20px -25px 10px;
+  border-radius: 1px 1px 0 0;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.247);
+    }
+    .table-title h2 {
+  margin: 5px 0 0;
+  font-size: 24px;
+ }
+
+ 
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+  padding: 12px 15px;
+  vertical-align: middle;
+  
+    }
+ table.table tr th:first-child {
+  width: 60px;
+ }
+ table.table tr th:last-child {
+  width: 100px;
+ }
+    table.table-striped tbody tr:nth-of-type(odd) {
+     background-color: #fcfcfc;
+ }
+ table.table-striped.table-hover tbody tr:hover {
+  background: #f5f5f5;
+ }
+   
+ .modal .modal-footer {
+  background: #ecf0f1;
+  border-radius: 0 0 1px 1px;
+ }
+    .modal .modal-title {
+        display: inline-block;
+    }
+ .modal .form-control {
+  border-radius: 1px;
+  box-shadow: none;
+  border-color: #dddddd;
+ }
+ 
 </style>
+
 @extends('layouts.main')
 
 @section('content')
@@ -182,26 +243,19 @@ dangerMode: true,
   }); 
 </script>
   @endif
+  
  <div class="container register">
         <div class="row">
             <div class="col-md-3 register-left">
     <img src="https://i.ibb.co/8MsG6qZ/icon.webp" alt="eau"  />
                 <h3>Bienvenue Dans l'espace de branchement aux réseaux publics</h3>
-
+                <button type="button"  data-toggle="modal" data-target="#myModal">
+                    Suivre les demandes
+                </button>
             </div>
             <div class="col-md-9 register-right">
 
-                {{-- <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link @if ($res == null) active @endif" id="home-tab" data-toggle="tab"
-                            href="#home" role="tab" aria-controls="home" aria-selected="true">Ajouter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if ($res != null) active @endif" id="profile-tab"
-                            data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                            aria-selected="true">Suivre</a>
-                    </li>
-                </ul> --}}
+       
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade  show active  " id="home"
                         role="tabpanel" aria-labelledby="home-tab">
@@ -253,7 +307,6 @@ dangerMode: true,
                                         <select class="form-control" name="type" value="{{ old('type') }}">
                                             <option class="hidden" selected disabled>Sélectionner Type de
                                                 branchement</option>
-                                            <option value="" selected>Sélectionner</option>
                                             <option value="Sonede">Sonede</option>
                                             <option value="Steg ">Steg </option>
                                        
@@ -276,258 +329,81 @@ dangerMode: true,
                             </div>
                         </form>
                     </div>
-                {{-- </div>
-                    <div class="tab-pane fade   @if ($res != null) show active @endif  " id="profile"
-                        role="tabpanel" aria-labelledby="profile-tab"> --}}
-                        <h3 class="register-heading">Suivre Demande</h3>
-                        <div class="row register-form">
-                           
-{{--                             
-                            <div class="col-md-5">
-                                <form action="{{ asset('checkReclam') }}" method="GET">
-                                    @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="numRec"
-                                        placeholder="Numéro Réclamation *" value="{{ old('numRec') }}" required />
-                                    @error('numRec')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="cin" placeholder="Numéro CIN *"
-                                        value="{{ old('cin') }}" required />
-                                    @error('cin')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-
-                                <button class="btnRegister" type="submit">Suivre</button>
-                            </form>
-                            </div> --}}
-                            <div class="col-md-12">
-
-                            
-                                <table class="table">
-                                    <thead class="thead-light">
-                                        <tr class="">
-                                            <th>N° demande </th>
-                                            <th> Type </th>
-                                            <th> Date de publication</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($res as $r)
-                                        <tr>
-                                            <td>{{ $r->num_branch }}</td>
-                                            <td>{{ $r->type }}</td>
-                                            <td>
-                                                {{ $r->created_at }}
-                                            </td>
-                                            <td>
-                                                @switch($r->status)
-                                                    @case('0')
-                                                        <span class="badge badge-danger">New</span>
-                                                    @break
-
-                                                    @case('1')
-                                                        <span class="badge badge-warning text-white">In progress</span>
-                                                    @break
-
-                                                    @case('2')
-                                                        <span class="badge badge-success text-white">Accepted</span>
-                                                    @break
-                                                    @case('3')
-                                                    <span class="badge badge-danger text-white">Rejected</span>
-                                                @break
-                                                @endswitch
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            
-
-                                    </div>
-                            
-                            
-                        </div>
-                        
+           
+                
                     </div>
                       
                     </div>
                  
                 </div>
-            </div>
+            </div> 
         
 
     </div>
-{{-- <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-    <div class="wrapper wrapper--w790">
-        <div class="card card-5">
-            <div class="card-heading">
-                <h2 class="title">Demande aux branchement au réseaux publics</h2>
-            </div>
-            <div class="card-body">
-                <center>   
-                    @if (session('success'))
-                    {{ session('success') }}
-                @endif
-                @if (session('error'))
-                    {{ session('error') }}
-                @endif
-            </center>
-                <form action="{{ asset('addDemande') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-row m-b-55">
-                        <div class="name">Nom & Prénom *
-                        </div>
-                        <div class="value">
-                            <div class="row row-space">
-                                <div class="col-6">
-                                    <div class="input-group-desc">
-                                        @error('first_name')
-                                        {{ $message }}
-                                    @enderror
-                                        <input class="input--style-5" type="text" value="{{ old('first_name') }}" name="first_name" required>
-                                        <label class="label--desc">Nom</label>
-                               
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group-desc">
-                                        @error('last_name')
-                                        {{ $message }}
-                                    @enderror
-                                        <input class="input--style-5" type="text" value="{{ old('last_name') }}" name="last_name" required>
-                                        <label class="label--desc">Prénom</label>
-                                  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="name">Numéro cin *</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <input class="input--style-5" type="text" name="cin" value="{{ old('cin') }}" required>
-                                @error('cin')
-                                {{ $message }}
-                            @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="name">Email *</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <input class="input--style-5" type="email" name="email" value="{{ old('email') }}" required>
+</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="name">Adresse *</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <input class="input--style-5" type="adresse" name="adresse" value="{{ old('adresse') }}" required>
-                                @error('adresse')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="name">Type branchement *</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <div class="rs-select2 js-select-simple select--no-search">
-                                    <select class="form-control" name="type" value="{{ old('type') }}">
-                                        <option value="" selected>Sélectionner</option>
-                                        <option value="Eau">Eau</option>
-                                        <option value="Energie">Enérgie</option>
-                                        
-                                        <option value="Autres branchement">Autres branchement</option>
-                                    </select>
-                                    @error('type')
-                                    {{ $message }}
-                                @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="name">Description </div>
-                        <div class="value">
-                            <div class="input-group">
-                                <input class="input--style-5" type="description" name="description" value="{{ old('description') }}" >
-                            
-                            </div>
-                        </div>
-                    </div>
+    <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
   
-                     
-                    </div>
-                    <div>
-                        <button class="btn btn--radius-2 btn--red" type="submit">Envoyer</button>
-                    </div>
-                </form>
-
-
-            </div>
+        <!-- Modal Header -->
+        <div class="modal-header table-title">
+            <h2>Suivre <b>les demandes</b></h2>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-    </div>
-</div> 
-
-<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
-    <div class="wrapper wrapper--w790">
-<div class="card card-5">
-    <div class="card-heading">
-        <h2 class="title">Suivi de demande</h2>
-    </div>
-    <div class="card-body">
-<table class="table">
-    <thead>
-        <tr class="bg-danger">
-            <th>N° demande </th>
+  
+        <!-- Modal body -->
+        <div class="modal-body" style="width: auto">
+            <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+            <th>Numéro demande </th>
             <th> Type </th>
-        <th> Date de publication</th>
-        <th>Status</th>
+            <th> Date de publication</th>
+            <th>Status</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         @foreach ($res as $r)
         <tr>
-            <td>{{ $r->id }}</td>
+            <td>{{ $r->num_branch }}</td>
             <td>{{ $r->type }}</td>
             <td>
                 {{ $r->created_at }}
             </td>
             <td>
                 @switch($r->status)
-                @case('0')
-                    <span class="badge badge-danger">New</span>
-                @break
-
-                @case('1')
-                    <span class="badge badge-warning text-white">In progress</span>
-                @break
-
-                @case('2')
-                    <span class="badge badge-success text-white">finished</span>
-                @break
-                @case('3')
-                        <span class="badge badge-warning text-white">Rejected</span>
+                    @case('0')
+                        <span class="badge badge-danger">New</span>
                     @break
-            @endswitch
+
+                    @case('1')
+                        <span class="badge badge-warning text-white">In progress</span>
+                    @break
+
+                    @case('2')
+                        <span class="badge badge-success text-white">Accepted</span>
+                    @break
+                    @case('3')
+                    <span class="badge badge-danger text-white">Rejected</span>
+                @break
+                @endswitch
             </td>
         </tr>
-    @endforeach
-    </tbody>
-</table>
-    </div></div>
-    </div></div>
-    --}}
+        @endforeach
+      </tbody>
+    </table>
+    </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  </div>
 @endsection
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -255,7 +255,7 @@
                                             <select class="form-control" name="type" value="{{ old('type') }}">
                                                 <option class="hidden" selected disabled>Sélectionner Type de
                                                     Réclamation</option>
-                                                <option value="" selected>Sélectionner</option>
+                                                
                                                 <option value="Administration">Administration</option>
                                                 <option value="Construction Anarchique">Construction Anarchique</option>
                                                 <option value="Energie">Enérgie</option>
