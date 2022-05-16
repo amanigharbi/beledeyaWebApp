@@ -89,6 +89,7 @@ class ReclamationController extends Controller
     public function down($id){
         $reclamation=reclamation::findOrFail($id);
          $data = [
+            'title' => 'Réclamation',
                 'logo'=> 'assets/images/logo.png',
                 'adr' => $reclamation['adresse'],
                 'nom'=> $reclamation['last_name'] ,

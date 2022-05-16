@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" charset="UTF-8">
-    <title>Reclamation</title>
+    <title>{{$title}}</title>
     <link rel="icon" href="{{ $logo }}" type="image/x-icon">
 
     <style>
@@ -21,11 +21,7 @@
 </head>
 
 <body>
-    {{-- <div class="row justify-content-start">
-        <div class="col-lg-3">
-            <img src="{{ $logo }}" alt="Menzel Abdelrahmane" style="width: 10%; height: 10%"/>
-        </div>
-    </div> --}}
+
 
     <img src="{{ $logo }}" alt="Menzel Abdelrahmane" style="width: 10%; height: 10%" />
     <div style="display:grid;">

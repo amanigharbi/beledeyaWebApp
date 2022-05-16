@@ -86,6 +86,7 @@ try{
     public function down($id){
         $reseauPublic=ReseauPublic::findOrFail($id);
         $data = [
+            'title' => 'Demande du branchement réseaux public',
             'logo'=> 'assets/images/logo.png',
             'adr' => $reseauPublic['adresse'],
             'nom'=> $reseauPublic['last_name'] ,

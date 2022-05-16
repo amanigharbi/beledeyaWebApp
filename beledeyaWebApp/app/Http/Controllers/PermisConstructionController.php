@@ -77,6 +77,7 @@ try{
         public function down($id){
             $permisConstruction=PermisConstruction::findOrFail($id);
             $data = [
+                'title' => 'Autorisation de batir',
                 'logo'=> 'assets/images/logo.png',
                 'adr' => $permisConstruction['adresse'],
                 'nom'=> $permisConstruction['last_name'] ,
@@ -88,7 +89,7 @@ try{
                 'cin' => $permisConstruction['cin'],
                 'des' => '',
                 'h3_title' =>'Numéro de demande d`autoriation de batir: '.$permisConstruction['num_autor'],
-                'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir Nous essayons de vous répondre dés que possible.',
+                'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir de surface '.$permisConstruction['surface'].' Nous essayons de vous répondre dés que possible.',
                 'type_doc' => ' demande d`autoriation de batir ',
                 'exist_doc' =>true,
                 
@@ -99,7 +100,7 @@ try{
             // $pdf = PDF::loadView('myPDF', $data);
                 session(['permisConsId' => null]);
                 $pdf = PDF::loadView('myPDF', $data);
-                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Rec.pdf');
+                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
     
         }
     
