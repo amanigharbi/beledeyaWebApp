@@ -10,7 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet">
-
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>commune menzel abderrahmen</title>
     <link rel="icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
 
@@ -24,235 +26,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 
-    <style>
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            font-size: 75%;
-            font-weight: 400;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 2px;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .badge {
-                transition: none;
-            }
-        }
-
-        a.badge:hover,
-        a.badge:focus {
-            text-decoration: none;
-        }
-
-        .badge:empty {
-            display: none;
-        }
-
-        .btn .badge {
-            position: relative;
-            top: -1px;
-        }
-
-        .badge-pill {
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-            border-radius: 10rem;
-        }
-
-        .badge-primary {
-            color: #fff;
-            background-color: #5f76e8;
-        }
-
-        a.badge-primary:hover,
-        a.badge-primary:focus {
-            color: #fff;
-            background-color: #3250e2;
-        }
-
-        a.badge-primary:focus,
-        a.badge-primary.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(95, 118, 232, 0.5);
-        }
-
-        .badge-secondary {
-            color: #fff;
-            background-color: #6c757d;
-        }
-
-        a.badge-secondary:hover,
-        a.badge-secondary:focus {
-            color: #fff;
-            background-color: #545b62;
-        }
-
-        a.badge-secondary:focus,
-        a.badge-secondary.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
-        }
-
-        .badge-success {
-            color: #fff;
-            background-color: #22ca80;
-        }
-
-        a.badge-success:hover,
-        a.badge-success:focus {
-            color: #fff;
-            background-color: #1b9e64;
-        }
-
-        a.badge-success:focus,
-        a.badge-success.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(34, 202, 128, 0.5);
-        }
-
-        .badge-info {
-            color: #fff;
-            background-color: #5f76e8;
-        }
-
-        a.badge-info:hover,
-        a.badge-info:focus {
-            color: #fff;
-            background-color: #3250e2;
-        }
-
-        a.badge-info:focus,
-        a.badge-info.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(95, 118, 232, 0.5);
-        }
-
-        .badge-warning {
-            color: #212529;
-            background-color: #fdc16a;
-        }
-
-        a.badge-warning:hover,
-        a.badge-warning:focus {
-            color: #212529;
-            background-color: #fcac38;
-        }
-
-        a.badge-warning:focus,
-        a.badge-warning.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(253, 193, 106, 0.5);
-        }
-
-        .badge-danger {
-            color: #fff;
-            background-color: #ff4f70;
-        }
-
-        a.badge-danger:hover,
-        a.badge-danger:focus {
-            color: #fff;
-            background-color: #ff1c47;
-        }
-
-        a.badge-danger:focus,
-        a.badge-danger.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(255, 79, 112, 0.5);
-        }
-
-        .badge-light {
-            color: #212529;
-            background-color: #e8eaec;
-        }
-
-        a.badge-light:hover,
-        a.badge-light:focus {
-            color: #212529;
-            background-color: #ccd1d5;
-        }
-
-        a.badge-light:focus,
-        a.badge-light.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(232, 234, 236, 0.5);
-        }
-
-        .badge-dark {
-            color: #fff;
-            background-color: #1c2d41;
-        }
-
-        a.badge-dark:hover,
-        a.badge-dark:focus {
-            color: #fff;
-            background-color: #0d141d;
-        }
-
-        a.badge-dark:focus,
-        a.badge-dark.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(28, 45, 65, 0.5);
-        }
-
-        .badge-cyan {
-            color: #fff;
-            background-color: #01caf1;
-        }
-
-        a.badge-cyan:hover,
-        a.badge-cyan:focus {
-            color: #fff;
-            background-color: #019fbe;
-        }
-
-        a.badge-cyan:focus,
-        a.badge-cyan.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(1, 202, 241, 0.5);
-        }
-
-        .badge-orange {
-            color: #212529;
-            background-color: #fb8c00;
-        }
-
-        a.badge-orange:hover,
-        a.badge-orange:focus {
-            color: #212529;
-            background-color: #c87000;
-        }
-
-        a.badge-orange:focus,
-        a.badge-orange.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(251, 140, 0, 0.5);
-        }
-
-        .badge-purple {
-            color: #fff;
-            background-color: #5f76e8;
-        }
-
-        a.badge-purple:hover,
-        a.badge-purple:focus {
-            color: #fff;
-            background-color: #3250e2;
-        }
-
-        a.badge-purple:focus,
-        a.badge-purple.focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(95, 118, 232, 0.5);
-        }
-
-    </style>
 
 </head>
 
@@ -337,7 +112,45 @@
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
-    
+    <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-6 align-self-center text-light">
+                            <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel Abderrahmen</h2>
+                                        <p class="text-light">
+                                            Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située à une soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte. Elle fait partie de l'agglomération de Bizerte
+                                            dont elle n'est séparée que de quelques kilomètres...
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12">
+                                      
+                                        <div class="col-lg-12">
+                                            <div class="white-button first-button scroll-to-section">
+                                                <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
+                                            </div>
+                                            <div class="white-button scroll-to-section">
+                                                <a href="#contact">contact <i class="fab fa-google-play"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <img src="{{ asset('assets/images/slider-dec.png') }}" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @yield('content')
     <div class="container">
         <div class="chatbox">
@@ -443,9 +256,8 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 
