@@ -278,7 +278,7 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{ asset('/') }}" class="logo">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
                         <!-- ***** Logo End ***** -->
