@@ -310,10 +310,7 @@ jsPDF.API.events.push(['addFonts', callAddFont])
   //  doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal');
   doc.addFileToVFS('Cairo-Regular-normal.ttf', font);
 doc.addFont('Cairo-Regular-normal.ttf', 'Cairo-Regular', 'normal');
-    doc.setFont('Cairo-Regular', 'normal');
-    // doc.setTextColor(0, 0, 255)
-    // doc.text(42,60,'مرحبا', {align: 'right'})
-    // console.log("zzzzzzzzz ",doc.getFontList())
+doc.setFont('Cairo-Regular', 'normal');
 doc.text(130,60,'Nom et Prénom : '+NomRec+' '+PrenomRec)
 doc.text(130,65,'Adresse : '+AdrRec)
 doc.text(130,70,'Email :'+EmailRec)

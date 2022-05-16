@@ -1,9 +1,7 @@
-
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
- 
     .register {
         background: -webkit-linear-gradient(left, #c15b5b, #ea9797);
         margin-top: 3%;
@@ -161,36 +159,38 @@
             </div>
         </div>
     </div>
-    @if ((session('success')) && (session('recId')))
-    <script>
-       swal({  title: "Good job!",
-  text: "{{ Session::get('success') }}",
-  icon: "success",
-  button: "download pdf",
-  dangerMode: true,
-  
-}).then((value) => {
-    open("{{asset('downPdf')}}/{{session('recId')}}");
-});
-    </script>
-@endif 
+    @if (session('success') && session('recId'))
+        <script>
+            swal({
+                title: "Good job!",
+                text: "{{ Session::get('success') }}",
+                icon: "success",
+                button: "download pdf",
+                dangerMode: true,
 
-      
-      
-      @if (session('error'))
-      <script>
-        swal({  title: "OPS!",
-   text: "{{ Session::get('error') }}",
-   icon: "warning",
-   dangerMode: true,
-      }); 
-    </script>
-      @endif
+            }).then((value) => {
+                open("{{ asset('downPdf') }}/{{ session('recId') }}");
+            });
+        </script>
+    @endif
+
+
+
+    @if (session('error'))
+        <script>
+            swal({
+                title: "OPS!",
+                text: "{{ Session::get('error') }}",
+                icon: "warning",
+                dangerMode: true,
+            });
+        </script>
+    @endif
     <div class="container register">
         <div class="row">
             <div class="col-md-3 register-left">
                 <img src="https://i.ibb.co/TPCPq8s/rec.png" alt="rec" />
-              
+
                 <h3>Bienvenue Dans l'espace Réclamation</h3>
             </div>
             <div class="col-md-9 register-right">
@@ -209,83 +209,83 @@
                     <div class="tab-pane fade @if ($rec == null) show active @endif" id="home"
                         role="tabpanel" aria-labelledby="home-tab">
                         <h3 class="register-heading">Ajouter une réclamation</h3>
-                     
-                      
-                            <form action="{{ asset('addReclamation') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row register-form">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="first_name"
-                                                placeholder="Prénom *" value="{{ old('first_name') }}" required />
-                                            @error('first_name')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="last_name" placeholder="Nom *"
-                                                value="{{ old('last_name') }}" required />
-                                            @error('last_name')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="cin" placeholder="Cin *"
-                                                value="{{ old('cin') }}" required />
-                                            @error('cin')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" name="email" placeholder="Email *"
-                                                value="{{ old('email') }}" required />
-                                            @error('email')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <button class="btnRegister" type="submit">Ajouter</button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="adresse" placeholder="Adresse "
-                                                value="{{ old('adresse') }}" />
-                                        </div>
 
-                                        <div class="form-group">
-                                            <select class="form-control" name="type" value="{{ old('type') }}">
-                                                <option class="hidden" selected disabled>Sélectionner Type de
-                                                    Réclamation</option>
-                                                
-                                                <option value="Administration">Administration</option>
-                                                <option value="Construction Anarchique">Construction Anarchique</option>
-                                                <option value="Energie">Enérgie</option>
-                                                <option value="Eclairage Public">Eclairage Public</option>
-                                                <option value="Espaces Verts">Espaces Verts</option>
-                                                <option value="Mobilite">Mobilité</option>
-                                                <option value="Occupation illegale">Occupation illégale</option>
-                                                <option value="Proprete">Propreté</option>
-                                                <option value="Sante et Higiene">Santé et Higiène</option>
-                                                <option value="Autres Reclamations">Autres Réclamations</option>
-                                            </select>
-                                            @error('type')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="sujet"
-                                                placeholder="Description de réclamation *" value="{{ old('sujet') }}"
-                                                required />
-                                            @error('sujet')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="file" class="form-control-file" name="photo"
-                                                placeholder="Joindre une photo" value="{{ old('photo') }}" />
-                                        </div>
+
+                        <form action="{{ asset('addReclamation') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row register-form">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="first_name" placeholder="Prénom *"
+                                            value="{{ old('first_name') }}" required />
+                                        @error('first_name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="last_name" placeholder="Nom *"
+                                            value="{{ old('last_name') }}" required />
+                                        @error('last_name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="cin" placeholder="Cin *"
+                                            value="{{ old('cin') }}" required />
+                                        @error('cin')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" placeholder="Email *"
+                                            value="{{ old('email') }}" required />
+                                        @error('email')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <button class="btnRegister" type="submit">Ajouter</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="adresse" placeholder="Adresse "
+                                            value="{{ old('adresse') }}" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select class="form-control" name="type" value="{{ old('type') }}">
+                                            <option class="hidden" selected disabled>Sélectionner Type de
+                                                Réclamation</option>
+
+                                            <option value="Administration">Administration</option>
+                                            <option value="Construction Anarchique">Construction Anarchique</option>
+                                            <option value="Energie">Enérgie</option>
+                                            <option value="Eclairage Public">Eclairage Public</option>
+                                            <option value="Espaces Verts">Espaces Verts</option>
+                                            <option value="Mobilite">Mobilité</option>
+                                            <option value="Occupation illegale">Occupation illégale</option>
+                                            <option value="Proprete">Propreté</option>
+                                            <option value="Sante et Higiene">Santé et Higiène</option>
+                                            <option value="Autres Reclamations">Autres Réclamations</option>
+                                        </select>
+                                        @error('type')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="sujet"
+                                            placeholder="Description de réclamation *" value="{{ old('sujet') }}"
+                                            required />
+                                        @error('sujet')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" name="photo"
+                                            placeholder="Joindre une photo" value="{{ old('photo') }}" />
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane fade @if ($rec != null) show active @endif" id="profile"
                         role="tabpanel" aria-labelledby="profile-tab">
@@ -357,8 +357,6 @@
             </div>
         </div>
     </div>
-
-   
 @endsection
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
