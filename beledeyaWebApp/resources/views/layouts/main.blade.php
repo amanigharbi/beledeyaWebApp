@@ -337,6 +337,7 @@
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
+    
     @yield('content')
     <div class="container">
         <div class="chatbox">

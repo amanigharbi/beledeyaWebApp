@@ -247,7 +247,8 @@ dangerMode: true,
  <div class="container register">
         <div class="row">
             <div class="col-md-3 register-left">
-    <img src="https://i.ibb.co/8MsG6qZ/icon.webp" alt="eau"  />
+                <img src="https://i.ibb.co/bb1YsqB/res-Public-removebg-preview.png" alt="res-Public-removebg-preview" />
+  
                 <h3>Bienvenue Dans l'espace de branchement aux réseaux publics</h3>
                 <button type="button"  data-toggle="modal" data-target="#myModal">
                     Suivre les demandes
