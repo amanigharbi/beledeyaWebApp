@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-   
+
     <style>
         .badge {
             display: inline-block;
@@ -278,19 +278,27 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{ asset('/') }}" class="logo">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="{{ route('welcome') }}#top"
-                                    class="active">Accueil</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('home') }}#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('documents') }}">Documents</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('reclamation') }}">Réclamations</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('taxes') }}">Taxes locatives</a></li>
-                            <li class="scroll-to-section"><a href="{{ route('about') }}">A propos</a></li>
+                                    class="{{ \Request::route()->getName() == 'welcome' ? 'active' : '' }}">Accueil</a>
+                            </li>
+                            <li class="scroll-to-section"><a href="{{ route('home') }}#services"
+                                    class="{{ \Request::is('home*') ? 'active' : '' }}">Services</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('documents') }}"
+                                    class="{{ \Request::is('documents*') ? 'active' : '' }}">Documents</a></li>
+                            <li class="scroll-to-section"><a href="{{ route('reclamation') }}"
+                                    class="{{ \Request::is('reclamation*') ? 'active' : '' }}">Réclamations</a>
+                            </li>
+                            <li class="scroll-to-section"><a href="{{ route('taxes') }}"
+                                    class="{{ \Request::is('taxes*') ? 'active' : '' }}">Taxes locatives</a>
+                            </li>
+                            <li class="scroll-to-section"><a href="{{ route('about') }}"
+                                    class="{{ \Request::is('about*') ? 'active' : '' }}">A propos</a></li>
 
                             @if (!auth::user())
                                 <li>
