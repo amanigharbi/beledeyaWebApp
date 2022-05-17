@@ -28,6 +28,7 @@ var descRec = "";
 var typeRec = "";
 var NumRec = "";
 var NomDoc="";
+
 var v = 0;
 
 args = {
@@ -400,11 +401,35 @@ file=element.file;
 });
 if(nameFile != ""){
     console.log("esm ",nameFile);
+    switch (language) {
+        case "anglais":
+            VoiceBot("your document will be uploaded soon", chatBox);
+            break;
+        case "français":
+            VoiceBot("votre document sera bientot téléchargé", chatBox);
+            break;
+        case "arabe":
+            VoiceBot("سيتم تحميل المستند الخاص بك قريبا", chatBox);
+            break;
+    }
+ 
     delay(4000).then(() => open("http://127.0.0.1:8000/storage/"+file));
+
     
 }
 else{
-console.log("document introuvable ");
+    switch (language) {
+        case "anglais":
+            VoiceBot("document not found try again!!", chatBox);
+            break;
+        case "français":
+            VoiceBot("document introuvale réessayer!!", chatBox);
+                        break;
+        case "arabe":
+            VoiceBot("لم يتم العثور على المستند حاول مرة أخرى", chatBox);
+            break;
+    }
+    
 }
 
          
@@ -498,7 +523,7 @@ function onSendButton(chatbox) {
              
               
         }
-        if((textField.includes("document adminitratif")) || (textField.includes("document")) (textField.includes("وثيقة"))) {
+        if((textField.includes("document")) || (textField.includes("document")) ||(textField.includes("وثيقة"))) {
             switch (language) {
                 case "anglais":
                     VoiceBot("Hello what is the name of the document you want to consult", chatbox);
@@ -970,8 +995,10 @@ case 9:
         if (textField !== "") {
             NomDoc =textField.replaceAll('é','e');
                 console.log("na9ra f ",NomDoc);
-                VoiceBot("votre document sera bientot téléchargé", chatbox);
-            getDocument(NomDoc);
+                 getDocument(NomDoc);
+       
+        
+
         } 
 break;
         }
