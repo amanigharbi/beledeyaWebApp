@@ -27,6 +27,7 @@ var adrRec = "";
 var descRec = "";
 var typeRec = "";
 var NumRec = "";
+var NomDoc="";
 var v = 0;
 
 args = {
@@ -66,8 +67,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
-        
-
+          
             break;
         case "arabe":
             mess2 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
@@ -370,9 +370,53 @@ doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
 
 doc.save(NomRec+PrenomRec+".pdf");
 }
-function getDocument(){
-
+function getDocument(FileName){
+    var list = [];
+    var nameFile="";
+    var file="";
+    var url = "http://127.0.0.1:8080/work/consommation%20api/viewAllDocuments.php";
+    $.ajax({
+        type: 'GET',
+        url: url,
+        mode: 'no-cors',
+        headers: {
+            "Access-Control-Allow-Origin": "127.0.0.1",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "*"
+        },
+        success: function (response, status, xhr) {
+           
+            var jsonData = JSON.parse(response);
+for (var i = 0; i < jsonData.length; i++) {
+    var counter = jsonData[i];
+    list.push(counter);
 }
+list.forEach(element => {
+    if(element.name.includes(FileName)){
+nameFile=element.name;
+file=element.file;
+    }
+  
+});
+if(nameFile != ""){
+    console.log("esm ",nameFile);
+    delay(4000).then(() => open("http://127.0.0.1:8000/storage/"+file));
+    
+}
+else{
+console.log("document introuvable ");
+}
+
+         
+        },
+        error: function (xhr, status, error) {
+            console.log("Something went wrong!");
+        }
+    });
+}
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
 /**
  * 
  * onSendButton(chatbox) nous permet d'envoyer les messages
@@ -403,8 +447,10 @@ function onSendButton(chatbox) {
         let msg1 = { name: "User", message: textField };
         messages.push(msg1);
         updateChatText(chatbox);
-        if ((textField == "réclamation") || (textField == "شكوى")
-            || (textField == "reclamation")) {
+         if ((textField.includes("réclamation")) || (textField.includes("شكوى"))|| (textField.includes("complaint")) || (textField.includes("reclamation")))
+        // if ((textField == "réclamation") || (textField == "شكوى")
+        //     || (textField == "reclamation"))
+             {
             switch (language) {
                 case "anglais":
                     VoiceBot("Hello! please send me your last name", chatbox);
@@ -428,10 +474,10 @@ function onSendButton(chatbox) {
 
 
         }
-        if ((textField == "suivi réclamation")|| (textField == "اتباع")
-        || (textField == "check")) {
-           
-           
+        // if ((textField == "suivi réclamation")|| (textField == "اتباع")
+        // || (textField == "check")) 
+        if ((textField.includes("suivi réclamation")) || (textField.includes("suivi")) || (textField.includes("اتباع"))|| (textField.includes("check complaint")) || (textField.includes("check")))
+           {
                 switch (language) {
                     case "anglais":
                         VoiceBot("Hi send me the claim number you want to track", chatbox);
@@ -452,7 +498,27 @@ function onSendButton(chatbox) {
              
               
         }
-          
+        if((textField.includes("document adminitratif")) || (textField.includes("document")) (textField.includes("وثيقة"))) {
+            switch (language) {
+                case "anglais":
+                    VoiceBot("Hello what is the name of the document you want to consult", chatbox);
+                    textField = "";
+                    v = 9;
+                    break;
+                case "français":
+                    VoiceBot("Salut quel est le nom de document que vous voulez consulter", chatbox);
+            textField = "";
+            v = 9;
+                    break;
+                case "arabe":
+                    VoiceBot("مرحبًا ما هو اسم المستند الذي تريد الرجوع إليه", chatbox);
+                    textField = "";
+                    v = 9;
+                    break;
+            }
+         
+           
+        }
 
         if (textField === "") {
             return;
@@ -899,7 +965,15 @@ function onSendButton(chatbox) {
                 }
             }
             break;
-
+case 9:
+           
+        if (textField !== "") {
+            NomDoc =textField.replaceAll('é','e');
+                console.log("na9ra f ",NomDoc);
+                VoiceBot("votre document sera bientot téléchargé", chatbox);
+            getDocument(NomDoc);
+        } 
+break;
         }
     };
     
