@@ -370,6 +370,9 @@ doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
 
 doc.save(NomRec+PrenomRec+".pdf");
 }
+function getDocument(){
+
+}
 /**
  * 
  * onSendButton(chatbox) nous permet d'envoyer les messages
@@ -449,14 +452,12 @@ function onSendButton(chatbox) {
              
               
         }
-        
-       
+          
 
-        // if (textField === "") {
-        //     return;
-        // }
+        if (textField === "") {
+            return;
+        }
 
-        // else{
         switch (v) {
             case 0:
                 fetch("http://127.0.0.1:5050/predict", {
@@ -901,7 +902,7 @@ function onSendButton(chatbox) {
 
         }
     };
-    // }
+    
 
 }
 /**
