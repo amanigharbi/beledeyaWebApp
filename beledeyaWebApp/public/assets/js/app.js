@@ -880,30 +880,30 @@ function onSendButton(chatbox) {
                         typeRec=getNumLet(textField);
                     switch (typeRec) {
                         case 1:
-                            typeRec = "Administration";
+                            typeRec = "الإدارة";
                             break;
                         case 2:
-                            typeRec = "Construction anarchiques";
+                            typeRec = "البناء الفوضوي";
                             break;
                         case 3:
-                            typeRec = "Eclairage publique";
+                            typeRec = "الإضاءة العامة";
                             break;
                         case 4:
-                            typeRec = "Energie";
+                            typeRec = "الطاقة";
                             break;
                         case 5:
-                            typeRec = "Espaces Verts";
+                            typeRec = "المساحة الخضراء";
                             break;
                         case 6:
-                            typeRec = "Mobilité";
+                            typeRec = "التنقل";
                             break;
                         case 7:
                            
-                            typeRec = "Santé et Higiéne";
+                            typeRec = "الصحة والنظافة";
                             break;
                         case 8:
                            
-                            typeRec = "Autres Réclamations ";
+                            typeRec = "نوع آخر ";
                             break;
                         default:
                             switch (language) {
