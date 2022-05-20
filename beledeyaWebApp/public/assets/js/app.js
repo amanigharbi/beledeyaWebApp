@@ -28,7 +28,7 @@ var descRec = "";
 var typeRec = "";
 var NumRec = "";
 var NomDoc="";
-
+var cin = "";
 var v = 0;
 
 args = {
@@ -193,12 +193,13 @@ function ajoutRecVoiceBot() {
     });
 
 }
-function suiviRecVoiceBot(num_rec,chatbox) {
+function suiviRecVoiceBot(num_rec,cin,chatbox) {
     var url = "http://127.0.0.1:8080/work/consommation%20api/suiviRec.php";
     $.ajax({
         type: 'POST',
         url: url,
-        data: { 'num_rec': num_rec },
+        data: { 'num_rec': num_rec ,
+        'cin': cin  },
         dataType: 'JSON',
         encode: true,
         mode: 'no-cors',
@@ -342,8 +343,8 @@ doc.text(118, 29, 'الفاكس   125 570 72')
 doc.text(70, 35, 'communemenzelabderrahmen@gmail.com')
 doc.text(105, 40, 'نهج المنجي سليم 7035 بنزرت')
 doc.setTextColor(0, 0, 255)
-doc.text(45,65,  ' الاسم و اللقب:'+PrenomRec+' '+NomRec )
-doc.text(68,72,' العنوان: '+AdrRec)
+doc.text(45,65,  ' السيد (ة):'+PrenomRec+' '+NomRec )
+doc.text(68,72,' القاطن(ة) ب: '+AdrRec)
 doc.text(45,79,EmailRec+' :البريد الالكتروني ')
 doc.text(52,87,annee+'/'+mois+'/'+jour+'بنزرت في ')
  doc.setFontSize(19)
@@ -443,7 +444,7 @@ if(nameFile != ""){
                 break;
     }
  
-    delay(4000).then(() => open("http://127.0.0.1:8000/storage/"+file));
+    delay(4000).then(() => open("http://192.168.1.6:8000/storage/"+file));
 
     
 }
@@ -572,22 +573,22 @@ function onSendButton(chatbox) {
                 case "anglais":
                     VoiceBot("Hello what is the name of the document you want to consult", chatbox);
                     textField = "";
-                    v = 9;
+                    v = 10;
                     break;
                 case "français":
                     VoiceBot("Salut quel est le nom de document que vous voulez consulter", chatbox);
             textField = "";
-            v = 9;
+            v = 10;
                     break;
                 case "arabe":
                     VoiceBot("مرحبًا ما هو اسم المستند الذي تريد الرجوع إليه", chatbox);
                     textField = "";
-                    v = 9;
+                    v = 10;
                     break;
                     case "tounsi":
                         VoiceBot("مرحبًا ما هو اسم المستند الذي تريد الرجوع إليه", chatbox);
                         textField = "";
-                        v = 9;
+                        v = 10;
                         break;
             }
          
@@ -1067,7 +1068,28 @@ function onSendButton(chatbox) {
                 
                 
                 if (num_rec.length == 8) {
-                    suiviRecVoiceBot(num_rec,chatbox);
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Hi send me your identity card number", chatbox);
+                            textField = "";
+                            v = 9;
+                            break;
+                        case "français":
+                            VoiceBot("Salut envoyez moi votre numéro de carte d`identité", chatbox);
+                            textField = "";
+                            v = 9;
+                            break;
+                        case "arabe":
+                            VoiceBot("مرحبًا ، أرسل لي رقم بطاقة هويتك", chatbox);
+                            textField = "";
+                            v = 9;
+                            break;
+                            case "tounsi":
+                                VoiceBot("مرحبًا ، أرسل  لي رقم بطاقة هويتك  ", chatbox);
+                                textField = "";
+                                v = 9;
+                                break;
+                    }
                 }
                 else {
                     switch(language){
@@ -1091,7 +1113,52 @@ function onSendButton(chatbox) {
                 }
             }
             break;
-case 9:
+            case 9 :
+                if (textField !== "") {
+                    cin="";
+            
+                    if ((language == "arabe") || (language=="tounsi")) {
+                        var cinArray = textField.split(' ');
+                        for (let i = 0; i < cinArray.length; i++) {
+                            cin = cin + getNumLet(cinArray[i]);
+                            console.log("nummm", cin);
+                        }
+                    } else {
+                        cin = textField.replaceAll(' ', '');
+             }
+    
+                   
+                 
+                    console.log("je suis la");
+                    
+                    
+                    if (cin.length == 8) {
+                        suiviRecVoiceBot(num_rec,cin,chatbox);
+                   
+                    }
+                    else {
+                        switch(language){
+                            case "anglais":
+                                VoiceBot("recheck", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Revérifier", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("حاول مرة اخرى", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("حاول مرة اخرى", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Revérifier", chatbox);
+                                break;
+                        }
+                      
+                    }
+                }
+                break;
+case 10:
            
         if (textField !== "") {
             NomDoc =textField.replaceAll('é','e');
