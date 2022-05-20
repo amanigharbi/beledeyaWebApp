@@ -99,7 +99,7 @@ try{
               
             // $pdf = PDF::loadView('myPDF', $data);
                 session(['permisConsId' => null]);
-                $pdf = PDF::loadView('myPDF', $data);
+                $pdf = PDF::loadView('pdf.myPDF', $data);
                 return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
     
         }

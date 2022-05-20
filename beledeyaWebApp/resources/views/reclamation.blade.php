@@ -38,7 +38,7 @@
         </div>
     </div>
 </div>
-    @if (session('success') && session('recId'))
+    @if (session('success') && session('recId') )
         <script>
             swal({
                 title: "Good job!",
@@ -48,12 +48,30 @@
                 dangerMode: true,
 
             }).then((value) => {
-                open("{{ asset('downPdf') }}/{{ session('recId') }}");
+               
+                    open("{{ asset('downPdf') }}/{{ session('recId') }}");
+               
+                
             });
         </script>
+        
     @endif
 
+    @if (session('success') && session('recId') && session('recAr'))
+        <script>
+            swal({
+                title: "Good job!",
+                text: "{{ Session::get('success') }}",
+                icon: "success",
+                button: "download pdf",
+                dangerMode: true,
 
+            }).then((value) => {
+                open("{{ asset('downPdfAr') }}/{{ session('recId') }}");
+            });
+        </script>
+        
+    @endif
 
     @if (session('error'))
         <script>

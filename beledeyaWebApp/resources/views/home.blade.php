@@ -93,7 +93,7 @@
                                   <h4>Taxe locative</h4>
                                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                                   <div class="text-button">
-                                    <a href="{{route('taxes')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>

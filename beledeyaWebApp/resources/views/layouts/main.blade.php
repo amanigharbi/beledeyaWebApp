@@ -69,8 +69,8 @@
                             <li class="scroll-to-section"><a href="{{ route('reclamation') }}"
                                     class="{{ \Request::is('reclamation*') ? 'active' : '' }}">Réclamations</a>
                             </li>
-                            <li class="scroll-to-section"><a href="{{ route('taxes') }}"
-                                    class="{{ \Request::is('taxes*') ? 'active' : '' }}">Taxes locatives</a>
+                            <li class="scroll-to-section"><a href="{{ route('ReseauPublic') }}"
+                                    class="{{ \Request::is('ReseauPublic*') ? 'active' : '' }}">Réseau Publique</a>
                             </li>
                             <li class="scroll-to-section"><a href="{{ route('about') }}"
                                     class="{{ \Request::is('about*') ? 'active' : '' }}">A propos</a></li>

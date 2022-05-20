@@ -33,7 +33,7 @@
     </div>
     <br><br>
     <div style="display:grid;float:right">
-        <div>Nom et prénom :{{ $nom }} {{ $prenom }}</div>
+        <div>Madame/Monsieur:{{ $nom }} {{ $prenom }}</div>
         <div>Adresse : {{ $adr }}</div>
         <div>Email: {{ $email }}</div>
         <div>Bizerte le {{ $date }}</div>

@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\reclamation;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
 use PDF;
-use Illuminate\Support\Facades\Cookie;
-
 class ReclamationController extends Controller
 {
     /**
@@ -47,6 +44,8 @@ class ReclamationController extends Controller
     {
         $result = $request->validate($this->validationRules());
         try {
+       
+         
             //Check if there's a photo
             if (isset($request['photo'])) {
                 $result['photo'] = $request['photo']->store('uploads', 'public');
@@ -77,7 +76,17 @@ class ReclamationController extends Controller
             $result['num_rec'] = $num_rec;
 
            $reclamation= reclamation::create($result);    
-            
+           if(preg_match("/[a-zA-Z]/",$request['first_name'])
+           and preg_match("/[a-zA-Z]/",$request['last_name'])
+           and preg_match("/[a-zA-Z]/",$request['adresse'])
+           and  preg_match("/[a-zA-Z]/",$request['sujet'])
+           ){
+               session(['recFrAng' => $reclamation->id]);
+           }
+       else{
+           session(['recAr' => $reclamation->id]);
+       }
+       
         
            session(['recId' => $reclamation->id]);
               return back()->with('success','Réclamation ajoutée. Merci de télécharger votre décharge');            
@@ -107,7 +116,31 @@ class ReclamationController extends Controller
                 'exist_doc' =>false,                
             ];
             session(['recId' => null]);
-            $pdf = PDF::loadView('myPDF', $data);
+            $pdf = PDF::loadView('pdf.myPDF', $data);
+            return $pdf->download($reclamation['last_name'].$reclamation['first_name'].'Rec.pdf');
+
+    }
+    public function downArabic($id){
+        $reclamation=reclamation::findOrFail($id);
+         $data = [
+            'title' => 'شكاية',
+                'logo'=> 'assets/images/logo.png',
+                'adr' => $reclamation['adresse'],
+                'nom'=> $reclamation['last_name'] ,
+                'prenom'=> $reclamation['first_name'] ,
+                'email'=>$reclamation['email'],
+                'date' =>$reclamation['created_at'],
+                'num' => $reclamation['num_rec'] ,
+                'type' => $reclamation['type'],
+                'cin' => $reclamation['cin'],
+                'des' => $reclamation['sujet'],
+                'h3_title' =>$reclamation['num_rec'].' :رقم الشكاية',
+                'p1' => 'سنحاول تصحيح المشكلة في أسرع وقت ممكن '.$reclamation['sujet'].'و الموضوع  '.$reclamation['type'].'لقد تلقينا شكواك من نوع ',
+                'type_doc' => $reclamation['type']. ' :شكوى عن ',
+                'exist_doc' =>false,                
+            ];
+            session(['recId' => null]);
+            $pdf = PDF::loadView('pdf.myPDFArabic', $data);
             return $pdf->download($reclamation['last_name'].$reclamation['first_name'].'Rec.pdf');
 
     }
@@ -201,4 +234,5 @@ class ReclamationController extends Controller
             'numRec' => 'required|numeric:8',
         ];
     }
+    
 }

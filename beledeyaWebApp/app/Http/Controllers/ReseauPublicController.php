@@ -107,7 +107,7 @@ try{
             
         ];
         session(['resId' => null]);
-        $pdf = PDF::loadView('myPDF', $data);
+        $pdf = PDF::loadView('pdf.myPDF', $data);
 
         return $pdf->download($reseauPublic['last_name'].$reseauPublic['first_name'].'Demande.pdf');
             
