@@ -17,19 +17,36 @@
         }
        
   body{
-    font-family: XBRiyaz;
+    font-family: XBRiyaz ;
     /* text-align:right; */
     direction:rtl;
-  }
-    
+}
+    .info_commune{
+        display:grid;
+      margin-top: -16%;
+        margin-right: 10%; 
+    }
+ .img{
+    width: 10%; 
+    height: 15%;
+ }
   
+  .info_user{
+    display:grid;
+    margin-right: 65%;
+  }
+ 
+  .commune{
+    margin-right: 65%; 
+    display:grid;
+  }
     </style>
 </head>
 
 <body>
 
-    <img src="{{ $logo }}" alt="Menzel Abdelrahmane" style="width: 10%; height: 10%" />
-    <div style="display:grid;">
+    <img src="{{ $logo }}" alt="Menzel Abdelrahmane" class="img" />
+    <div class="info_commune">
         <div>بلدية منزل عبد الرحمان</div>
         <div>  الهاتف 125 570 70 / 295 571 70 </div>
         <div>الفاكس 125 570 70</div>
@@ -37,7 +54,7 @@
         <div>  نهج المنجي سليم 7035 بنزرت </div>
     </div>
     <br><br>
-    <div style="display:grid;">
+    <div class="info_user">
         <div> السيد/السيدة: {{ $nom }} {{ $prenom }}</div>
         <div>  العنوان: {{ $adr }}</div>
         <div> البريد الالكتروني: {{ $email }} </div>
@@ -45,7 +62,6 @@
 
     </div>
 
-    <br><br><br><br><br>
     <h3> {{ $h3_title }}</h3>
     <h3> {{$type_doc}}</h3>
     <h4 style="font-style: italic;">  
@@ -59,10 +75,9 @@
     <p>السيد/السيدة ,<b>{{ $nom }} {{ $prenom }}</b> ,
         لك اطيب التحيات 
     </p>
-  
-    <br><br><br>
-    <h4 style="display:grid">بلدية منزل عبد الرحمان</h4>
-<br><br><br>
+<br>
+    <h4 class="commune">بلدية منزل عبد الرحمان</h4>
+<br>
 @if ( $exist_doc == true)
 <p style="color: red"> لاتمام الاجراءات <b> مع الاوراق التالية </b>  <b> هذه الوثيقة إلى البلدية</b> يرجى إحضار 
 </p>
@@ -71,10 +86,10 @@
     <li type="circle"> test test </li>
     <li type="circle"> test test </li>
 </ul>
-     <footer style="margin-top:15%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+     <footer style="margin-top:15%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
 
 @else
-<footer style="margin-top:35%;margin-left:50%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+<footer style="margin-top:35%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
   
 @endif
 
