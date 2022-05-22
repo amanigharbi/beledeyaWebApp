@@ -16,46 +16,52 @@
             align-self: center;
         }
        
-      /* * { font-family: DejaVu Sans, sans-serif;
-      direction: rtl;
-    } */
+  body{
+    font-family: XBRiyaz;
+    /* text-align:right; */
+    direction:rtl;
+  }
+    
   
     </style>
 </head>
 
-<body style="font-family: DejaVu Sans; direction:rtl;">
-
+<body>
 
     <img src="{{ $logo }}" alt="Menzel Abdelrahmane" style="width: 10%; height: 10%" />
-    <div style="display:grid;float:right;">
+    <div style="display:grid;">
         <div>بلدية منزل عبد الرحمان</div>
-        <div>  70 570 125 / 72 571 295 الهاتف </div>
-        <div>الفاكس 72 570 125</div>
+        <div>  الهاتف 125 570 70 / 295 571 70 </div>
+        <div>الفاكس 125 570 70</div>
         <div>communemenzelabderrahmen@gmail.com</div>
         <div>  نهج المنجي سليم 7035 بنزرت </div>
     </div>
     <br><br>
-    <div style="display:grid;float:left">
-        <div>{{ $nom }} {{ $prenom }} :السيد/السيدة</div>
-        <div> {{ $adr }} :ب (ة) القاطن</div>
-        <div> {{ $email }} :البريد الالكتروني</div>
-        <div> {{ $date }} :بنزرت في </div>
+    <div style="display:grid;">
+        <div> السيد/السيدة: {{ $nom }} {{ $prenom }}</div>
+        <div>  العنوان: {{ $adr }}</div>
+        <div> البريد الالكتروني: {{ $email }} </div>
+        <div>  بنزرت في : {{ $date }}</div>
 
     </div>
 
     <br><br><br><br><br>
     <h3> {{ $h3_title }}</h3>
-    <h3> {{$type_doc}} :ملخص عن</h3>
-    <h4 style="font-style: italic;">  {{ $cin }} بطاقة التعريف الوطنية عدد (ة)صاحب {{ $nom }} {{ $prenom }} السيد/السيدة </h4>
+    <h3> {{$type_doc}}</h3>
+    <h4 style="font-style: italic;">  
+        السيد او السيدة {{ $nom }} {{ $prenom }} صاحب/صاحبة بطاقة التعريف الوطنية عدد 
+        {{ $cin }}   </h4>
     <p>{{$p1}}
     </p>
     <p>
-        <b> {{ $num }}</b> عن طريق الرقم <b> {{$type_doc}}<b> يمكنك اتباع شكواك من نوع </p>
-    <p>لك اطيب التحيات  {{ $nom }} {{ $prenom }} السيد/السيدة 
-       
+        يمكنك اتباع شكواك من نوع <b>{{$type_doc}}</b> عن طريق الرقم <b> {{ $num }}</b>
+        </p>
+    <p>السيد/السيدة ,<b>{{ $nom }} {{ $prenom }}</b> ,
+        لك اطيب التحيات 
     </p>
+  
     <br><br><br>
-    <h4 style="display:grid;float:left">Commune de Menzel Abderrahmane</h4>
+    <h4 style="display:grid">بلدية منزل عبد الرحمان</h4>
 <br><br><br>
 @if ( $exist_doc == true)
 <p style="color: red"> لاتمام الاجراءات <b> مع الاوراق التالية </b>  <b> هذه الوثيقة إلى البلدية</b> يرجى إحضار 

@@ -134,9 +134,10 @@ class ReclamationController extends Controller
                 'type' => $reclamation['type'],
                 'cin' => $reclamation['cin'],
                 'des' => $reclamation['sujet'],
-                'h3_title' =>$reclamation['num_rec'].' :رقم الشكاية',
-                'p1' => 'سنحاول تصحيح المشكلة في أسرع وقت ممكن '.$reclamation['sujet'].'و الموضوع  '.$reclamation['type'].'لقد تلقينا شكواك من نوع ',
-                'type_doc' => $reclamation['type']. ' :شكوى عن ',
+                'h3_title' =>'رقم الشكاية: '.$reclamation['num_rec'],
+                'p1' => 'لقد تلقينا شكواك من نوع '.$reclamation['type'].' و الموضوع '.$reclamation['sujet'].
+                '. سنحاول تصحيح المشكلة في أسرع وقت ممكن',
+                'type_doc' => ' شكوى عن:  '.$reclamation['type'],
                 'exist_doc' =>false,                
             ];
             session(['recId' => null]);

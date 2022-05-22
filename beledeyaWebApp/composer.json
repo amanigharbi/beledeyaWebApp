@@ -11,6 +11,7 @@
         "php": "^7.0.3",
         "ar-php/ar-php": "^1.0",
         "barryvdh/laravel-dompdf": "*",
+        "carlos-meneses/laravel-mpdf": "^2.1",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/socialite": "3.2.0",
@@ -62,4 +63,5 @@
             "@php artisan key:generate --ansi"
         ]
     }
+    
 }
