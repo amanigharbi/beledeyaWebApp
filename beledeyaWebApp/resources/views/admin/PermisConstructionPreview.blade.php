@@ -58,71 +58,7 @@
                     {{ $permisConstruction->num_autor }} 
                 </h3>
             </div>
-            <div class="text-right d-flex align-items-start">
-            @if (($permisConstruction->status != '2') && ($permisConstruction->status != '3'))
-                <div class="col-8 align-self-center ">
-                    <a class="btn btn-success btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
-                        onclick="event.preventDefault(); document.getElementById('update-form').submit();">
-                        Accept
-                        <i class="fa fa-check"></i>
-                    </a>
-                    <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
-                        style="display: none;">
-                        @csrf @method('PATCH')
-                    </form>
-                </div>
-            @endif
-            {{-- @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
-                <div class="col-8 align-self-center ">
-                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
-                        onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
-                        Reject
-                        <i class="fa fa-ban"></i>
-                    </a>
-                    <form id="update-form2" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST"
-                        style="display: none;">
-                        @csrf @method('GET')
-                    </form>
-                </div>
-            @endif --}}
-            <button class="btn btn-danger btn-sm mt-3" data-toggle="modal" data-target="#myModal"> 
-                Reject
-                <i class="fa fa-ban"></i>
-            </button>
-            <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title">Reason of reject</h1>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-            <div class="modal-body">
-              
-                <form role="form" method="POST" action="{{ asset('addReason') }}">
-                    @csrf
-                  
-                    <div class="form-group">
-                        <label class="control-label">Reason</label>
-                        <div>
-                            <input type="text" class="form-control input-lg" name="raison" value="">
-                        </div>
-                    </div>
-                  
-                    <div class="form-group">
-                        <div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-  </div>
+         
   
         </div></div>
         <div class="container-fluid mt-3">
@@ -197,6 +133,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="card border-right">
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
@@ -211,6 +148,93 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="container ">
+                <div class="col-md-12 text-center">
+                
+            @if (($permisConstruction->status != '2') && ($permisConstruction->status != '3'))
+                <div class="col-8 align-self-center ">
+                    <a class="btn waves-effect waves-light btn-rounded btn-success" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
+                        onclick="event.preventDefault(); document.getElementById('update-form').submit();">
+                        Accept
+                        <i class="fa fa-check"></i>
+                    </a>
+                    <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf @method('PATCH')
+                    </form>
+                </div>
+            @endif
+            {{-- @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
+                <div class="col-8 align-self-center ">
+                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
+                        onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
+                        Reject
+                        <i class="fa fa-ban"></i>
+                    </a>
+                    <form id="update-form2" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf @method('GET')
+                    </form>
+                </div>
+            @endif --}}
+            @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
+            <button class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal" data-target="#myModal"> 
+                Reject
+                <i class="fa fa-ban"></i>
+            </button>
+            <!-- The Modal -->
+
+@endif
+  </div></div>
+  <div class="modal" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Reason of reject</h1>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+              
+                <form role="form" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST">
+                    @csrf @method('GET')
+                  
+                    <div class="form-group">
+                        <label class="control-label">Reason</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="raison" value="" required>
+                            @error('raison')
+                            {{ $message }}
+                        @enderror
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <div>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->       
+            @if ($permisConstruction->status == '3')
+            <div class="card-body">
+                <div class="d-flex d-lg-flex d-md-block align-items-center">
+                    <div>
+                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Reasson of Reject</h6>
+                        <div class="d-inline-flex align-items-center">
+                            <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->response }}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        @endif
         </div>
         
     @endsection

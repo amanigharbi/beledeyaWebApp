@@ -160,16 +160,20 @@ try{
      * Show the form for editing the specified resource.
      *
      * @param  \App\PermisConstruction  $permisConstruction
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(PermisConstruction $permisConstruction,$id)
+    public function edit(Request $request,PermisConstruction $permisConstruction,$id)
     {
+        $request->validate($this->validationReason());
         try { 
             $permisConstruction = PermisConstruction::find($id);
+         
+                $permisConstruction->response = $request['raison'];
             $permisConstruction->status = "3";
             $permisConstruction->save();
                 return back()->with('success', 'Marked as rejected');
-          
+            
                } catch (\Throwable $th) {
                 return back()->with('error', 'Opss! something went wrong');
             }
@@ -237,6 +241,12 @@ try{
         return [
             'cin' => 'required|numeric:8',
             'num_autor' => 'required|numeric:8',
+        ];
+    }
+    private function validationReason()
+    {
+        return [
+            'raison' => 'required|string',
         ];
     }
 }
