@@ -85,6 +85,45 @@
                     </form>
                 </div>
             @endif
+            {{-- <button class="btn btn-danger btn-sm mt-3" data-toggle="modal" data-target="#myModal"> 
+                Reject
+                <i class="fa fa-ban"></i>
+            </button>
+            <!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Reason of reject</h1>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+              
+                <form role="form" method="POST" action="{{ asset('addReason') }}">
+                    @csrf
+                  
+                    <div class="form-group">
+                        <label class="control-label">Reason</label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="raison" value="">
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <div>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> --}}
+  </div>
+  
         </div></div>
         <div class="container-fluid mt-3">
             <div class="card-group">

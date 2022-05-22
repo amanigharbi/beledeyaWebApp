@@ -84,7 +84,8 @@
                     </form>
                 </div>
             @endif
-        </div></div>
+        </div>
+    </div>
         <div class="container-fluid mt-3">
             <div class="card-group">
                 <div class="card border-right">
