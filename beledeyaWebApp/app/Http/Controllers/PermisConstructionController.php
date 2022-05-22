@@ -66,7 +66,16 @@ try{
 
            $permisConstruction= PermisConstruction::create($result);    
             
-            
+           if(preg_match("/[a-zA-Z]/",$request['first_name'])
+           and preg_match("/[a-zA-Z]/",$request['last_name'])
+           and preg_match("/[a-zA-Z]/",$request['adresse'])
+           
+           ){
+               session(['permisConsIdFrAng' => $permisConstruction->id]);
+           }
+       else{
+           session(['permisConsIdAr' => $permisConstruction->id]);
+       }
 
             session(['permisConsId' => $permisConstruction->id]);
               return back()->with('success','Demande de batir ajoutée. Merci de télécharger votre décharge');  
@@ -103,7 +112,32 @@ try{
                 return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
     
         }
+        public function downArabic($id){
+            $permisConstruction=PermisConstruction::findOrFail($id);
+             $data = [
+                'title' => 'رخصة بناء',
+                    'logo'=> 'assets/images/logo.png',
+                    'adr' => $permisConstruction['adresse'],
+                    'nom'=> $permisConstruction['last_name'] ,
+                    'prenom'=> $permisConstruction['first_name'] ,
+                    'email'=>$permisConstruction['email'],
+                    'date' =>$permisConstruction['created_at'],
+                    'num' => $permisConstruction['num_autor'] ,
+                    'type' => '',
+                    'cin' => $permisConstruction['cin'],
+                    'des' => '',
+                    'h3_title' =>'رقم طلب تصريح البناء: '.$permisConstruction['num_autor'],
+                    'p1' => 'لقد تلقينا طلب تصريح البناء الخاص بك ، والذي تبلغ مساحته '.$permisConstruction['surface'].
+                    '. سنحاول الرد عليك في أقرب وقت ممكن',
+                    'type_doc' => ' طلب تصريح البناء:  ',
+                    'exist_doc' =>true,                
+                ];
+                session(['permisConsIdAr' => null]);
+                session(['permisConsId' => null]);
+                $pdf = PDF::loadView('pdf.myPDFArabic', $data);
+                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
     
+        }
     /**
      * Display the specified resource.
      *

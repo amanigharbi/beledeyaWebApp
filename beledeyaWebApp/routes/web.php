@@ -43,9 +43,11 @@ Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::post('/addDemandeConst', 'PermisConstructionController@store');
     Route::get('/checkAutorisation', 'PermisConstructionController@check');
     Route::get('/downPdfPermis/{id}', 'PermisConstructionController@down')->name('downPdfPermis');
+    Route::get('/downPdfPermisAr/{id}', 'PermisConstructionController@downArabic')->name('downPdfPermisAr');
     Route::get('/ReseauPublics', 'ReseauPublicController@showView')->name('ReseauPublic');
     Route::post('/addDemande', 'ReseauPublicController@store');
     Route::get('/downPdfRes/{id}', 'ReseauPublicController@down')->name('downPdfRes');
+    Route::get('/downPdfResAr/{id}', 'ReseauPublicController@downArabic')->name('downPdfResAr');
     
     Route::get('/home', 'HomeController@index')->name('home');
 });

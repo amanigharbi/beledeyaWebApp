@@ -119,7 +119,21 @@
             });
         </script>
     @endif
+    @if (session('success') && session('resId') && session('resAr'))
+    <script>
+        swal({
+            title: "Good job!",
+            text: "{{ Session::get('success') }}",
+            icon: "success",
+            button: "download pdf",
+            dangerMode: true,
 
+        }).then((value) => {
+            open("{{ asset('downPdfResAr') }}/{{ session('resId') }}");
+        });
+    </script>
+    
+@endif
 
 
     @if (session('error'))

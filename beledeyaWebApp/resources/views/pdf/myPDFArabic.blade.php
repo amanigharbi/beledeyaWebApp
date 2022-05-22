@@ -79,8 +79,8 @@
     <h4 class="commune">بلدية منزل عبد الرحمان</h4>
 <br>
 @if ( $exist_doc == true)
-<p style="color: red"> لاتمام الاجراءات <b> مع الاوراق التالية </b>  <b> هذه الوثيقة إلى البلدية</b> يرجى إحضار 
-</p>
+<p style="color: red"> يرجى إحضار <b> هذه الوثيقة إلى البلدية </b> مع  <b> الاوراق التالية</b> لاتمام الاجراءات </p>
+
 <ul>
     <li type="circle"> test test </li>
     <li type="circle"> test test </li>

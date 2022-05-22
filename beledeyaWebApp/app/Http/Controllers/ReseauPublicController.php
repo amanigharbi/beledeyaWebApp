@@ -76,6 +76,16 @@ try{
          
 
             $reseauPublic=   ReseauPublic::create($result);
+            if(preg_match("/[a-zA-Z]/",$request['first_name'])
+            and preg_match("/[a-zA-Z]/",$request['last_name'])
+            and preg_match("/[a-zA-Z]/",$request['adresse'])
+            and  preg_match("/[a-zA-Z]/",$request['description'])
+            ){
+                session(['resFrAng' => $reseauPublic->id]);
+            }
+        else{
+            session(['resAr' => $reseauPublic->id]);
+        }
             session(['resId' => $reseauPublic->id]);
             return back()->with('success', 'demande de branchement aux réseaux publics ajoutée! télécharger votre décharge');
                
@@ -112,6 +122,32 @@ try{
         return $pdf->download($reseauPublic['last_name'].$reseauPublic['first_name'].'Demande.pdf');
             
      
+
+    }
+    public function downArabic($id){
+        $reseauPublic=ReseauPublic::findOrFail($id);
+         $data = [
+            'title' => 'طلب الاتصال بالشبكات العامة',
+                'logo'=> 'assets/images/logo.png',
+                'adr' => $reseauPublic['adresse'],
+                'nom'=> $reseauPublic['last_name'] ,
+                'prenom'=> $reseauPublic['first_name'] ,
+                'email'=>$reseauPublic['email'],
+                'date' =>$reseauPublic['created_at'],
+                'num' => $reseauPublic['num_branch'] ,
+                'type' => $reseauPublic['type'],
+                'cin' => $reseauPublic['cin'],
+                'des' => $reseauPublic['description'],
+                'h3_title' =>'رقم الملف: '.$reseauPublic['num_branch'],
+                'p1' => 'لقد تلقينا طلبك للاتصال بالشبكات العامة من النوع '.$reseauPublic['type'].' و الموضوع '.$reseauPublic['description'].
+                '. سنحاول الرد عليك في أقرب وقت ممكن',
+                'type_doc' => ' طلب الاتصال بالشبكة العامة لـ:  '.$reseauPublic['type'],
+                'exist_doc' =>true,                
+            ];
+            session(['resAr' => null]);
+            session(['resId' => null]);
+            $pdf = PDF::loadView('pdf.myPDFArabic', $data);
+            return $pdf->download($reseauPublic['last_name'].$reseauPublic['first_name'].'Demande.pdf');
 
     }
 

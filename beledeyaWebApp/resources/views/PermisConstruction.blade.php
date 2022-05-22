@@ -55,7 +55,21 @@
                 open("{{ asset('downPdfPermis') }}/{{ session('permisConsId') }}");
             });
         </script>
-        @endif @if (session('error'))
+        @endif 
+        @if (session('success') && session('permisConsId') && session('permisConsIdAr'))
+        <script>
+            swal({
+                title: "Good job!",
+                text: "{{ Session::get('success') }}",
+                icon: "success",
+                button: "download pdf",
+                dangerMode: true
+            }).then((value) => {
+                open("{{ asset('downPdfPermisAr') }}/{{ session('permisConsId') }}");
+            });
+        </script>
+        @endif
+        @if (session('error'))
             <script>
                 swal({
                     title: "OPS!",

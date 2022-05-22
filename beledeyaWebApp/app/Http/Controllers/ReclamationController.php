@@ -140,6 +140,7 @@ class ReclamationController extends Controller
                 'type_doc' => ' شكوى عن:  '.$reclamation['type'],
                 'exist_doc' =>false,                
             ];
+            session(['recAr' => null]);
             session(['recId' => null]);
             $pdf = PDF::loadView('pdf.myPDFArabic', $data);
             return $pdf->download($reclamation['last_name'].$reclamation['first_name'].'Rec.pdf');
