@@ -72,7 +72,7 @@
                     </form>
                 </div>
             @endif
-            @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
+            {{-- @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
                 <div class="col-8 align-self-center ">
                     <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
@@ -84,8 +84,8 @@
                         @csrf @method('GET')
                     </form>
                 </div>
-            @endif
-            {{-- <button class="btn btn-danger btn-sm mt-3" data-toggle="modal" data-target="#myModal"> 
+            @endif --}}
+            <button class="btn btn-danger btn-sm mt-3" data-toggle="modal" data-target="#myModal"> 
                 Reject
                 <i class="fa fa-ban"></i>
             </button>
@@ -121,7 +121,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> --}}
+</div><!-- /.modal -->
   </div>
   
         </div></div>
