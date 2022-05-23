@@ -199,7 +199,7 @@
                                     @if ($autorisation != null && !session('error'))
                                         <table class="table">
                                             <thead class="thead-light">
-                                                <tr class="">
+                                                <tr class="text-center">
                                                     <th>N° Demande</th>
                                                     <th>Date de publication</th>
                                                     <th>Status</th>
@@ -209,7 +209,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $autorisation->num_autor }}</td>
 
                                                     <td>
@@ -234,9 +234,16 @@
                                                             @break
                                                         @endswitch
                                                     </td>
-                                                    @if ($autorisation->status > 1)
-                                                        <td><button class="btn btn-sm btn-danger">Voir document</button>
+                                                    cccc
+                                                        <td><button type="submit" class="" onclick="getPdf();"><i
+                                                            class="fas fa-eye"></i></button>
                                                         </td>
+                                                        <script>
+                                                            function getPdf(){
+                                                                
+                                                                open("{{ asset('downPdfDecision') }}/{{ $autorisation ->id }}");
+                                                            }
+                                                            </script>
                                                     @endif
                                                 </tr>
                                             </tbody>

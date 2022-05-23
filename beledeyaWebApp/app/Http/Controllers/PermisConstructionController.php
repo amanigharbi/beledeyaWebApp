@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\PermisConstruction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PDF;
+
 class PermisConstructionController extends Controller
 {
     /**
@@ -19,8 +21,8 @@ class PermisConstructionController extends Controller
     }
     public function autorisationBatir()
     {
-        $autorisation=null;
-        return view('PermisConstruction',compact('autorisation'));
+        $autorisation = null;
+        return view('PermisConstruction', compact('autorisation'));
     }
     /**
      * Show the form for creating a new resource.
@@ -41,14 +43,14 @@ class PermisConstructionController extends Controller
     public function store(Request $request)
     {
         $result = $request->validate($this->validationRules());
-               
-try{
+
+        try {
             //Check if request has email
             if (isset($request['email'])) {
                 $result['email'] = $request['email'];
             }
 
-          
+
             $digits_needed = 8;
 
             $num_autor = ''; // set up a blank string
@@ -64,87 +66,157 @@ try{
 
             $result['num_autor'] = $num_autor;
 
-           $permisConstruction= PermisConstruction::create($result);    
-            
-           if(preg_match("/[a-zA-Z]/",$request['first_name'])
-           and preg_match("/[a-zA-Z]/",$request['last_name'])
-           and preg_match("/[a-zA-Z]/",$request['adresse'])
-           
-           ){
-               session(['permisConsIdFrAng' => $permisConstruction->id]);
-           }
-       else{
-           session(['permisConsIdAr' => $permisConstruction->id]);
-       }
+            $permisConstruction = PermisConstruction::create($result);
+
+            if (
+                preg_match("/[a-zA-Z]/", $request['first_name'])
+                and preg_match("/[a-zA-Z]/", $request['last_name'])
+                and preg_match("/[a-zA-Z]/", $request['adresse'])
+
+            ) {
+                session(['permisConsIdFrAng' => $permisConstruction->id]);
+            } else {
+                session(['permisConsIdAr' => $permisConstruction->id]);
+            }
 
             session(['permisConsId' => $permisConstruction->id]);
-              return back()->with('success','Demande de batir ajoutée. Merci de télécharger votre décharge');  
-             } catch (\Throwable $th) {
+            return back()->with('success', 'Demande de batir ajoutée. Merci de télécharger votre décharge');
+        } catch (\Throwable $th) {
             return back()->with('error', 'Vérifier!');
         }
-        }
-        public function down($id){
-            $permisConstruction=PermisConstruction::findOrFail($id);
-            $data = [
-                'title' => 'Autorisation de batir',
-                'logo'=> 'assets/images/logo.png',
-                'adr' => $permisConstruction['adresse'],
-                'nom'=> $permisConstruction['last_name'] ,
-                'prenom'=> $permisConstruction['first_name'] ,
-                'email'=>$permisConstruction['email'],
-                'date' => $permisConstruction['created_at'],
-                'num' => $permisConstruction['num_autor'] ,
-                'type' => '',
-                'cin' => $permisConstruction['cin'],
-                'des' => '',
-                'h3_title' =>'Numéro de demande d`autoriation de batir: '.$permisConstruction['num_autor'],
-                'p1' =>'Nous avons bien reçu votre demande d`autoriation de batir de surface '.$permisConstruction['surface'].' Nous essayons de vous répondre dés que possible.',
-                'type_doc' => ' demande d`autoriation de batir ',
-                'exist_doc' =>true,
-                
+    }
+    public function down($id)
+    {
+        $permisConstruction = PermisConstruction::findOrFail($id);
+        $data = [
+            'title' => 'Autorisation de batir',
+            'logo' => 'assets/images/logo.png',
+            'adr' => $permisConstruction['adresse'],
+            'nom' => $permisConstruction['last_name'],
+            'prenom' => $permisConstruction['first_name'],
+            'email' => $permisConstruction['email'],
+            'date' => $permisConstruction['created_at'],
+            'num' => $permisConstruction['num_autor'],
+            'type' => '',
+            'cin' => $permisConstruction['cin'],
+            'des' => '',
+            'h3_title' => 'Numéro de demande d`autoriation de batir: ' . $permisConstruction['num_autor'],
+            'p1' => 'Nous avons bien reçu votre demande d`autoriation de batir de surface ' . $permisConstruction['surface'] . ' Nous essayons de vous répondre dés que possible.',
+            'type_doc' => ' demande d`autoriation de batir ',
+            'exist_doc' => true,
+            'doc1' => 'Une demande au nom de madame le maire, identifiable par signature sous la forme de plus d`un propriétaire ',
+            'doc2' => 'Certificat de propriété ou contrat de vente',
+            'doc3' => '5 exemple de plan',
+            'doc4' => ' Attestation de libération des paiements afférents au terrain ou à l`immeuble, objet de la demande de licence ',
+            'doc5' => 'Revenu annuel ou carte de séjour à l`étranger ',
+   
 
-                
+
+
+        ];
+
+        // $pdf = PDF::loadView('myPDF', $data);
+        session(['permisConsId' => null]);
+        $pdf = PDF::loadView('pdf.myPDF', $data);
+        return $pdf->download($permisConstruction['last_name'] . $permisConstruction['first_name'] . 'Const.pdf');
+    }
+    public function downArabic($id)
+    {
+        $permisConstruction = PermisConstruction::findOrFail($id);
+        $data = [
+            'title' => 'رخصة بناء',
+            'logo' => 'assets/images/logo.png',
+            'adr' => $permisConstruction['adresse'],
+            'nom' => $permisConstruction['last_name'],
+            'prenom' => $permisConstruction['first_name'],
+            'email' => $permisConstruction['email'],
+            'date' => $permisConstruction['created_at'],
+            'num' => $permisConstruction['num_autor'],
+            'type' => '',
+            'cin' => $permisConstruction['cin'],
+            'des' => '',
+            'h3_title' => 'رقم طلب تصريح البناء: ' . $permisConstruction['num_autor'],
+            'p1' => 'لقد تلقينا طلب تصريح البناء الخاص بك ، والذي تبلغ مساحته ' . $permisConstruction['surface'] .
+                '. سنحاول الرد عليك في أقرب وقت ممكن',
+            'type_doc' => ' طلب تصريح البناء:  ',
+            'exist_doc' => true,
+            'doc1' => 'مطلب باسم السيدة رئيسة البلدية معرف بالامضاء في صورة اكثر من مالك',
+            'doc2' => 'شهادة ملكية او عقد بيع ',
+            'doc3' => '5 امثلة هندسية',
+            'doc4' => 'شهادة خلاص الاداءات المتعلقة بالارض او العقار موضوع طلب الرخصة',
+            'doc5' => 'الدخل السنوي او بطاقة اقامة بالخارج ',
+        ];
+        session(['permisConsIdAr' => null]);
+        session(['permisConsId' => null]);
+        $pdf = PDF::loadView('pdf.myPDFArabic', $data);
+        return $pdf->download($permisConstruction['last_name'] . $permisConstruction['first_name'] . 'Const.pdf');
+    }
+    public function downPdfDecision($id)
+    {
+        $permisConstruction = PermisConstruction::findOrFail($id);
+        if (
+            preg_match("/[a-zA-Z]/", $permisConstruction['first_name'])
+            and preg_match("/[a-zA-Z]/", $permisConstruction['last_name'])
+            and preg_match("/[a-zA-Z]/", $permisConstruction['adresse'])
+
+        ) {
+            if ($permisConstruction['status'] == '2') {
+                $descision = 'acceptation';
+            }
+            if ($permisConstruction['status'] == '3') {
+                $descision = 'refus';
+            }
+            $data = [
+                'title' => 'Réponse autorisation de batir',
+                'logo' => 'assets/images/logo.png',
+                'date' => date('Y-m-d'),
+                'nom' => $permisConstruction['last_name'],
+                'prenom' => $permisConstruction['first_name'],
+                'adr' => $permisConstruction['adresse'],
+                'cin' => $permisConstruction['cin'],
+                'date_reunion' => Carbon::parse($permisConstruction['created_at'])->format('Y-m-d'),
+                'descision' => $descision,
+                'reasons' => $permisConstruction['response'],
+
+
+
             ];
-              
-            // $pdf = PDF::loadView('myPDF', $data);
-                session(['permisConsId' => null]);
-                $pdf = PDF::loadView('pdf.myPDF', $data);
-                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
-    
+
+            $pdf = PDF::loadView('pdf.PDFDecisionBatir', $data);
+        } else {
+            if ($permisConstruction['status'] == '2') {
+                $descision = 'الموافقة';
+            }
+            if ($permisConstruction['status'] == '3') {
+                $descision = 'عدم الموافقة';
+            }
+            $data = [
+                'title' => 'Réponse autorisation de batir',
+                'logo' => 'assets/images/logo.png',
+                'date' => date('Y-m-d'),
+                'nom' => $permisConstruction['last_name'],
+                'prenom' => $permisConstruction['first_name'],
+                'adr' => $permisConstruction['adresse'],
+                'cin' => $permisConstruction['cin'],
+                'date_reunion' => Carbon::parse($permisConstruction['created_at'])->format('Y-m-d'),
+                'descision' => $descision,
+                'reasons' => $permisConstruction['response'],
+
+
+
+            ];
+
+            $pdf = PDF::loadView('pdf.PDFDecisionBatirAr', $data);
         }
-        public function downArabic($id){
-            $permisConstruction=PermisConstruction::findOrFail($id);
-             $data = [
-                'title' => 'رخصة بناء',
-                    'logo'=> 'assets/images/logo.png',
-                    'adr' => $permisConstruction['adresse'],
-                    'nom'=> $permisConstruction['last_name'] ,
-                    'prenom'=> $permisConstruction['first_name'] ,
-                    'email'=>$permisConstruction['email'],
-                    'date' =>$permisConstruction['created_at'],
-                    'num' => $permisConstruction['num_autor'] ,
-                    'type' => '',
-                    'cin' => $permisConstruction['cin'],
-                    'des' => '',
-                    'h3_title' =>'رقم طلب تصريح البناء: '.$permisConstruction['num_autor'],
-                    'p1' => 'لقد تلقينا طلب تصريح البناء الخاص بك ، والذي تبلغ مساحته '.$permisConstruction['surface'].
-                    '. سنحاول الرد عليك في أقرب وقت ممكن',
-                    'type_doc' => ' طلب تصريح البناء:  ',
-                    'exist_doc' =>true,                
-                ];
-                session(['permisConsIdAr' => null]);
-                session(['permisConsId' => null]);
-                $pdf = PDF::loadView('pdf.myPDFArabic', $data);
-                return $pdf->download($permisConstruction['last_name'].$permisConstruction['first_name'].'Const.pdf');
-    
-        }
+        return $pdf->download($permisConstruction['last_name'] . $permisConstruction['first_name'] . 'Response.pdf');
+    }
     /**
      * Display the specified resource.
      *
      * @param  \App\PermisConstruction  $permisConstruction
      * @return \Illuminate\Http\Response
      */
-    public function show(PermisConstruction $permisConstruction,$id)
+    public function show(PermisConstruction $permisConstruction, $id)
     {
         $permisConstruction = PermisConstruction::find($id);
         if ($permisConstruction->status == "0") {
@@ -163,20 +235,19 @@ try{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,PermisConstruction $permisConstruction,$id)
+    public function edit(Request $request, PermisConstruction $permisConstruction, $id)
     {
         $request->validate($this->validationReason());
-        try { 
+        try {
             $permisConstruction = PermisConstruction::find($id);
-         
-                $permisConstruction->response = $request['raison'];
+
+            $permisConstruction->response = $request['raison'];
             $permisConstruction->status = "3";
             $permisConstruction->save();
-                return back()->with('success', 'Marked as rejected');
-            
-               } catch (\Throwable $th) {
-                return back()->with('error', 'Opss! something went wrong');
-            }
+            return back()->with('success', 'Marked as rejected');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Opss! something went wrong');
+        }
     }
 
     /**
@@ -186,17 +257,17 @@ try{
      * @param  \App\PermisConstruction  $permisConstruction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PermisConstruction $permisConstruction,$id)
-    {  
-        try {  
-            
+    public function update(Request $request, PermisConstruction $permisConstruction, $id)
+    {
+        try {
+
             $permisConstruction = PermisConstruction::find($id);
             $permisConstruction->status = "2";
             $permisConstruction->save();
 
-           
+
             return back()->with('success', 'Marked as accepted');
-             } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return back()->with('error', 'Opss! something went wrong');
         }
     }
@@ -214,14 +285,14 @@ try{
     public function check(Request $request)
     {
         $data = $request->validate($this->checkValid());
-            $autorisation = PermisConstruction::where([['num_autor', $data['num_autor']], ['cin', $data['cin']]])->first();
-            if(!$autorisation){
-                
-                return back()->with('error', 'Demande de batir not found');
-            }
-            return view('PermisConstruction',compact('autorisation'));
-            try {
-            } catch (\Throwable $th) {
+        $autorisation = PermisConstruction::where([['num_autor', $data['num_autor']], ['cin', $data['cin']]])->first();
+        if (!$autorisation) {
+
+            return back()->with('error', 'Demande de batir not found');
+        }
+        return view('PermisConstruction', compact('autorisation'));
+        try {
+        } catch (\Throwable $th) {
             return back()->with('error', 'something went wrong');
         }
     }

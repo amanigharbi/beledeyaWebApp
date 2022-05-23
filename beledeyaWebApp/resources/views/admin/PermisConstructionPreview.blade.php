@@ -59,8 +59,52 @@
                 </h3>
             </div>
          
+          
+                <table class="text-center">
+                    <tr>
+                        <td>
+            @if (($permisConstruction->status != '2') && ($permisConstruction->status != '3'))
+                <div class="col-8 align-self-center ">
+                    <a class="btn waves-effect waves-light btn-rounded btn-success" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
+                        onclick="event.preventDefault(); document.getElementById('update-form').submit();">
+                        
+                        <i class="fa fa-check">Accept</i>
+                    </a>
+                    <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf @method('PATCH')
+                    </form>
+                </div>
+            @endif
+                        </td>
+            {{-- @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
+                <div class="col-8 align-self-center ">
+                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
+                        onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
+                        Reject
+                        <i class="fa fa-ban"></i>
+                    </a>
+                    <form id="update-form2" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST"
+                        style="display: none;">
+                        @csrf @method('GET')
+                    </form>
+                </div>
+            @endif --}}
+            <td>
+            @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
+            <button class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal" data-target="#myModal"> 
+                Reject
+                <i class="fa fa-ban"></i>
+            </button>
+            <!-- The Modal -->
+
+@endif
+            </td>
+                    </tr>
+                </table>
   
         </div></div>
+        
         <div class="container-fluid mt-3">
             <div class="card-group">
                 <div class="card border-right">
@@ -149,44 +193,7 @@
                 </div>
             </div>
             
-            <div class="container ">
-                <div class="col-md-12 text-center">
-                
-            @if (($permisConstruction->status != '2') && ($permisConstruction->status != '3'))
-                <div class="col-8 align-self-center ">
-                    <a class="btn waves-effect waves-light btn-rounded btn-success" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
-                        onclick="event.preventDefault(); document.getElementById('update-form').submit();">
-                        Accept
-                        <i class="fa fa-check"></i>
-                    </a>
-                    <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
-                        style="display: none;">
-                        @csrf @method('PATCH')
-                    </form>
-                </div>
-            @endif
-            {{-- @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
-                <div class="col-8 align-self-center ">
-                    <a class="btn btn-danger btn-sm mt-3" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
-                        onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
-                        Reject
-                        <i class="fa fa-ban"></i>
-                    </a>
-                    <form id="update-form2" action="{{ route('PermisConstructions.edit', $permisConstruction->id) }}" method="POST"
-                        style="display: none;">
-                        @csrf @method('GET')
-                    </form>
-                </div>
-            @endif --}}
-            @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
-            <button class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal" data-target="#myModal"> 
-                Reject
-                <i class="fa fa-ban"></i>
-            </button>
-            <!-- The Modal -->
 
-@endif
-  </div></div>
   <div class="modal" id="myModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

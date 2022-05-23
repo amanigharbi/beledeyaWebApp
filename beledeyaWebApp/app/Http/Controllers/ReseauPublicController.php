@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 class ReseauPublicController extends Controller
 {
@@ -112,7 +114,11 @@ try{
             '. Nous essayons de vous répondre dès que possible.',
             'type_doc' => 'demande de branchement aux réseau publics  de : '.$reseauPublic['type'],
             'exist_doc' => true,
-            
+            'doc1' => 'Une demande au nom de madame le maire, identifiable par signature sous la forme de plus d`un propriétaire ',
+            'doc2' => 'Certificat de propriété ou contrat de vente',
+            'doc3' => '',
+            'doc4' => '',
+            'doc5' => '',
 
             
         ];
@@ -142,7 +148,12 @@ try{
                 'p1' => 'لقد تلقينا طلبك للاتصال بالشبكات العامة من النوع '.$reseauPublic['type'].' و الموضوع '.$reseauPublic['description'].
                 '. سنحاول الرد عليك في أقرب وقت ممكن',
                 'type_doc' => ' طلب الاتصال بالشبكة العامة لـ:  '.$reseauPublic['type'],
-                'exist_doc' =>true,                
+                'exist_doc' =>true,    
+                'doc1' => 'مطلب باسم السيدة رئيسة البلدية معرف بالامضاء في صورة اكثر من مالك',
+                'doc2' => 'شهادة ملكية او عقد بيع ',
+                'doc3' => '',
+                'doc4' => '',
+                'doc5' => '',          
             ];
             session(['resAr' => null]);
             session(['resId' => null]);
@@ -150,7 +161,80 @@ try{
             return $pdf->download($reseauPublic['last_name'].$reseauPublic['first_name'].'Demande.pdf');
 
     }
+    public function downPdfDecisionRes($id)
+    {
+        $reseauPublic=ReseauPublic::findOrFail($id);
+        if (
+            preg_match("/[a-zA-Z]/", $reseauPublic['first_name'])
+            and preg_match("/[a-zA-Z]/", $reseauPublic['last_name'])
+            and preg_match("/[a-zA-Z]/", $reseauPublic['adresse'])
+            and preg_match("/[a-zA-Z]/", $reseauPublic['description'])
+        ) {
+            if ($reseauPublic['type'] == 'Sonede') {
+                $type = 'eau potable';
+                $type_soc ='Société nationale d`exploitation et de distribution des eaux';
+                $type_res ='réseau public de distribution d`eau';
+            }
+            if ($reseauPublic['type'] == 'Steg') {
+                $type = 'eclairage public';
+                $type_soc ='Société tunisienne de l`électricité et du gaz';
+                $type_res ='réseau public de distribution de l`électricité';
+            }
+            $data = [
+                'title' => 'Réponse de demande de branchement au réeau public',
+                'logo' => 'assets/images/logo.png',
+                'date' => date('Y-m-d'),
+                'nom' => $reseauPublic['last_name'],
+                'prenom' => $reseauPublic['first_name'],
+                'adr' => $reseauPublic['adresse'],
+                'type_soc' => $type_soc,
+                'date_reunion' => Carbon::parse($reseauPublic['created_at'])->format('Y-m-d'),
+                'type' => $type,
+                'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
+                'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
+                'type_res' => $type_res,
+                'num' => $reseauPublic['num_branch'],
 
+
+
+            ];
+
+            $pdf = PDF::loadView('pdf.PDFDecisionRes', $data);
+        } else {
+            
+            if ($reseauPublic['type'] == 'Sonede') {
+                $type = ' الماء الصالح للشراب ';
+                $type_soc =' الشركة الوطنية لاستغلال و توزيع المياه ';
+                $type_res =' الشبكة العمومية لتوزيع المياه ';
+            }
+            if ($reseauPublic['type'] == 'Steg') {
+                $type = ' الإنارة العامة ';
+                $type_soc =' الشركة التونسية للكهرباء والغاز ';
+                $type_res =' شبكة توزيع الكهرباء العامة ';
+            }
+            $data = [
+                'title' => ' الاستجابة لطلب الاتصال بالشبكة العامة ',
+                'logo' => 'assets/images/logo.png',
+                'date' => date('Y-m-d'),
+                'nom' => $reseauPublic['last_name'],
+                'prenom' => $reseauPublic['first_name'],
+                'adr' => $reseauPublic['adresse'],
+                'type_soc' => $type_soc,
+                'date_reunion' => Carbon::parse($reseauPublic['created_at'])->format('Y-m-d'),
+                'type' => $type,
+                'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
+                'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
+                'type_res' => $type_res,
+                'num' => $reseauPublic['num_branch'],
+
+
+
+            ];
+
+            $pdf = PDF::loadView('pdf.PDFDecisionResAr', $data);
+        }
+        return $pdf->download($reseauPublic['last_name'] . $reseauPublic['first_name'] . 'Response.pdf');
+    }
     /**
      * Display the specified resource.
      *

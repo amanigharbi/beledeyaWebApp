@@ -32,11 +32,11 @@
     }
 
     table.table tr th:first-child {
-        width: 60px;
+        width: 100px;
     }
 
     table.table tr th:last-child {
-        width: 100px;
+        width: 150px;
     }
 
     table.table-striped tbody tr:nth-of-type(odd) {
@@ -246,10 +246,9 @@
     </div>
 
     <!-- The Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
+    <div class="modal" id="myModal" >
+        <div class="modal-dialog modal-lg " >
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header table-title">
                     <h2>Suivre <b>les demandes</b></h2>
@@ -257,17 +256,18 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body" style="width: auto">
-                    <table class="table table-striped table-hover">
-                        <thead>
+                <div class="modal-body " style="width: auto">
+                    <table class="table table-striped table-hover" >
+                        <thead class="text-center">
                             <tr>
                                 <th>Numéro demande </th>
                                 <th> Type </th>
                                 <th> Date de publication</th>
                                 <th>Status</th>
+                                <th>Document</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             @foreach ($res as $r)
                                 <tr>
                                     <td>{{ $r->num_branch }}</td>
@@ -294,6 +294,16 @@
                                             @break
                                         @endswitch
                                     </td>
+                                    @if ($r->status ==2) 
+                                                        <td><button type="submit" class="" onclick="window.location.href='{{ asset('downPdfDecisionRes') }}/{{$r->id}}';"><i
+                                                            class="fas fa-eye"></i></button>
+                                                        </td>
+                                                     
+                                                     @else
+                                                     <td>
+                                                     <span class="badge badge-light">Pas de document</span>
+                                                     </td>
+                                                 @endif
                                 </tr>
                             @endforeach
                         </tbody>

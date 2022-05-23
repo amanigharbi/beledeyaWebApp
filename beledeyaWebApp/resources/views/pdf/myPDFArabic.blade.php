@@ -58,7 +58,7 @@
         <div> السيد/السيدة: {{ $nom }} {{ $prenom }}</div>
         <div>  العنوان: {{ $adr }}</div>
         <div> البريد الالكتروني: {{ $email }} </div>
-        <div>  بنزرت في : {{ $date }}</div>
+        <div>  منزل عبد الرحمان في : {{ $date }}</div>
 
     </div>
 
@@ -75,20 +75,25 @@
     <p>السيد/السيدة ,<b>{{ $nom }} {{ $prenom }}</b> ,
         لك اطيب التحيات 
     </p>
-<br>
-    <h4 class="commune">بلدية منزل عبد الرحمان</h4>
+
 <br>
 @if ( $exist_doc == true)
 <p style="color: red"> يرجى إحضار <b> هذه الوثيقة إلى البلدية </b> مع  <b> الاوراق التالية</b> لاتمام الاجراءات </p>
 
 <ul>
-    <li type="circle"> test test </li>
-    <li type="circle"> test test </li>
-    <li type="circle"> test test </li>
+    <li> {{$doc1}} </li>
+    <li> {{$doc2}} </li>
+    <li> {{$doc3}} </li>
+    <li> {{$doc4}} </li>
+    <li> {{$doc5}} </li>
 </ul>
-     <footer style="margin-top:15%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+
+    <h4 class="commune">بلدية منزل عبد الرحمان</h4>
+     <footer style="margin-top:10%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
 
 @else
+
+    <h4 class="commune">بلدية منزل عبد الرحمان</h4>
 <footer style="margin-top:35%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
   
 @endif
