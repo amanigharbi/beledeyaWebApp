@@ -226,7 +226,7 @@
                                             {{ $message }}
                                         @enderror
                                     </div>
-                                    <button class="btnRegister" type="submit">Ajouter</button>
+                                    <button class="btnRegister" style="float: left;!important" type="submit">Ajouter</button>
                                 </div>
 
                             </div>
