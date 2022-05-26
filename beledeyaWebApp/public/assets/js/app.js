@@ -69,7 +69,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
-            getPDFResPublic();
+            getPDFAcceptBatir();
             break;
         case "arabe":
            // mess2="عسلامة كيفاش نجموا نعاونك"
@@ -78,7 +78,7 @@ function modifyLanguage(lang) {
             messages.push(msg03);
             updateChatText(chatBox);
             readOutLoud(mess2, "chat-1", "chat");
-            getPDFResPublic();
+            getPDFAcceptBatir();
             break;
             case "tounsi":
                 mess3 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
@@ -86,7 +86,7 @@ function modifyLanguage(lang) {
                  messages.push(msg04);
                  updateChatText(chatBox);
                  readOutLoud(mess3, "chat-1", "chat");
-                 getPDFResPublic();
+                 getPDFAcceptBatir();
                  break;
         default:
             readOutLoud("choisir une langue", "lang-chose", "chat");
@@ -424,14 +424,17 @@ function getPDFResPublic(){
     doc.text(195,100,p1,{ align: "right",lang: 'ar'})
     var p2 = doc.splitTextToSize('وتبعا للجلسة المحلية لاسناد تراخيص الربط بالشبكات العمومية للبناءات المشيدة بدون ترخيص المنعقدة بمقر بلدية منزل عبد الرحمان بتاريخ 2022-05 -2',250);
      doc.text(195,130,p2,{ align: "right",lang: 'ar'})
-     var p3 = doc.splitTextToSize('واستنادا لمصادقة السيد والي بنزرت بتاريخ 2022-07-23 و جدول ارسال الولاية عدد 972 / 13 بتاريخ 2022- 09- 23 يرخص للسيد/ة الغربي اماني',250);
+     var p3 = doc.splitTextToSize('واستنادا لمصادقة السيد والي بنزرت بتاريخ 2021-01-02 و جدول ارسال الولاية عدد 972 / 13 بتاريخ 2022- 02- 04 ',250);
      doc.text(195,150,p3,{ align: "right",lang: 'ar'})
-    doc.text(195,175,'في ربط محله/ها المذكور ب الشبكة العمومية لتوزيع المياه',{ align: "right",lang: 'ar'})
-    doc.text(195,185,' سلمت هذه الشهادة للادلاء بها لدى مصالح الشركة الوطنية لاستغلال و توزيع المياه ',{ align: "right",lang: 'ar'})
-    doc.text(195,200,' رقم الملف : 86113033 ',{ align: "right",lang: 'ar'})
+     var p4 = doc.splitTextToSize('و بعد تبعا لمحضر جلسة اللجنة المحلية لاسناد تراخيص الربط بشبكتي الماء الصالح للشراب و النور الكهربائي المنعقدة بتاريخ 16/12/2014 بمقر بلدية منزل عبد الرحمان',250);
+     doc.text(195,170,p4,{ align: "right",lang: 'ar'})
+     doc.text(195,195,'يرخص للسيد/ة الغربي اماني',{ align: "right",lang: 'ar'})
+    doc.text(195,205,'في ربط محله/ها المذكور ب الشبكة العمومية لتوزيع المياه',{ align: "right",lang: 'ar'})
+    doc.text(195,215,' سلمت هذه الشهادة للادلاء بها لدى مصالح الشركة الوطنية لاستغلال و توزيع المياه ',{ align: "right",lang: 'ar'})
+    doc.text(195,225,' رقم الملف : 86113033 ',{ align: "right",lang: 'ar'})
     doc.setFontSize(16)
-    doc.text(35,220,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
-    doc.text(50,230,'رئيس/رئيسة البلدية')
+    doc.text(35,245,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
+    doc.text(50,255,'رئيس/رئيسة البلدية')
     doc.setFontSize(10)
     doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
@@ -455,22 +458,25 @@ function getPDFResPublic(){
     doc.text(15,100,p1)
     var p2 = doc.splitTextToSize('Et selon la session locale d`attribution des licences de raccordement aux réseaux publics pour les bâtiments construits sans licence, tenue au siège de la municipalité de Manzil Abd al-Rahman le 2022-05-23.', 180);
     doc.text(15,120,p2)
-    var p3 = doc.splitTextToSize('Et sur la base de l`approbation de M. Gouverneur de Bizerte en date du 2022-07-23 et du bordereau d`expédition de l`etat n° 13/972 en date du 2022-09-23', 180);
+    var p3 = doc.splitTextToSize('Et sur la base de l`approbation de M. Gouverneur de Bizerte en date du 02-01-2021 et du bordereau d`expédition de l`etat n° 13/972 en date du 04-02-2022', 180);
     doc.text(15,140,p3)
-    var p4 = doc.splitTextToSize('Raccordement de ses locaux précités au réseau public de réseau public de distribution de l`électricité', 180);
-    doc.text(15,160,p4)
-    var p5 = doc.splitTextToSize('Ce certificat a été délivré aux intérêts de la Société tunisienne de l`électricité et du gaz', 180);
-    doc.text(15,180,p5)
+    var p4 = doc.splitTextToSize(' Et après, selon le procès-verbal de la séance de la commission locale d`attribution des autorisations de raccordement aux réseaux d`eau potable et d`éclairage électrique, qui s`est tenue le  16/12/2014 au siège de la commune de Manzil Abd al-Rahman', 180);
+    doc.text(15,155,p4)
+    var p5 = doc.splitTextToSize('Raccordement de ses locaux précités au réseau public de réseau public de distribution de l`électricité', 180);
+    doc.text(15,175,p5)
+    var p6 = doc.splitTextToSize('Ce certificat a été délivré aux intérêts de la Société tunisienne de l`électricité et du gaz', 180);
+    doc.text(15,190,p6)
+    doc.text(15,200,'Numéro dossier : 8888888 ')
     doc.setFontSize(14)
-    doc.text(105,205,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
-    doc.text(115,215,'Maire de la municipalité')
+    doc.text(105,220,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
+    doc.text(115,230,'Maire de la municipalité')
     doc.setFontSize(10)
     doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
     
     doc.save("test.pdf");
     }
-    function getPDFAutorBatir(){
+    function getPDFAcceptBatir(){
    
         var doc = new jsPDF();
         
@@ -492,21 +498,27 @@ function getPDFResPublic(){
         doc.text(10,15,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
          doc.setFontSize(19)
          doc.setTextColor(0, 0, 255)
-        doc.text(60,70,'ترخيص في ادخال الماء الصالح للشراب' )
+        doc.text(60,60,' من رئيسة بلدية منزل عبد الرحمان الى' )
+        doc.text(80,70,'السيد/السيدة: اماني الغربي ' )
+        doc.text(50,80,'القاطن/القاطنة ب: نهج الخناء منزل عبد الرحمان ' )
         doc.setFontSize(18)
         doc.setTextColor(0, 0, 0)
-        var p1 = doc.splitTextToSize('ان رئيسة بلدية منزل عبد الرحمان بعد اطلاعها على  المطلب الذي تقدم به السيد/السيدة الغربي اماني لتزويد محله/ها الكائن ب حي الاندلس بنزرت بالماء الصالح للشراب من طرف الشركة الوطنية لاستغلال و توزيع المياه',260);
-        doc.text(195,100,p1,{ align: "right",lang: 'ar'})
-        var p2 = doc.splitTextToSize('وتبعا للجلسة المحلية لاسناد تراخيص الربط بالشبكات العمومية للبناءات المشيدة بدون ترخيص المنعقدة بمقر بلدية منزل عبد الرحمان بتاريخ 2022-05 -2',250);
-         doc.text(195,130,p2,{ align: "right",lang: 'ar'})
-         var p3 = doc.splitTextToSize('واستنادا لمصادقة السيد والي بنزرت بتاريخ 2022-07-23 و جدول ارسال الولاية عدد 972 / 13 بتاريخ 2022- 09- 23 يرخص للسيد/ة الغربي اماني',250);
-         doc.text(195,150,p3,{ align: "right",lang: 'ar'})
-        doc.text(195,175,'في ربط محله/ها المذكور ب الشبكة العمومية لتوزيع المياه',{ align: "right",lang: 'ar'})
-        doc.text(195,185,' سلمت هذه الشهادة للادلاء بها لدى مصالح الشركة الوطنية لاستغلال و توزيع المياه ',{ align: "right",lang: 'ar'})
-        doc.text(195,200,' رقم الملف : 86113033 ',{ align: "right",lang: 'ar'})
+        doc.text(195,100,'الموضوع : حول ملف رخصة البناء',{ align: "right",lang: 'ar'})
+        var p1 = doc.splitTextToSize('وبعد تبعا لملف رخصة البناء المقدم من طرفكم حول العقار الموجود بمنزل عبد الرحمان نعلمكم انه تم عرض ملفكم على انضار اللجنة الفنية الجهوية لرخص البناء في الجلسة المنعقدة بتاريخ 14/04/2022',260);
+        doc.text(195,120,p1,{ align: "right",lang: 'ar'})
+        doc.text(195,145,'و التي ابدت رايها بالموافقة',{ align: "right",lang: 'ar'})
+        doc.setDrawColor(255, 0, 0)
+        doc.rect(165, 165, 20, 10)
+        doc.setTextColor(255, 0, 0);
+        doc.text(185,170, 'هام جدا',{ align: "right",lang: 'ar'});
+        doc.setDrawColor(0, 0, 0)
+        doc.rect(10, 180, 195, 35)
+        doc.setTextColor(0, 0, 0);
+        var p2 = doc.splitTextToSize('بناء على قرار اليدة وزيرة التجهيز و الاكان و التهيئة الترابية المؤرخ في 17 افريل 2007 المتعلق بضبط الوثائق المكونة لملف رخصة البناء و اجل صلاحيتها و التمديد فيها و روط تجديدها و خاصة الفصل الخام منه فاننا ندعوكم الى تلم رخصة البناء في اجل اقصاه هر من تاريخ هذا الاعلام و الا اصبحت غير سارية المفعول ',260);
+        doc.text(200,190, p2,{ align: "right",lang: 'ar'});
         doc.setFontSize(16)
-        doc.text(35,220,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
-        doc.text(50,230,'رئيس/رئيسة البلدية')
+        doc.text(35,230,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
+        doc.text(50,240,'رئيس/رئيسة البلدية')
         doc.setFontSize(10)
         doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
         }
@@ -521,24 +533,31 @@ function getPDFResPublic(){
      
     
         doc.text(140,15,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
-        doc.setFontSize(19)
+        doc.setFontSize(16)
         doc.setTextColor(0, 0, 255)
-        doc.text(45,75,'Autorisation d`amener d`eclairage public')
+        doc.text(45,60,'Du maire de la municipalité  d`Abd al-Rahman A')
+        doc.text(66,70,'Madame/Monieur : Amani Gharbi')
+        doc.text(66,80,'Adresse : Menzel Abdel Rahmen')
         doc.setFontSize(12)
         doc.setTextColor(0, 0, 0)
-        var p1 = doc.splitTextToSize('Le maire de Menzel Abderrahmane, après examen de la demande présentée par M./Mme test test, d`approvisionner son commerce situé en 4 rue des andalous en eclairage public de la Société tunisienne de l`électricité et du gaz', 180);
-        doc.text(15,100,p1)
-        var p2 = doc.splitTextToSize('Et selon la session locale d`attribution des licences de raccordement aux réseaux publics pour les bâtiments construits sans licence, tenue au siège de la municipalité de Manzil Abd al-Rahman le 2022-05-23.', 180);
-        doc.text(15,120,p2)
-        var p3 = doc.splitTextToSize('Et sur la base de l`approbation de M. Gouverneur de Bizerte en date du 2022-07-23 et du bordereau d`expédition de l`etat n° 13/972 en date du 2022-09-23', 180);
-        doc.text(15,140,p3)
-        var p4 = doc.splitTextToSize('Raccordement de ses locaux précités au réseau public de réseau public de distribution de l`électricité', 180);
-        doc.text(15,160,p4)
-        var p5 = doc.splitTextToSize('Ce certificat a été délivré aux intérêts de la Société tunisienne de l`électricité et du gaz', 180);
-        doc.text(15,180,p5)
+        doc.text(15,100,'Sujet: À propos du dossier de permis de construire')
+     
+        var p1 = doc.splitTextToSize('Et après, selon le dossier de permis de construire déposé par vous concernant le bien situé dans la maison d`Abd al-Rahman, nous vous informons que votre dossier a été présenté à l`attention de la commission technique régionale des permis de construire lors de la séance tenue le 14-04-2022.', 180);
+        doc.text(15,110,p1)
+        doc.text(15,135,'Et celle qui a donné son avis par: Acceptation')
+        doc.setDrawColor(255, 0, 0)
+        doc.rect(20, 160, 34, 10)
+        doc.setTextColor(255, 0, 0);
+        doc.text(24,166,'Très important.')
+        doc.setDrawColor(0, 0, 0)
+        doc.rect(13, 173, 183, 30)
+        doc.setTextColor(0, 0, 0);
+        var p2 = doc.splitTextToSize('Vu l`arrêté du ministre de l`équipement, de l`habitat et de l`aménagement du territoire en date du 17 avril 2007, relatif au contrôle des pièces constituant le dossier de permis de construire, sa durée de validité et sa prorogation, les conditions de son renouvellement, et notamment le chapitre brut de celui-ci, nous vous invitons à retirer le permis de construire dans un délai maximum d`un mois à compter de la date de ce média, faute de quoi il n`est plus valable', 180);
+        doc.text(15,178,p2)
+     
         doc.setFontSize(14)
-        doc.text(105,205,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
-        doc.text(115,215,'Maire de la municipalité')
+        doc.text(105,215,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
+        doc.text(115,225,'Maire de la municipalité')
         doc.setFontSize(10)
         doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
         }
