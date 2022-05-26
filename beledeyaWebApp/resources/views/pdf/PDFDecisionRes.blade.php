@@ -74,9 +74,10 @@
     
     <p> Et selon la session locale d'attribution des licences de raccordement aux réseaux publics pour les bâtiments construits sans licence, tenue au siège 
         de la municipalité de Manzil Abd al-Rahman le <b>{{$date_reunion}}</b></p>
-        <p>Et sur la base de l'approbation de M. Gouverneur de Bizerte en date du <b>{{$date_gouv}}</b>
-             et du bordereau d'expédition de l'etat n° 13/972 en date du <b>{{$date_gouv_ar}}</b></p>
-  
+        <p>Et sur la base de l'approbation de M. Gouverneur de Bizerte en date du <b>02/01/2021</b>
+           <p>  Et après, selon le procès-verbal de la séance de la commission locale d'attribution
+                des autorisations de raccordement aux réseaux d'eau potable et d'éclairage électrique, 
+                qui s'est tenue le <b> 16/12/2014</b> au siège de la commune de Manzil Abd al-Rahman </p>
   <p>Autorisé à M.Mme <b> {{$nom}} {{$prenom}}</b> </p>
        <p> <b> Raccordement de ses locaux précités au réseau public de {{$type_res}}</b></p>
              
@@ -87,7 +88,7 @@
     <h4 class="commune"> Menzel Abderrahman le {{ $date }}</h4>
     <h4 class="commune" style="text-decoration: underline black;margin-left: 55%;"> Maire de la municipalité</h4>
 
-<footer style="margin-top:25%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
+<footer style="margin-top:20%;margin-left:45%">http://www.commune-menzel-abderrahmen.gov.tn</footer> 
   
 
 

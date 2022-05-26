@@ -190,8 +190,8 @@ try{
                 'type_soc' => $type_soc,
                 'date_reunion' => Carbon::parse($reseauPublic['created_at'])->format('Y-m-d'),
                 'type' => $type,
-                'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
-                'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
+                // 'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
+                // 'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
                 'type_res' => $type_res,
                 'num' => $reseauPublic['num_branch'],
 
@@ -222,8 +222,8 @@ try{
                 'type_soc' => $type_soc,
                 'date_reunion' => Carbon::parse($reseauPublic['created_at'])->format('Y-m-d'),
                 'type' => $type,
-                'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
-                'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
+                // 'date_gouv' =>Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(2)))->format('Y-m-d'),
+                // 'date_gouv_ar' => Carbon::parse($reseauPublic['created_at']->add(CarbonInterval::months(4)))->format('Y-m-d'),
                 'type_res' => $type_res,
                 'num' => $reseauPublic['num_branch'],
 
