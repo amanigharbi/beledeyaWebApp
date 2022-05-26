@@ -60,7 +60,6 @@ function modifyLanguage(lang) {
             messages.push(msg01);
             updateChatText(chatBox);
             readOutLoud(mess0, "chat-1", "chat");
-            getPDFResPublic();
             break;
         case "français":
 
@@ -69,7 +68,6 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
-            getPDFAcceptBatir();
             break;
         case "arabe":
            // mess2="عسلامة كيفاش نجموا نعاونك"
@@ -78,7 +76,6 @@ function modifyLanguage(lang) {
             messages.push(msg03);
             updateChatText(chatBox);
             readOutLoud(mess2, "chat-1", "chat");
-            getPDFAcceptBatir();
             break;
             case "tounsi":
                 mess3 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
@@ -86,7 +83,6 @@ function modifyLanguage(lang) {
                  messages.push(msg04);
                  updateChatText(chatBox);
                  readOutLoud(mess3, "chat-1", "chat");
-                 getPDFAcceptBatir();
                  break;
         default:
             readOutLoud("choisir une langue", "lang-chose", "chat");
@@ -564,6 +560,85 @@ function getPDFResPublic(){
         
         doc.save("test.pdf");
         }
+        function getPDFRefusBatir(){
+   
+            var doc = new jsPDF();
+            
+            
+            if((language=="arabe")|| (language=="tounsi")){
+               
+            
+            doc.addFileToVFS('Amiri-Regular-normal.ttf', font);
+            doc.addFont('Amiri-Regular-normal.ttf', 'Amiri-Regular', 'normal');
+            doc.addFileToVFS('Amiri-Italic-normal.ttf', fontItalic);
+            doc.addFont('Amiri-Italic-normal.ttf', 'Amiri-Italic', 'normal');
+            doc.setFont('Amiri-Regular', 'normal');
+            doc.addImage(imgData, 'PNG', 90, 10, 25, 35)
+            doc.viewerPreferences({"Direction" : "RTL"}, true);
+            doc.text(170, 15, 'الجمهورية التونسية')
+            doc.text(175, 22, 'وزارة الداخلية')
+            doc.text(179, 29, 'ولاية بنزرت')
+            doc.text(159, 35, 'بلدية منزل عبد الرحمان')
+            doc.text(10,15,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
+             doc.setFontSize(19)
+             doc.setTextColor(0, 0, 255)
+            doc.text(60,60,' من رئيسة بلدية منزل عبد الرحمان الى' )
+            doc.text(80,70,'السيد/السيدة: اماني الغربي ' )
+            doc.text(50,80,'القاطن/القاطنة ب: نهج الخناء منزل عبد الرحمان ' )
+            doc.setFontSize(18)
+            doc.setTextColor(0, 0, 0)
+            doc.text(195,100,'الموضوع : حول ملف رخصة البناء',{ align: "right",lang: 'ar'})
+            var p1 = doc.splitTextToSize('وبعد تبعا لملف رخصة البناء المقدم من طرفكم حول العقار الموجود بمنزل عبد الرحمان نعلمكم انه تم عرض ملفكم على انضار اللجنة الفنية الجهوية لرخص البناء في الجلسة المنعقدة بتاريخ 14/04/2022',260);
+            doc.text(195,120,p1,{ align: "right",lang: 'ar'})
+            doc.text(195,150,'و التي ابدت رايها بعدم الموافقة',{ align: "right",lang: 'ar'})
+            doc.text(195,165,':للاسباب التالية',{ align: "right",lang: 'ar'})
+            doc.setTextColor(255, 0, 0)
+            doc.text(195,180,'حدود العقر غير واضحة *',{ align: "right",lang: 'ar'})
+            doc.setTextColor(0, 0, 0)
+            doc.setFontSize(16)
+            doc.text(35,240,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
+            doc.text(50,250,'رئيس/رئيسة البلدية')
+            doc.setFontSize(10)
+            doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
+            }
+            else{
+                
+                doc.addImage(imgData, 'PNG', 90, 10, 25, 35)
+            doc.setFontSize(10)
+            doc.text(10, 15, 'République Tunisienne')
+            doc.text(10, 22, 'Ministère de l`Intérieur ')
+            doc.text(10, 29, 'Province de Bizerte')
+            doc.text(10, 35, 'Municipalité de Manzel Abd al-Rahman')
+         
+        
+            doc.text(140,15,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
+            doc.setFontSize(16)
+            doc.setTextColor(0, 0, 255)
+            doc.text(45,60,'Du maire de la municipalité  d`Abd al-Rahman A')
+            doc.text(66,70,'Madame/Monieur : Amani Gharbi')
+            doc.text(66,80,'Adresse : Menzel Abdel Rahmen')
+            doc.setFontSize(12)
+            doc.setTextColor(0, 0, 0)
+            doc.text(15,100,'Sujet: À propos du dossier de permis de construire')
+         
+            var p1 = doc.splitTextToSize('Et après, selon le dossier de permis de construire déposé par vous concernant le bien situé dans la maison d`Abd al-Rahman, nous vous informons que votre dossier a été présenté à l`attention de la commission technique régionale des permis de construire lors de la séance tenue le 14-04-2022.', 180);
+            doc.text(15,110,p1)
+            doc.text(15,135,'Et celle qui a donné son avis par: Refus')
+            doc.text(15,145,'Pour les raisons suivantes')
+            doc.setTextColor(255, 0, 0)
+            doc.text(15,160,'* Les limites du terrain ne sont pas claires')
+            doc.setTextColor(0, 0, 0)
+            
+         
+            doc.setFontSize(14)
+            doc.text(105,185,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
+            doc.text(115,195,'Maire de la municipalité')
+            doc.setFontSize(10)
+            doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
+            }
+            
+            doc.save("test.pdf");
+            }
 function getDocument(FileName){
     var list = [];
     var nameFile="";
@@ -659,7 +734,6 @@ function onSendButton(chatbox) {
             recognition.lang = "fr-FR";
             break;
         case "arabe":
-            //ar-TN
             recognition.lang = "ar-AE";
             break;
             case "tounsi":

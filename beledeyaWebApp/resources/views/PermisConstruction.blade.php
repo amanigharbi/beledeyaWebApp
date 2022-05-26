@@ -234,7 +234,7 @@
                                                             @break
                                                         @endswitch
                                                     </td>
-                                                    cccc
+                                                    @if ($r->status >1) 
                                                         <td><button type="submit" class="" onclick="getPdf();"><i
                                                             class="fas fa-eye"></i></button>
                                                         </td>
