@@ -28,7 +28,6 @@ var descRec = "";
 var typeRec = "";
 var NumRec = "";
 var NomDoc="";
-var cin = "";
 var v = 0;
 var nomRes = "";
 var prenomRes = "";
@@ -38,6 +37,14 @@ var adrRes = "";
 var descRes = "";
 var typeRes = "";
 var num_branch = "";
+var nom = "";
+var prenom = "";
+var cin = "";
+var email = "";
+var address = "";
+var surface ="";
+var prop = "";
+var num_autor = "";
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -75,6 +82,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
+            
             break;
         case "arabe":
            // mess2="عسلامة كيفاش نجموا نعاونك"
@@ -198,21 +206,80 @@ function ajoutRecVoiceBot() {
 
 }
 
+function ajoutBatirVoiceBot() {
+    for (var i = 1; i < 9; i++) {
+        num_autor += Math.floor(Math.random() * 9);;
+    }
+    console.log(num_autor);
+
+    var data = {
+        'nom': nom,
+        'prenom': prenom,
+        'email': email,
+        'cin': cin,
+        'address': address,
+        'surface': surface,
+        'prop': prop,
+        'num_autor': num_autor,
+    };
+
+    var url = "http://127.0.0.1:8080/work/consommation%20api/add_autorisation_batir.php";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        dataType: 'JSON',
+        encode: true,
+        mode: 'no-cors',
+        headers: {
+            "Access-Control-Allow-Origin": "127.0.0.1",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "*"
+        },
+        success: function (response, status, xhr) {
+            switch (language) {
+                case "anglais":
+                    VoiceBot("Request registered. your waiver is uploded", chatBox);
+                    num_autor = "";
+                    break;
+                case "français":
+                    VoiceBot("Demande enregistré. votre décharge à été télécharger", chatBox);
+                    num_autor   = "";
+                case "arabe":
+                    VoiceBot(" تم تسجيل طلبكم ", chatBox);
+                    num_autor = "";
+                    break;
+                    case "tounsi":
+                        VoiceBot(" تم تسجيل طلبكم ", chatBox);
+                        num_autor = "";
+                        break;
+                default:
+                    VoiceBot("Demande enregistré. Merci de télécharger votre décharge", chatBox);
+                    num_autor = "";
+                    break;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Something went wrong!");
+        }
+    });
+
+}
 function ajoutResVoiceBot() {
     for (var i = 1; i < 9; i++) {
         num_branch += Math.floor(Math.random() * 9);;
     }
-    console.log(num_branch);
+    console.log(num_autor);
 
     var data = {
-        'user' : 2,
-        'nom': nomRes,
-        'prenom': prenomRes,
-        'email': emailRes,
-        'cin': cinRes,
-        'address': adrRes,
-        'type': typeRes,
-        'description': descRes,
+
+        'nom': "nomRes",
+        'prenom': "prenomRes",
+        'email': "emailRes",
+        'cin': "12345678",
+        'address': "adrRes",
+        'type': "typeRes",
+        'description': "descRes",
         'num_branch': num_branch,
     };
 
@@ -355,6 +422,115 @@ function suiviRecVoiceBot(num_rec,cin,chatbox) {
         }
     });
 }
+function suiviBatirVoiceBot(num_autor,cinBatir,chatbox) {
+    var url = "http://127.0.0.1:8080/work/consommation%20api/SuiviAutorisationBatir.php";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { 'num_autor': num_autor ,
+        'cin': cinBatir  
+    },
+        dataType: 'JSON',
+        encode: true,
+        mode: 'no-cors',
+        headers: {
+            "Access-Control-Allow-Origin": "127.0.0.1",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "*"
+        },
+        success: function (response, status, xhr) {
+            console.log("hello every baadi ",response);
+            switch (language) {
+                case "anglais":
+                    switch(response['status']){
+                        case "0":
+                            VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is delivered but not yet processed ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is being processed ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is accepted ", chatbox);
+                                getPDFAcceptBatir(response['last_name'],response['first_name'],response['adresse']);
+                            break;
+                            case "3":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is rejected ", chatbox);
+                                getPDFRefusBatir(response['last_name'],response['first_name'],response['adresse'],response['response']);
+                            break;
+                    }
+                     
+                    break;
+                case "français":
+                    console.log("name ",response['first_name']);
+                    console.log("status ",response['status']);
+                    var status = response['status'];
+                    switch(status){
+                        case "0":
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est delivré mais pas encore traité ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est en cours de traitement ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est acceptée ", chatbox);
+                                getPDFAcceptBatir(response['last_name'],response['first_name'],response['adresse']);
+                            break;
+                            case "3":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est refusée ", chatbox);
+                                getPDFRefusBatir(response['last_name'],response['first_name'],response['adresse'],response['response']);
+                            break;
+                    }
+                   
+                    break;
+                case "arabe":
+                    switch(response['status']){
+                        case "0":
+                            VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" طلبك قيد المعالجة ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم قبول طلبك ", chatbox);
+                                getPDFAcceptBatir(response['last_name'],response['first_name'],response['adresse']);
+                            break;
+                            case "3":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم رفض طلبك ", chatbox);
+                                getPDFRefusBatir(response['last_name'],response['first_name'],response['adresse'],response['response']);
+                            break;
+                    }
+                  
+                    break;
+                    case "tounsi":
+                        switch(response['status']){
+                            case "0":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatbox);
+                                break;
+                                case "1":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" طلبك قيد المعالجة ", chatbox);
+                                break;
+                                case "2":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم قبول طلبك ", chatbox);
+                                    getPDFAcceptBatir(response['last_name'],response['first_name'],response['adresse']);
+                                break;
+                                case "3":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم رفض طلبك ", chatbox);
+                                    getPDFRefusBatir(response['last_name'],response['first_name'],response['adresse'],response['response']);
+                                break;
+                        }
+                      
+                        break;
+               
+               
+                    
+                    
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Something went wrong!");
+        }
+    });
+}
 function getNumLet(s) {
     switch (s) {
         case 'واحد':
@@ -403,7 +579,7 @@ doc.text(118, 29, 'الفاكس   125 570 72')
 doc.text(70, 35, 'communemenzelabderrahmen@gmail.com')
 doc.text(105, 40, 'نهج المنجي سليم 7035 بنزرت')
 doc.setTextColor(0, 0, 255)
-doc.text(45,65,  ' السيد/السيدة):'+PrenomRec+' '+NomRec )
+doc.text(45,65,  ' السيد/السيدة:'+PrenomRec+' '+NomRec )
 doc.text(68,72,' القاطن/القاطنة ب: '+AdrRec)
 doc.text(45,79,EmailRec+' :البريد الالكتروني ')
 doc.text(52,87,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
@@ -459,7 +635,7 @@ doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
 
 doc.save(NomRec+PrenomRec+".pdf");
 }
-function getPDFResPublic(){
+function getPDFResPublicAccept(){
    
     var doc = new jsPDF();
     
@@ -540,7 +716,7 @@ function getPDFResPublic(){
     
     doc.save("test.pdf");
     }
-    function getPDFAcceptBatir(){
+    function getPDFAcceptBatir(nom,prenom,address){
    
         var doc = new jsPDF();
         
@@ -563,8 +739,8 @@ function getPDFResPublic(){
          doc.setFontSize(19)
          doc.setTextColor(0, 0, 255)
         doc.text(60,60,' من رئيسة بلدية منزل عبد الرحمان الى' )
-        doc.text(80,70,'السيد/السيدة: اماني الغربي ' )
-        doc.text(50,80,'القاطن/القاطنة ب: نهج الخناء منزل عبد الرحمان ' )
+        doc.text(80,70,' السيد/السيدة: ' +nom +" " +prenom )
+        doc.text(50,80,'القاطن/القاطنة ب: ' +address)
         doc.setFontSize(18)
         doc.setTextColor(0, 0, 0)
         doc.text(195,100,'الموضوع : حول ملف رخصة البناء',{ align: "right",lang: 'ar'})
@@ -600,8 +776,8 @@ function getPDFResPublic(){
         doc.setFontSize(16)
         doc.setTextColor(0, 0, 255)
         doc.text(45,60,'Du maire de la municipalité  d`Abd al-Rahman A')
-        doc.text(66,70,'Madame/Monieur : Amani Gharbi')
-        doc.text(66,80,'Adresse : Menzel Abdel Rahmen')
+        doc.text(66,70,'Madame/Monieur : '+nom +" "+prenom)
+        doc.text(66,80,'Adresse : '+address)
         doc.setFontSize(12)
         doc.setTextColor(0, 0, 0)
         doc.text(15,100,'Sujet: À propos du dossier de permis de construire')
@@ -626,9 +802,9 @@ function getPDFResPublic(){
         doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
         }
         
-        doc.save("test.pdf");
+        doc.save(nom+prenom+"Respons.pdf");
         }
-        function getPDFRefusBatir(){
+        function getPDFRefusBatir(nom,prenom,address,raison){
    
             var doc = new jsPDF();
             
@@ -651,8 +827,8 @@ function getPDFResPublic(){
              doc.setFontSize(19)
              doc.setTextColor(0, 0, 255)
             doc.text(60,60,' من رئيسة بلدية منزل عبد الرحمان الى' )
-            doc.text(80,70,'السيد/السيدة: اماني الغربي ' )
-            doc.text(50,80,'القاطن/القاطنة ب: نهج الخناء منزل عبد الرحمان ' )
+            doc.text(80,70,' السيد/السيدة: ' +nom +" "+prenom)
+            doc.text(50,80,'القاطن/القاطنة ب:  ' +address)
             doc.setFontSize(18)
             doc.setTextColor(0, 0, 0)
             doc.text(195,100,'الموضوع : حول ملف رخصة البناء',{ align: "right",lang: 'ar'})
@@ -661,7 +837,7 @@ function getPDFResPublic(){
             doc.text(195,150,'و التي ابدت رايها بعدم الموافقة',{ align: "right",lang: 'ar'})
             doc.text(195,165,':للاسباب التالية',{ align: "right",lang: 'ar'})
             doc.setTextColor(255, 0, 0)
-            doc.text(195,180,'حدود العقر غير واضحة *',{ align: "right",lang: 'ar'})
+            doc.text(195,180,' *'+raison,{ align: "right",lang: 'ar'})
             doc.setTextColor(0, 0, 0)
             doc.setFontSize(16)
             doc.text(35,240,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
@@ -683,8 +859,8 @@ function getPDFResPublic(){
             doc.setFontSize(16)
             doc.setTextColor(0, 0, 255)
             doc.text(45,60,'Du maire de la municipalité  d`Abd al-Rahman A')
-            doc.text(66,70,'Madame/Monieur : Amani Gharbi')
-            doc.text(66,80,'Adresse : Menzel Abdel Rahmen')
+            doc.text(66,70,'Madame/Monieur :' +nom +' '+prenom)
+            doc.text(66,80,'Adresse : '+address)
             doc.setFontSize(12)
             doc.setTextColor(0, 0, 0)
             doc.text(15,100,'Sujet: À propos du dossier de permis de construire')
@@ -694,7 +870,7 @@ function getPDFResPublic(){
             doc.text(15,135,'Et celle qui a donné son avis par: Refus')
             doc.text(15,145,'Pour les raisons suivantes')
             doc.setTextColor(255, 0, 0)
-            doc.text(15,160,'* Les limites du terrain ne sont pas claires')
+            doc.text(15,160,'* '+raison)
             doc.setTextColor(0, 0, 0)
             
          
@@ -705,7 +881,7 @@ function getPDFResPublic(){
             doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
             }
             
-            doc.save("test.pdf");
+            doc.save(nom+prenom+"Respons.pdf");
             }
 function getDocument(FileName){
     var list = [];
@@ -784,7 +960,7 @@ else{
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
-  function verifResPublic(textField,chatbox){
+  function verifRec(textField,chatbox){
     switch (v) {
         case 0:
             fetch("http://127.0.0.1:5050/predict", {
@@ -808,27 +984,580 @@ function delay(time) {
                 .catch(console.error);
             break;
 
-        case 11:
+        case 1:
             if (textField !== "") {
-                nomRes = textField;
-                if (typeof nomRes === 'string' && nomRes.trim().length >= 4) {
+                nomRec = textField;
+                if (typeof nomRec === 'string' && nomRec.trim().length >= 4) {
                     switch (language) {
                         case "anglais":
-                            VoiceBot("Mr or Mrs " + nomRes + " please send me your first name", chatbox);
+                            VoiceBot("Mr or Mrs " + nomRec + " please send me your first name", chatbox);
                             break;
                         case "français":
-                            VoiceBot("Monsieur ou Madame " + nomRes + " s`il vous plait envoyer moi votre prénom", chatbox);
+                            VoiceBot("Monsieur ou Madame " + nomRec + " s`il vous plait envoyer moi votre prénom", chatbox);
                             break;
                         case "arabe":
-                            VoiceBot(" السيد او السيدة  " + nomRes + "ارسل لي اسمك "
+                            VoiceBot(" السيد او السيدة  " + nomRec + "ارسل لي اسمك "
                                 , chatbox);
                             break;
                             case "tounsi":
-                                VoiceBot(" السيد او السيدة  " + nomRes + "ارسل لي اسمك "
+                                VoiceBot(" السيد او السيدة  " + nomRec + "ارسل لي اسمك "
                                 , chatbox);
                                 break;
                         default:
-                            VoiceBot("Monsieur ou Madame " + nomRes + " s`il vous plait envoyer moi votre prénom", chatbox);
+                            VoiceBot("Monsieur ou Madame " + nomRec + " s`il vous plait envoyer moi votre prénom", chatbox);
+                            break;
+                    }
+                    v = 2;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Invalid name", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Nom non valide", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("اسم عائلة غير صحيح", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("اسم عائلة غير صحيح", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Nom non valide", chatbox);
+                            break;
+                    }
+                }
+            }
+
+            break;
+
+        case 2:
+            if (textField !== "") {
+                prenomRec = textField;
+
+                if (typeof prenomRec === 'string' && prenomRec.trim().length >= 3) {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Mr or Mrs " + nomRec + " " + prenomRec + " send me your identity card number", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Monsieur ou Madame " + nomRec + " " + prenomRec + " envoyer moi votre numéro de carte d`identité", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("السيد او السيدة" + nomRec + " " + prenomRec + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("السيد او السيدة" + nomRec + " " + prenomRec + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                                break;
+
+                        default:
+                            VoiceBot("Monsieur ou Madame " + nomRec + " " + prenomRec + " envoyer moi votre numéro de carte d`identité", chatbox);
+                            break;
+                    }
+                    v = 3;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Say a real name please", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
+                            break;
+                    }
+
+                }
+            }
+
+            break;
+        case 3:
+            if (textField !== "") {
+                cinRec = "";
+                if ((language == "arabe") || (language == "tounsi"))  {
+                    var cinArray = textField.split(' ');
+                    for (let i = 0; i < cinArray.length; i++) {
+                        cinRec = cinRec + getNumLet(cinArray[i]);
+                    }
+                } else {
+                    cinRec = textField.replaceAll(' ', '');
+                }
+
+                console.log("cin " + cinRec);
+                if (cinRec.length == 8) {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Great now what is your address", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
+                            break;
+                    }
+                    v = 4;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("The identity card number must be an 8-digit number", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
+                            break;
+                    }
+                }
+            }
+
+            break;
+        case 4:
+            if (textField !== "") {
+                adrRec = textField;
+
+                if (typeof adrRec === 'string' && adrRec.trim().length >= 4) {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("what is your email", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("c`est quoi Votre email", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("ماهو بريدك الإلكتروني", chatbox);
+                            recognition.lang = "en-US";
+                            break;
+                            case "tounsi":
+                                VoiceBot("ماهو بريدك الإلكتروني", chatbox);
+                                recognition.lang = "en-US";
+                                break;
+                        default:
+                            VoiceBot("c`est quoi Votre email", chatbox);
+                            break;
+                    }
+                    v = 5;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("there is an error try again", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("il y a une erreur réessayer", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
+                                break;
+                        default:
+                            VoiceBot("il y a une erreur réessayer", chatbox);
+                            break;
+                    }
+                }
+            }
+
+            break;
+        case 5:
+            if (textField !== "") {
+                textField = textField.replaceAll('arobase', '@');
+                textField = textField.replaceAll('at', '@');
+                textField = textField.replaceAll(' ', '');
+                emailRec = textField
+                console.log("email " + emailRec);
+                if (validateEmail(emailRec)) {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Choose a type from this list say 1 if the complaint is of the administration type 2 if of the anarchic construction type 3 if of the public lighting type 4 if of the energy type 5 if of the green space type 6 mobility 7 health and hygiene and 8 if it is another kind", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", chatbox);
+                            break;
+                        case "arabe":
+                            recognition.lang = "ar-AE";
+                            VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشكوى من نوع الإدارة 2 إذا كانت من نوع البناء الفوضوي 3 إذا كانت من نوع الإضاءة العامة  4 إذا كانت من نوع الطاقة 5 إذا كانت من المساحة الخضراء  6 التنقل 7 الصحة والنظافة 8 إذا كان من نوع آخر", chatbox);
+                            break;
+                            case "tounsi":
+                                recognition.lang = "ar-TN";
+                                VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشكوى من نوع الإدارة 2 إذا كانت من نوع البناء الفوضوي 3 إذا كانت من نوع الإضاءة العامة  4 إذا كانت من نوع الطاقة 5 إذا كانت من المساحة الخضراء  6 التنقل 7 الصحة والنظافة 8 إذا كان من نوع آخر", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", chatbox);
+                            break;
+                    }
+                    v = 6;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("invalid email try again", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("email non valide réessayer", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
+                                recognition.lang = "en-US";
+                                break;
+                        default:
+                            VoiceBot("email non valide réessayer", chatbox);
+                            break;
+                    }
+
+                }
+            }
+
+            break;
+        case 6:
+            if (textField !== "") {
+                 if((language=="arabe")||(language == "tounsi") ){
+                    typeRec=getNumLet(textField);
+                switch (typeRec) {
+                    case 1:
+                        typeRec = "الإدارة";
+                        break;
+                    case 2:
+                        typeRec = "البناء الفوضوي";
+                        break;
+                    case 3:
+                        typeRec = "الإضاءة العامة";
+                        break;
+                    case 4:
+                        typeRec = "الطاقة";
+                        break;
+                    case 5:
+                        typeRec = "المساحة الخضراء";
+                        break;
+                    case 6:
+                        typeRec = "التنقل";
+                        break;
+                    case 7:
+                       
+                        typeRec = "الصحة والنظافة";
+                        break;
+                    case 8:
+                       
+                        typeRec = "نوع آخر ";
+                        break;
+                    default:
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Unknown type try again", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Type non connue réessayer", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Type non connue réessayer", chatbox);
+                                break;
+                        }
+                        break;
+                }
+                console.log("type ",typeRec);
+            }
+            else{
+                switch (textField) {
+                    case "1":
+                        typeRec = "Administration";
+                        break;
+                    case "2":
+                        typeRec = "Construction anarchiques";
+                        break;
+                    case "3":
+                        typeRec = "Eclairage publique";
+                        break;
+                    case "4":
+                        typeRec = "Energie";
+                        break;
+                    case "5":
+                        typeRec = "Espaces Verts";
+                        break;
+                    case "6":
+                        typeRec = "Mobilité";
+                        break;
+                    case "7":
+                        typeRec = "Santé et Higiéne";
+                        break;
+                    case "8":
+                        typeRec = "Autres Réclamations ";
+                        break;
+                    default:
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Unknown type try again", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Type non connue réessayer", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                    break;
+
+                            default:
+                                VoiceBot("Type non connue réessayer", chatbox);
+                                break;
+                        }
+                        break;
+                }
+                console.log("type ",typeRec);
+            }
+                switch (language) {
+                    case "anglais":
+                        VoiceBot("Please send me a short description of your complaint", chatbox);
+                        break;
+                    case "français":
+                        VoiceBot("Merci de m`envoyer une petite description de votre réclamation", chatbox);
+                        break;
+                    case "arabe":
+                        VoiceBot("من فضلك أرسل لي وصفا موجزا لشكواك", chatbox);
+                        break;
+                        case "tounsi":
+                            VoiceBot("من فضلك أرسل لي وصفا موجزا لشكواك", chatbox);
+                            break;
+                    default:
+                        VoiceBot("Merci de m`envoyer une petite description de votre réclamation", chatbox);
+                        break;
+                }
+
+
+                v = 7;
+
+            }
+
+            break;
+        case 7:
+            if (textField !== "") {
+                descRec = textField;
+
+                if (typeof descRec === 'string' && descRec.trim().length >= 10) {
+                    
+                    ajoutRecVoiceBot();
+                    getPDF(adrRec,nomRec,prenomRec,cinRec,emailRec,typeRec,descRec,NumRec);
+                    console.log("nom " +
+                        nomRec +
+                        " prenom " +
+                        prenomRec +
+                        " cin " +
+                        cinRec +
+                        " email " +
+                        emailRec +
+                        " adr " +
+                        adrRec +
+                        " type " +
+                        typeRec +
+                        " description " +
+                        descRec);
+                    //v = 8;
+                }
+                else {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Say a correct description", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Dire une correcte description", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("قل وصفا صحيحا", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("قل وصفا صحيحا", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Dire une correcte description", chatbox);
+                            break;
+                    }
+
+                }
+            }
+
+            break;
+    case 8:
+       
+        if (textField !== "") {
+            num_rec="";
+    
+            if ((language == "arabe") || (language=="tounsi")) {
+                var NumArray = textField.split(' ');
+                for (let i = 0; i < NumArray.length; i++) {
+                    num_rec = num_rec + getNumLet(NumArray[i]);
+                    console.log("nummm", num_rec);
+                }
+            } else {
+                num_rec = textField.replaceAll(' ', '');
+     }
+
+           
+         
+            console.log("je suis la");
+            
+            
+            if (num_rec.length == 8) {
+                switch (language) {
+                    case "anglais":
+                        VoiceBot("Hi send me your identity card number", chatbox);
+                        textField = "";
+                        v = 9;
+                        break;
+                    case "français":
+                        VoiceBot("Salut envoyez moi votre numéro de carte d`identité", chatbox);
+                        textField = "";
+                        v = 9;
+                        break;
+                    case "arabe":
+                        VoiceBot("مرحبًا ، أرسل لي رقم بطاقة هويتك", chatbox);
+                        textField = "";
+                        v = 9;
+                        break;
+                        case "tounsi":
+                            VoiceBot("مرحبًا ، أرسل  لي رقم بطاقة هويتك  ", chatbox);
+                            textField = "";
+                            v = 9;
+                            break;
+                }
+            }
+            else {
+                switch(language){
+                    case "anglais":
+                        VoiceBot("recheck", chatbox);
+                        break;
+                    case "français":
+                        VoiceBot("Revérifier", chatbox);
+                        break;
+                    case "arabe":
+                        VoiceBot("حاول مرة اخرى", chatbox);
+                        break;
+                        case "tounsi":
+                            VoiceBot("حاول مرة اخرى", chatbox);
+                            break;
+                    default:
+                        VoiceBot("Revérifier", chatbox);
+                        break;
+                }
+              
+            }
+        }
+        break;
+        case 9 :
+            if (textField !== "") {
+                cin="";
+        
+                if ((language == "arabe") || (language=="tounsi")) {
+                    var cinArray = textField.split(' ');
+                    for (let i = 0; i < cinArray.length; i++) {
+                        cin = cin + getNumLet(cinArray[i]);
+                        console.log("nummm", cin);
+                    }
+                } else {
+                    cin = textField.replaceAll(' ', '');
+         }
+
+               
+             
+                console.log("je suis la");
+                
+                
+                if (cin.length == 8) {
+                    suiviRecVoiceBot(num_rec,cin,chatbox);
+               
+                }
+                else {
+                    switch(language){
+                        case "anglais":
+                            VoiceBot("recheck", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Revérifier", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("حاول مرة اخرى", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("حاول مرة اخرى", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Revérifier", chatbox);
+                            break;
+                    }
+                  
+                }
+            }
+            break;
+case 10:
+       
+    if (textField !== "") {
+        NomDoc =textField.replaceAll('é','e');
+            console.log("na9ra f ",NomDoc);
+            recognition.lang = "fr-FR";
+             getDocument(NomDoc);
+   
+    
+
+    } 
+break;
+    }
+  }
+  function verifAutoBatir(textField,chatbox){
+    switch (v) {
+
+        case 11:
+            if (textField !== "") {
+                nom = textField;
+                if (typeof nom === 'string' && nom.trim().length >= 4) {
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Mr or Mrs " + nom + " please send me your first name", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Monsieur ou Madame " + nom + " s`il vous plait envoyer moi votre prénom", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot(" السيد او السيدة  " + nom + "ارسل لي اسمك "
+                                , chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot(" السيد او السيدة  " + nom + "ارسل لي اسمك "
+                                , chatbox);
+                                break;
+                        default:
+                            VoiceBot("Monsieur ou Madame " + nom + " s`il vous plait envoyer moi votre prénom", chatbox);
                             break;
                     }
                     v = 12;
@@ -858,25 +1587,25 @@ function delay(time) {
 
         case 12:
             if (textField !== "") {
-                prenomRes = textField;
+                prenom = textField;
 
-                if (typeof prenomRes === 'string' && prenomRes.trim().length >= 3) {
+                if (typeof prenom === 'string' && prenom.trim().length >= 3) {
                     switch (language) {
                         case "anglais":
-                            VoiceBot("Mr or Mrs " + nomRes + " " + prenomRes +" send me your identity card number", chatbox);
+                            VoiceBot("Mr or Mrs " + nom + " " + prenom +" send me your identity card number", chatbox);
                             break;
                         case "français":
-                            VoiceBot("Monsieur ou Madame " + nomRes + " " + prenomRes + " envoyer moi votre numéro de carte d`identité", chatbox);
+                            VoiceBot("Monsieur ou Madame " + nom + " " + prenom + " envoyer moi votre numéro de carte d`identité", chatbox);
                             break;
                         case "arabe":
-                            VoiceBot("السيد او السيدة" + nomRes + " " + prenomRes + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                            VoiceBot("السيد او السيدة" + nom + " " + prenom + "ارسل لي رقم بطاقة هويتك ", chatbox);
                             break;
                             case "tounsi":
-                                VoiceBot("السيد او السيدة" + nomRes + " " + prenomRes + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                                VoiceBot("السيد او السيدة" + nom + " " + prenom + "ارسل لي رقم بطاقة هويتك ", chatbox);
                                 break;
 
                         default:
-                            VoiceBot("Monsieur ou Madame " + nomRes + " " + prenomRes + " envoyer moi votre numéro de carte d`identité", chatbox);
+                            VoiceBot("Monsieur ou Madame " + nom + " " + prenom + " envoyer moi votre numéro de carte d`identité", chatbox);
                             break;
                     }
                     v = 13;
@@ -906,18 +1635,18 @@ function delay(time) {
             break;
         case 13:
             if (textField !== "") {
-                cinRes = "";
+                cin = "";
                 if ((language == "arabe") || (language == "tounsi"))  {
                     var cinArray = textField.split(' ');
                     for (let i = 0; i < cinArray.length; i++) {
-                        cinRes = cinRes + getNumLet(cinArray[i]);
+                        cin = cin + getNumLet(cinArray[i]);
                     }
                 } else {
-                    cinRes = textField.replaceAll(' ', '');
+                    cin = textField.replaceAll(' ', '');
                 }
 
-                console.log("cin " + cinRes);
-                if (cinRes.length == 8) {
+                console.log("cin " + cin);
+                if (cin.length == 8) {
                     switch (language) {
                         case "anglais":
                             VoiceBot("Great now what is your address", chatbox);
@@ -961,9 +1690,9 @@ function delay(time) {
             break;
         case 14:
             if (textField !== "") {
-                adrRes = textField;
+                address = textField;
 
-                if (typeof adrRes === 'string' && adrRes.trim().length >= 4) {
+                if (typeof address === 'string' && address.trim().length >= 4) {
                     switch (language) {
                         case "anglais":
                             VoiceBot("what is your email", chatbox);
@@ -1012,26 +1741,26 @@ function delay(time) {
                 textField = textField.replaceAll('arobase', '@');
                 textField = textField.replaceAll('at', '@');
                 textField = textField.replaceAll(' ', '');
-                emailRes = textField
+                email = textField
                 console.log("email " + emailRec);
-                if (validateEmail(emailRes)) {
+                if (validateEmail(email)) {
                     switch (language) {
                         case "anglais":
-                            VoiceBot("Choose a type from this list say 1 if the network is Sonede type and 2 if Steg type", chatbox);
+                            VoiceBot("what is the surface of your building", chatbox);
                             break;
                         case "français":
-                            VoiceBot("Choisir un type parmi cette liste dire 1 si le réseau est de type Sonéde et 2 si de type Steg", chatbox);
+                            VoiceBot("c`est quoi la surface de votre batir", chatbox);
                             break;
                         case "arabe":
                             recognition.lang = "ar-AE";
-                            VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشبكة من نوع الماء و 2 إذا كانت من النوع الكهرباء و الغاز", chatbox);
+                            VoiceBot("كم يبلغ مساحة سطح المبنى الخاص بك", chatbox);
                             break;
                             case "tounsi":
                                 recognition.lang = "ar-TN";
-                                VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشبكة من نوع الماء و 2 إذا كانت من النوع الكهرباء و الغاز", chatbox);
+                                VoiceBot("كم يبلغ مساحة سطح المبنى الخاص بك", chatbox);
                                 break;
                         default:
-                            VoiceBot("Choisir un type parmi cette liste dire 1 si le réseau est de type Sonéde et 2 si de type Steg", chatbox);
+                            VoiceBot("c`est quoi la surface de votre batir", chatbox);
                             break;
                     }
                     v = 16;
@@ -1063,152 +1792,202 @@ function delay(time) {
         case 16:
             if (textField !== "") {
                  if((language=="arabe")||(language == "tounsi") ){
-                    typeRes=getNumLet(textField);
-                switch (typeRes) {
-                    case "1":
-                        typeRes = "الماء";
-                        break;
-                    case "2":
-                        typeRes = "الكهرباء و الغاز";
-                        break;
-                   
-                    default:
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Unknown type try again", chatbox);
-                                v=16;
-                                break;
-                            case "français":
-                                VoiceBot("Type non connue réessayer", chatbox);
-                                v=16;
-                                break;
-                            case "arabe":
-                                VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                v=16;
-                                break;
-                                case "tounsi":
-                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                    v=16;
-                                    break;
-                            default:
-                                VoiceBot("Type non connue réessayer", chatbox);
-                                v=16;
-                                break;
-                        }
-                        break;
-                }
-                console.log("type ",typeRec);
-            }
+                    surface=getNumLet(textField);
+                 }
             else{
-                switch (textField) {
-                    case "1":
-                        typeRes = "Sonede";
-                        break;
-                    case "2":
-                        typeRes = "Steg";
-                        break;
-                    default:
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Unknown type try again", chatbox);
-                                v=16;
-                                break;
-                            case "français":
-                                VoiceBot("Type non connue réessayer", chatbox);
-                                v=16;
-                                break;
-                            case "arabe":
-                                VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                v=16;
-                                break;
-                                case "tounsi":
-                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                    v=16;
-                                    break;
-
-                            default:
-                                VoiceBot("Type non connue réessayer", chatbox);
-                                v=16;
-                                break;
-                        }
-                        break;
+               surface = textField.replaceAll(' ','');
                 }
-                console.log("type ",typeRes);
+                console.log("urfce ",surface);
             }
                 switch (language) {
                     case "anglais":
-                        VoiceBot("Please send me a short description of your request", chatbox);
+                        VoiceBot("Does the land adjoin public property? say 1 if yes and 2 if not", chatbox);
                         break;
                     case "français":
-                        VoiceBot("Merci de m`envoyer une petite description de votre demande", chatbox);
+                        VoiceBot("Le terrain jouxte-t-il une propriété publique? dire 1 si oui et 2 sinon", chatbox);
                         break;
                     case "arabe":
-                        VoiceBot("من فضلك أرسل لي وصفا موجزا لطلبك", chatbox);
+                        VoiceBot("هل الأرض مجاورة للممتلكات العامة؟ قل 1 إذا كانت الإجابة بنعم و 2 إذا لم يكن كذلك", chatbox);
                         break;
                         case "tounsi":
-                            VoiceBot("من فضلك أرسل لي وصفا موجزا لطلبك", chatbox);
+                            VoiceBot("هل الأرض مجاورة للممتلكات العامة؟ قل 1 إذا كانت الإجابة بنعم و 2 إذا لم يكن كذلك", chatbox);
                             break;
                     default:
-                        VoiceBot("Merci de m`envoyer une petite description de votre demande", chatbox);
+                        VoiceBot("Le terrain jouxte-t-il une propriété publique? dire 1 si oui et 2 sinon", chatbox);
                         break;
                 }
 
 
                 v = 17;
 
-            }
+            
 
             break;
         case 17:
             if (textField !== "") {
-                descRes= textField;
-
-                if (typeof descRes === 'string' && descRes.trim().length >= 10) {
-                    
-                    ajoutResVoiceBot();
-                    getPDFResPublic(adrRes,nomRes,prenomRes,cinRes,emailRes,typeRes,descRes,num_branch);
+                if((language=="arabe")||(language == "tounsi") ){
+                    prop=getNumLet(textField);
+                    switch (prop) {
+                        case "1":
+                            prop="نعم"
+                            break;
+                            case "2":
+                                prop="لا"
+                                break;
+                       
+                    }
+                 }
+            else{
+                switch (textField) {
+                    case "1":
+                        prop="oui"
+                        break;
+                        case "2":
+                            prop="non"
+                            break;
+                }
+         
+            }
+             
+                    ajoutBatirVoiceBot();
+                    getPDFBatirPublic(address,nom,prenom,cin,email,surface,num_autor);
                     console.log("nom " +
-                        nomRes +
+                        nom +
                         " prenom " +
-                        prenomRes +
+                        prenom +
                         " cin " +
-                        cinRes +
+                        cin +
                         " email " +
-                        emailRes +
+                        email +
                         " adr " +
-                        adrRes +
+                        address +
                         " type " +
-                        typeRes +
+                        surface +
                         " description " +
-                        descRes);
+                        prop);
                     //v = 8;
                 }
-                else {
-                    switch (language) {
-                        case "anglais":
-                            VoiceBot("Say a correct description", chatbox);
-                            break;
-                        case "français":
-                            VoiceBot("Dire une correcte description", chatbox);
-                            break;
-                        case "arabe":
-                            VoiceBot("قل وصفا صحيحا", chatbox);
-                            break;
-                            case "tounsi":
-                                VoiceBot("قل وصفا صحيحا", chatbox);
-                                break;
-                        default:
-                            VoiceBot("Dire une correcte description", chatbox);
-                            break;
+               
+                break;
+                case 18:
+       
+                    if (textField !== "") {
+                        num_autor="";
+                
+                        if ((language == "arabe") || (language=="tounsi")) {
+                            var NumArray = textField.split(' ');
+                            for (let i = 0; i < NumArray.length; i++) {
+                                num_autor = num_autor + getNumLet(NumArray[i]);
+                                console.log("nummm", num_autor);
+                            }
+                        } else {
+                            num_autor = textField.replaceAll(' ', '');
+                 }
+            
+                       
+                     
+                        console.log("je suis la");
+                        
+                        
+                        if (num_autor.length == 8) {
+                            switch (language) {
+                                case "anglais":
+                                    VoiceBot("Hi send me your identity card number", chatbox);
+                                    textField = "";
+                                    v = 19;
+                                    break;
+                                case "français":
+                                    VoiceBot("Salut envoyez moi votre numéro de carte d`identité", chatbox);
+                                    textField = "";
+                                    v = 19;
+                                    break;
+                                case "arabe":
+                                    VoiceBot("مرحبًا ، أرسل لي رقم بطاقة هويتك", chatbox);
+                                    textField = "";
+                                    v = 19;
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("مرحبًا ، أرسل  لي رقم بطاقة هويتك  ", chatbox);
+                                        textField = "";
+                                        v = 19;
+                                        break;
+                            }
+                        }
+                        else {
+                            switch(language){
+                                case "anglais":
+                                    VoiceBot("recheck", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("حاول مرة اخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("حاول مرة اخرى", chatbox);
+                                        break;
+                                default:
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                            }
+                          
+                        }
                     }
+                    break;
+                case 19 :
+                    if (textField !== "") {
+                      var  cinBatir="";
+                
+                        // if ((language == "arabe") || (language=="tounsi")) {
+                        //     var cinArray = textField.split(' ');
+                        //     for (let i = 0; i < cinArray.length; i++) {
+                        //         cinBatir = cinBatir + getNumLet(cinArray[i]);
+                        //         console.log("nummm", cinBatir);
+                        //     }
+                        // } 
+                        // else{
+                            cinBatir = textField.replaceAll(' ', '');
+                        // }
+        
+                       
+                     
+                        console.log("je suis la ",cinBatir);
+                        
+                        
+                        if (cinBatir.length == 8) {
+                            suiviBatirVoiceBot(num_autor,cinBatir,chatbox);
+                       
+                        }
+                        else {
+                            switch(language){
+                                case "anglais":
+                                    VoiceBot("recheck", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("حاول مرة اخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("حاول مرة اخرى", chatbox);
+                                        break;
+                                default:
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                            }
+                          
+                        }
+                    }
+                    break;
+            }   
+            
 
-                }
-            }
-
-            break;
-  }
+           
+  
 }
-function getPDFResPublic(AdrRes,NomRes,PrenomRes,NumCin,EmailRes,TypeRes,DescRes,num_branch){
+function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
    
     var doc = new jsPDF();
     
@@ -1229,30 +2008,27 @@ function getPDFResPublic(AdrRes,NomRes,PrenomRes,NumCin,EmailRes,TypeRes,DescRes
     doc.text(70, 35, 'communemenzelabderrahmen@gmail.com')
     doc.text(105, 40, 'نهج المنجي سليم 7035 بنزرت')
     doc.setTextColor(0, 0, 255)
-    doc.text(45,65,  ' السيد (ة):'+PrenomRes+' '+NomRes )
-    doc.text(68,72,' القاطن(ة) ب: '+AdrRes)
-    doc.text(45,79,EmailRes+' :البريد الالكتروني ')
-    doc.text(52,87,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
+    doc.text(45,65,  ' السيد/السيد :'+Prenom+' '+Nom )
+    doc.text(45,72,' القاطن/القاطنة ب: '+Adr)
+    doc.text(45,79,Email+' :البريد الالكتروني ')
+    doc.text(30,87,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
      doc.setFontSize(19)
     doc.setTextColor(0, 0, 0)
-    doc.text(120,110,'رقم الملف : '+num_branch)
-    doc.text(120,125,'طلب الاتصال بالشبكة العامة ل : '+typeRes)
+    doc.text(135,110,'رقم الملف : '+num_autor)
+    doc.text(150,125,'طلب تصريح البناء')
      doc.setFontSize(19)
      doc.setFont('Amiri-Italic', 'normal');
     doc.setTextColor(0, 0, 255)
     doc.setFontSize(18)
-    doc.text(40,140,' السيدة/السيدة  '+NomRes+' '+PrenomRes +' صاحب بطاقة تعريف وطنية عدد '+NumCin)
+    doc.text(40,140,' السيدة/السيدة  '+Nom+' '+Prenom +' صاحب بطاقة تعريف وطنية عدد '+NumCin)
     doc.setFont('Amiri-Regular', 'normal');
     doc.setTextColor(0, 0, 0)
-     doc.text(57,160,'  و الموضوع '+DescRec+' '+TypeRec+' لقد تلقينا طلبك للاتصال بالشبكات العامة من النوع  ')
-     doc.text(95,162,'سنحاول الرد عليك في أسرع وقت ممكن')
-    doc.text(18,178,' يمكنك متابعة طلبك من خلال هذا الرقم  '+num_branch +' للبقاء على اتصال مع الجميع')
-    doc.text(60,190,' من فضلك استقبل سيدتي ام سيدي '+NomRes+' '+PrenomRes +',  أطيب التحيات')
-    doc.setTextColor(255, 0, 0)
-    doc.text(60,205,'يرجى إحضار هذه الوثيقة إلى البلدية مع الاوراق التالية لاتمام الاجراءات \n * مطلب باسم السيدة رئيسة البلدية معرف بالامضاء في صورة اكثر من مالك \n * شهادة ملكية او عقد بيع')
-    doc.setTextColor(0, 0, 0)
+     doc.text(57,155,+surface+' لقد تلقينا طلب تصريح البناء الخاص بك و الذي تبلغ مساحته ')
+     doc.text(110,165,'سنحاول الرد عليك في أسرع وقت ممكن')
+    doc.text(18,175,' يمكنك متابعة طلبك من خلال هذا الرقم  '+num_autor +' للبقاء على اتصال مع الجميع')
+    doc.text(60,185,' من فضلك استقبل سيدتي ام سيدي '+Nom+' '+Prenom +',  أطيب التحيات')
     doc.setFontSize(16)
-    doc.text(35,220,'بلدية منزل عبد الرحمان')
+    doc.text(35,215,'بلدية منزل عبد الرحمان')
     doc.setFontSize(10)
     doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
@@ -1263,36 +2039,428 @@ function getPDFResPublic(AdrRes,NomRes,PrenomRes,NumCin,EmailRes,TypeRes,DescRes
     doc.text(42, 15, 'Commune de MENZEL ABDERRAHMAN  \n Tel (+216) 72 570 125/ (+216) 72 571 295 \n Fax (+216) 72 570 125 \n communemenzelabderrahmen@gmail.com \n Rue El Mongi Slim 7035 menzel abdel rahmen ')
     
     doc.setTextColor(0, 0, 255)
-    doc.text(130,60,'Nom et Prénom : '+NomRes+' '+PrenomRes)
-    doc.text(130,65,'Adresse : '+AdrRes)
-    doc.text(130,70,'Email :'+EmailRes)
+    doc.text(130,60,'Nom et Prénom : '+Nom+' '+Prenom)
+    doc.text(130,65,'Adresse : '+Adr)
+    doc.text(130,70,'Email :'+Email)
     doc.text(130,75,'Menzel Abderhmane le '+jour+'/'+mois+'/'+annee)
     doc.setFontSize(16)
     doc.setTextColor(0, 0, 0)
-    doc.text(15,95,'Numéro dossier: '+num_branch)
-    doc.text(15,105,'Décharge de demande de branchement aux réseau publics de '+TypeRes)
+    doc.text(15,95,'Numéro dossier: '+num_autor)
+    doc.text(15,105,'Décharge de demande d`autoriation de batir')
     doc.setFontSize(16)
     doc.setFontType('italic')
     doc.setTextColor(0, 0, 255)
     doc.setFontSize(12)
-    doc.text(15,115,'Monsieur/Madame '+NomRes+' '+PrenomRes +' titulaire de cin '+NumCin)
+    doc.text(15,115,'Monsieur/Madame '+Nom+' '+Prenom +' titulaire de cin '+NumCin)
     doc.setFontType('normal')
     doc.setTextColor(0, 0, 0)
-    doc.text(15,125,'Nous avons bien reçu votre demande de branchement aux réseau publics de type '+TypeRes +'\n et de description '+DescRes +' \n \n Nous essayons de vou répondre dés que possible.')
-    doc.text(20,150,'Vous pouvez suivre votre demande a travers ce numéro '+num_branch +' pour restez en contact de tous.')
-    doc.text(20,160,'Veuillez recevoir, Madame, ou Monsieur,'+NomRes+' '+PrenomRes +',  nos salutations distinguées')
-    doc.setTextColor(255, 0, 0)
-    doc.text(20,170,'Merci d`apporter ce document à la municipalité accompagné des documents suivants pour terminer les procédures')
-    doc.text(20,180,'* Une demande au nom de madame le maire, identifiable par signature sous la forme de plus d`un propriétaire \n * Certificat de propriété ou contrat de vente ')
-    doc.setTextColor(0, 0, 0)
+    doc.text(15,125,'Nous avons bien reçu votre demande d`autoriation de batir de surface '+surface +' \n \n Nous essayons de vou répondre dés que possible.')
+    doc.text(15,150,'Vous pouvez suivre votre demande a travers ce numéro '+num_autor +' pour restez en contact de tous.')
+    doc.text(15,160,'Veuillez recevoir, Madame, ou Monsieur,'+Nom+' '+Prenom +',  nos salutations distinguées')
     doc.setFontSize(16)
-    doc.text(105,205,'Commune de Menzel Abderrahmane')
+    doc.text(105,200,'Commune de Menzel Abderrahmane')
     doc.setFontSize(10)
     doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
     
-    doc.save(NomRes+PrenomRes+".pdf");
+    doc.save(Nom+Prenom+"Const.pdf");
     }
+    function verifResPublic(textField,chatbox){
+        switch (v) {
+           
+    
+            case 20:
+                if (textField !== "") {
+                    nomRes = textField;
+                    if (typeof nomRes === 'string' && nomRes.trim().length >= 4) {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Mr or Mrs " + nomRes + " please send me your first name", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Monsieur ou Madame " + nomRes + " s`il vous plait envoyer moi votre prénom", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot(" السيد او السيدة  " + nomRes + "ارسل لي اسمك "
+                                    , chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot(" السيد او السيدة  " + nomRes + "ارسل لي اسمك "
+                                    , chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Monsieur ou Madame " + nomRes + " s`il vous plait envoyer moi votre prénom", chatbox);
+                                break;
+                        }
+                        v = 21;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Invalid name", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Nom non valide", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("اسم عائلة غير صحيح", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("اسم عائلة غير صحيح", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Nom non valide", chatbox);
+                                break;
+                        }
+                    }
+                }
+    
+                break;
+    
+            case 21:
+                if (textField !== "") {
+                    prenomRes = textField;
+    
+                    if (typeof prenomRes === 'string' && prenomRes.trim().length >= 3) {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Mr or Mrs " + nomRes + " " + prenomRes + " send me your identity card number", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Monsieur ou Madame " + nomRes + " " + prenomRes + " envoyer moi votre numéro de carte d`identité", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("السيد او السيدة" + nomRes + " " + prenomRes + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("السيد او السيدة" + nomRes + " " + prenomRes + "ارسل لي رقم بطاقة هويتك ", chatbox);
+                                    break;
+    
+                            default:
+                                VoiceBot("Monsieur ou Madame " + nomRes + " " + prenomRes + " envoyer moi votre numéro de carte d`identité", chatbox);
+                                break;
+                        }
+                        v = 22;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Say a real name please", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
+                                break;
+                        }
+    
+                    }
+                }
+    
+                break;
+            case 22:
+                if (textField !== "") {
+                    cinRes = "";
+                    if ((language == "arabe") || (language == "tounsi"))  {
+                        var cinArray = textField.split(' ');
+                        for (let i = 0; i < cinArray.length; i++) {
+                            cinRes = cinRes + getNumLet(cinArray[i]);
+                        }
+                    } else {
+                        cinRes = textField.replaceAll(' ', '');
+                    }
+    
+                    console.log("cin " + cinRes);
+                    if (cinRes.length == 8) {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Great now what is your address", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
+                                break;
+                        }
+                        v = 23;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("The identity card number must be an 8-digit number", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
+                                break;
+                        }
+                    }
+                }
+    
+                break;
+            case 23:
+                if (textField !== "") {
+                    adrRes = textField;
+    
+                    if (typeof adrRes === 'string' && adrRes.trim().length >= 4) {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("what is your email", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("c`est quoi Votre email", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("ماهو بريدك الإلكتروني", chatbox);
+                                recognition.lang = "en-US";
+                                break;
+                                case "tounsi":
+                                    VoiceBot("ماهو بريدك الإلكتروني", chatbox);
+                                    recognition.lang = "en-US";
+                                    break;
+                            default:
+                                VoiceBot("c`est quoi Votre email", chatbox);
+                                break;
+                        }
+                        v = 24;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("there is an error try again", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("il y a une erreur réessayer", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("il y a une erreur réessayer", chatbox);
+                                break;
+                        }
+                    }
+                }
+    
+                break;
+            case 24:
+                if (textField !== "") {
+                    textField = textField.replaceAll('arobase', '@');
+                    textField = textField.replaceAll('at', '@');
+                    textField = textField.replaceAll(' ', '');
+                    emailRes = textField
+                    console.log("email " + emailRes);
+                    if (validateEmail(emailRes)) {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Choose the type of your request say 1 if  sonede type and 2 if steg type", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Choisir le type de votre demande dire 1 si de type sonede et 2 si de type steg", chatbox);
+                                break;
+                            case "arabe":
+                                recognition.lang = "ar-AE";
+                                VoiceBot("اختر نوع طلبك ، قل 1 إذا كان نوع الماء و 2 إذا كان نوع الكهرباء و الغاز", chatbox);
+                                break;
+                                case "tounsi":
+                                    recognition.lang = "ar-TN";
+                                    VoiceBot("اختر نوع طلبك ، قل 1 إذا كان نوع الماء و 2 إذا كان نوع الكهرباء و الغاز", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Choisir le type de votre demande dire 1 si de type sonede et 2 si de type steg", chatbox);
+                                break;
+                        }
+                        v = 25;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("invalid email try again", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("email non valide réessayer", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
+                                    recognition.lang = "en-US";
+                                    break;
+                            default:
+                                VoiceBot("email non valide réessayer", chatbox);
+                                break;
+                        }
+    
+                    }
+                }
+    
+                break;
+            case 25:
+                if (textField !== "") {
+                     if((language=="arabe")||(language == "tounsi") ){
+                        typeRes=getNumLet(textField);
+                    switch (typeRes) {
+                        case "1":
+                            typeRes = "الماء";
+                            break;
+                        case "2":
+                            typeRes = "الكهرباء و الغاز";
+                            break;
+                        default:
+                            switch (language) {
+                                case "anglais":
+                                    VoiceBot("Unknown type try again", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Type non connue réessayer", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                        break;
+                                default:
+                                    VoiceBot("Type non connue réessayer", chatbox);
+                                    break;
+                            }
+                            break;
+                    }
+                    console.log("type ",typeRes);
+                }
+                else{
+                    switch (textField) {
+                        case "1":
+                            typeRes = "Sonede";
+                            break;
+                        case "2":
+                            typeRes = "Steg";
+                            break;
+                        
+                        default:
+                            switch (language) {
+                                case "anglais":
+                                    VoiceBot("Unknown type try again", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Type non connue réessayer", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
+                                        break;
+    
+                                default:
+                                    VoiceBot("Type non connue réessayer", chatbox);
+                                    break;
+                            }
+                            break;
+                    }
+                    console.log("type ",typeRes);
+                }
+                    switch (language) {
+                        case "anglais":
+                            VoiceBot("Please send me a short description of your request", chatbox);
+                            break;
+                        case "français":
+                            VoiceBot("Merci de m`envoyer une petite description de votre demande", chatbox);
+                            break;
+                        case "arabe":
+                            VoiceBot("من فضلك أرسل لي وصفا موجزا لطلبك", chatbox);
+                            break;
+                            case "tounsi":
+                                VoiceBot("من فضلك أرسل لي وصفا موجزا لطلبك", chatbox);
+                                break;
+                        default:
+                            VoiceBot("Merci de m`envoyer une petite description de votre demande", chatbox);
+                            break;
+                    }
+    
+    
+                    v = 26;
+    
+                }
+    
+                break;
+            case 26:
+                if (textField !== "") {
+                    descRes = textField;
+    
+                    if (typeof descRes === 'string' && descRes.trim().length >= 10) {
+                        
+                        ajoutResVoiceBot();
+                        // getPDF(adrRes,nomRes,prenomRes,cinRes,emailRes,typeRes,descRes,num_branch);
+                        console.log("nom " +
+                            nomRes +
+                            " prenom " +
+                            prenomRes +
+                            " cin " +
+                            cinRes +
+                            " email " +
+                            emailRes +
+                            " adr " +
+                            adrRes +
+                            " type " +
+                            typeRes +
+                            " description " +
+                            descRes);
+                        //v = 8;
+                    }
+                    else {
+                        switch (language) {
+                            case "anglais":
+                                VoiceBot("Say a correct description", chatbox);
+                                break;
+                            case "français":
+                                VoiceBot("Dire une correcte description", chatbox);
+                                break;
+                            case "arabe":
+                                VoiceBot("قل وصفا صحيحا", chatbox);
+                                break;
+                                case "tounsi":
+                                    VoiceBot("قل وصفا صحيحا", chatbox);
+                                    break;
+                            default:
+                                VoiceBot("Dire une correcte description", chatbox);
+                                break;
+                        }
+    
+                    }
+                }
+    
+                break;
+       
+   
+        }
+      }
 /**
  * 
  * onSendButton(chatbox) nous permet d'envoyer les messages
@@ -1313,9 +2481,9 @@ function onSendButton(chatbox) {
         case "arabe":
             recognition.lang = "ar-AE";
             break;
-            case "tounsi":
-                recognition.lang = "ar-TN";
-                break;
+        case "tounsi":
+            recognition.lang = "ar-TN";
+            break;
       
     }
     console.log("aaaa " + recognition.lang);
@@ -1357,7 +2525,7 @@ function onSendButton(chatbox) {
         }
         // if ((textField == "suivi réclamation")|| (textField == "اتباع")
         // || (textField == "check")) 
-        if ((textField.includes("suivi réclamation")) || (textField.includes("suivi")) || (textField.includes("اتباع"))|| (textField.includes("check complaint")) || (textField.includes("check")) || (textField.includes("وين وصله الشكايه")))
+        if ((textField.includes("suivi réclamation")) || (textField.includes("اتباع شكايه"))|| (textField.includes("check complaint")) || (textField.includes("check")) || (textField.includes("وين وصله الشكايه")))
            {
                 switch (language) {
                     case "anglais":
@@ -1410,8 +2578,8 @@ function onSendButton(chatbox) {
          
            
         }
-        if ((textField.includes("réseau public")) || (textField.includes("شبكة عامة"
-            ))|| (textField.includes("public network")) || (textField.includes("ماء وضوء")))
+        if ((textField.includes("autorisation bâtir")) || (textField.includes("رخصة"
+            ))|| (textField.includes("permit")))
         // if ((textField == "réclamation") || (textField == "شكوى")
         //     || (textField == "reclamation"))
              {
@@ -1440,582 +2608,66 @@ function onSendButton(chatbox) {
             }
             
         }
+        if ((textField.includes("suivi bâtir")) || (textField.includes("اتباع رخصه"))|| (textField.includes("check request")) || (textField.includes("وين وصل مطلب الرخصة")))
+        {
+             switch (language) {
+                 case "anglais":
+                     VoiceBot("Hi send me the file number you want to track", chatbox);
+                     textField = "";
+                     v = 18;
+                     break;
+                 case "français":
+                     VoiceBot("Salut envoyez moi le numéro de demande que vous voullez suivre", chatbox);
+                     textField = "";
+                     v = 18;
+                     break;
+                 case "arabe":
+                     VoiceBot("مرحبًا ، أرسل لي رقم المطالبة الذي تريد تتبعه", chatbox);
+                     textField = "";
+                     v = 18;
+                     break;
+                     case "tounsi":
+                         VoiceBot("مرحبًا ، أرسل لي رقم المطالبة الذي تريد تتبعه", chatbox);
+                         textField = "";
+                         v = 18;
+                         break;
+             }
+          
+           
+     }
+        if ((textField.includes("réseau public")) || (textField.includes("شبكة عامة"))|| (textField.includes("public network")) || (textField.includes("ماء و ضوء")))
+        {
+            switch (language) {
+                case "anglais":
+                    VoiceBot("Hello! please send me your last name", chatbox);
+                    textField = "";
+                    v = 20;
+                    break;
+                case "français":
+                    VoiceBot("Bienvenue  merci d`envoyer votre nom", chatbox);
+                    
+                    textField = "";
+                    v = 20;
+                    break;
+                case "arabe":
+                    VoiceBot("مرحبا من فضلك ارسل لي اسم العائلة", chatbox);
+                    textField = "";
+                    v = 20;
+                    break;
+                    case "tounsi":
+                        VoiceBot("مرحبا من فضلك ارسل لي اسم العائلة", chatbox);
+                        textField = "";
+                        v = 20;
+                        break;
+            }
+        }
+
         if (textField === "") {
             return;
         }
 
-        switch (v) {
-            case 0:
-                fetch("http://127.0.0.1:5050/predict", {
-                    method: "POST",
-                    body: JSON.stringify({ message: textField }),
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "127.0.0.1"
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        let msg2 = { name: "Sam", message: data };
-                        messages.push(msg2);
-                        chatRepId++;
-                        updateChatText(chatbox);
-                        readOutLoud(data, "chat-" + chatRepId, "chat");
-                        textField.value = "";
-                    })
-                    .catch(console.error);
-                break;
-
-            case 1:
-                if (textField !== "") {
-                    nomRec = textField;
-                    if (typeof nomRec === 'string' && nomRec.trim().length >= 4) {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Mr or Mrs " + nomRec + " please send me your first name", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Monsieur ou Madame " + nomRec + " s`il vous plait envoyer moi votre prénom", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot(" السيد او السيدة  " + nomRec + "ارسل لي اسمك "
-                                    , chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot(" السيد او السيدة  " + nomRec + "ارسل لي اسمك "
-                                    , chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Monsieur ou Madame " + nomRec + " s`il vous plait envoyer moi votre prénom", chatbox);
-                                break;
-                        }
-                        v = 2;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Invalid name", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Nom non valide", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("اسم عائلة غير صحيح", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("اسم عائلة غير صحيح", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Nom non valide", chatbox);
-                                break;
-                        }
-                    }
-                }
-
-                break;
-
-            case 2:
-                if (textField !== "") {
-                    prenomRec = textField;
-
-                    if (typeof prenomRec === 'string' && prenomRec.trim().length >= 3) {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Mr or Mrs " + nomRec + " " + prenomRec + " send me your identity card number", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Monsieur ou Madame " + nomRec + " " + prenomRec + " envoyer moi votre numéro de carte d`identité", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("السيد او السيدة" + nomRec + " " + prenomRec + "ارسل لي رقم بطاقة هويتك ", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("السيد او السيدة" + nomRec + " " + prenomRec + "ارسل لي رقم بطاقة هويتك ", chatbox);
-                                    break;
-
-                            default:
-                                VoiceBot("Monsieur ou Madame " + nomRec + " " + prenomRec + " envoyer moi votre numéro de carte d`identité", chatbox);
-                                break;
-                        }
-                        v = 3;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Say a real name please", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("قل الاسم الحقيقي من فضلك", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Dire un vrai prénom s`il vous plait", chatbox);
-                                break;
-                        }
-
-                    }
-                }
-
-                break;
-            case 3:
-                if (textField !== "") {
-                    cinRec = "";
-                    if ((language == "arabe") || (language == "tounsi"))  {
-                        var cinArray = textField.split(' ');
-                        for (let i = 0; i < cinArray.length; i++) {
-                            cinRec = cinRec + getNumLet(cinArray[i]);
-                        }
-                    } else {
-                        cinRec = textField.replaceAll(' ', '');
-                    }
-
-                    console.log("cin " + cinRec);
-                    if (cinRec.length == 8) {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Great now what is your address", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("عظيم الآن ما هو عنوانك", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Génial maintenant c`est quoi votre adresse", chatbox);
-                                break;
-                        }
-                        v = 4;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("The identity card number must be an 8-digit number", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("يجب أن يتكون رقم بطاقة الهوية من 8 أرقام", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Le numéro de carte d`identité doit etre un nombre de 8 chiffres", chatbox);
-                                break;
-                        }
-                    }
-                }
-
-                break;
-            case 4:
-                if (textField !== "") {
-                    adrRec = textField;
-
-                    if (typeof adrRec === 'string' && adrRec.trim().length >= 4) {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("what is your email", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("c`est quoi Votre email", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("ماهو بريدك الإلكتروني", chatbox);
-                                recognition.lang = "en-US";
-                                break;
-                                case "tounsi":
-                                    VoiceBot("ماهو بريدك الإلكتروني", chatbox);
-                                    recognition.lang = "en-US";
-                                    break;
-                            default:
-                                VoiceBot("c`est quoi Votre email", chatbox);
-                                break;
-                        }
-                        v = 5;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("there is an error try again", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("il y a une erreur réessayer", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("هناك خطأ ما حاول مرة أخرى", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("il y a une erreur réessayer", chatbox);
-                                break;
-                        }
-                    }
-                }
-
-                break;
-            case 5:
-                if (textField !== "") {
-                    textField = textField.replaceAll('arobase', '@');
-                    textField = textField.replaceAll('at', '@');
-                    textField = textField.replaceAll(' ', '');
-                    emailRec = textField
-                    console.log("email " + emailRec);
-                    if (validateEmail(emailRec)) {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Choose a type from this list say 1 if the complaint is of the administration type 2 if of the anarchic construction type 3 if of the public lighting type 4 if of the energy type 5 if of the green space type 6 mobility 7 health and hygiene and 8 if it is another kind", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", chatbox);
-                                break;
-                            case "arabe":
-                                recognition.lang = "ar-AE";
-                                VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشكوى من نوع الإدارة 2 إذا كانت من نوع البناء الفوضوي 3 إذا كانت من نوع الإضاءة العامة  4 إذا كانت من نوع الطاقة 5 إذا كانت من المساحة الخضراء  6 التنقل 7 الصحة والنظافة 8 إذا كان من نوع آخر", chatbox);
-                                break;
-                                case "tounsi":
-                                    recognition.lang = "ar-TN";
-                                    VoiceBot("اختر نوعًا من هذه القائمة قل 1 إذا كانت الشكوى من نوع الإدارة 2 إذا كانت من نوع البناء الفوضوي 3 إذا كانت من نوع الإضاءة العامة  4 إذا كانت من نوع الطاقة 5 إذا كانت من المساحة الخضراء  6 التنقل 7 الصحة والنظافة 8 إذا كان من نوع آخر", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Choisir un type parmi cette liste dire 1 si la réclamation de type administration 2 si de type construction anarchique 3 si de type éclairage publique 4 si de type énergie 5 si de type espace verts 6 mobilité 7 santé et hiégiéne et 8 si c est une autre type", chatbox);
-                                break;
-                        }
-                        v = 6;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("invalid email try again", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("email non valide réessayer", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot(" البريد الإلكتروني غير صالح حاول مرة أخرى", chatbox);
-                                    recognition.lang = "en-US";
-                                    break;
-                            default:
-                                VoiceBot("email non valide réessayer", chatbox);
-                                break;
-                        }
-
-                    }
-                }
-
-                break;
-            case 6:
-                if (textField !== "") {
-                     if((language=="arabe")||(language == "tounsi") ){
-                        typeRec=getNumLet(textField);
-                    switch (typeRec) {
-                        case 1:
-                            typeRec = "الإدارة";
-                            break;
-                        case 2:
-                            typeRec = "البناء الفوضوي";
-                            break;
-                        case 3:
-                            typeRec = "الإضاءة العامة";
-                            break;
-                        case 4:
-                            typeRec = "الطاقة";
-                            break;
-                        case 5:
-                            typeRec = "المساحة الخضراء";
-                            break;
-                        case 6:
-                            typeRec = "التنقل";
-                            break;
-                        case 7:
-                           
-                            typeRec = "الصحة والنظافة";
-                            break;
-                        case 8:
-                           
-                            typeRec = "نوع آخر ";
-                            break;
-                        default:
-                            switch (language) {
-                                case "anglais":
-                                    VoiceBot("Unknown type try again", chatbox);
-                                    break;
-                                case "français":
-                                    VoiceBot("Type non connue réessayer", chatbox);
-                                    break;
-                                case "arabe":
-                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                    break;
-                                    case "tounsi":
-                                        VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                        break;
-                                default:
-                                    VoiceBot("Type non connue réessayer", chatbox);
-                                    break;
-                            }
-                            break;
-                    }
-                    console.log("type ",typeRec);
-                }
-                else{
-                    switch (textField) {
-                        case "1":
-                            typeRec = "Administration";
-                            break;
-                        case "2":
-                            typeRec = "Construction anarchiques";
-                            break;
-                        case "3":
-                            typeRec = "Eclairage publique";
-                            break;
-                        case "4":
-                            typeRec = "Energie";
-                            break;
-                        case "5":
-                            typeRec = "Espaces Verts";
-                            break;
-                        case "6":
-                            typeRec = "Mobilité";
-                            break;
-                        case "7":
-                            typeRec = "Santé et Higiéne";
-                            break;
-                        case "8":
-                            typeRec = "Autres Réclamations ";
-                            break;
-                        default:
-                            switch (language) {
-                                case "anglais":
-                                    VoiceBot("Unknown type try again", chatbox);
-                                    break;
-                                case "français":
-                                    VoiceBot("Type non connue réessayer", chatbox);
-                                    break;
-                                case "arabe":
-                                    VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                    break;
-                                    case "tounsi":
-                                        VoiceBot("نوع غير معروف حاول مرة أخرى", chatbox);
-                                        break;
-
-                                default:
-                                    VoiceBot("Type non connue réessayer", chatbox);
-                                    break;
-                            }
-                            break;
-                    }
-                    console.log("type ",typeRec);
-                }
-                    switch (language) {
-                        case "anglais":
-                            VoiceBot("Please send me a short description of your complaint", chatbox);
-                            break;
-                        case "français":
-                            VoiceBot("Merci de m`envoyer une petite description de votre réclamation", chatbox);
-                            break;
-                        case "arabe":
-                            VoiceBot("من فضلك أرسل لي وصفا موجزا لشكواك", chatbox);
-                            break;
-                            case "tounsi":
-                                VoiceBot("من فضلك أرسل لي وصفا موجزا لشكواك", chatbox);
-                                break;
-                        default:
-                            VoiceBot("Merci de m`envoyer une petite description de votre réclamation", chatbox);
-                            break;
-                    }
-
-
-                    v = 7;
-
-                }
-
-                break;
-            case 7:
-                if (textField !== "") {
-                    descRec = textField;
-
-                    if (typeof descRec === 'string' && descRec.trim().length >= 10) {
-                        
-                        ajoutRecVoiceBot();
-                        getPDF(adrRec,nomRec,prenomRec,cinRec,emailRec,typeRec,descRec,NumRec);
-                        console.log("nom " +
-                            nomRec +
-                            " prenom " +
-                            prenomRec +
-                            " cin " +
-                            cinRec +
-                            " email " +
-                            emailRec +
-                            " adr " +
-                            adrRec +
-                            " type " +
-                            typeRec +
-                            " description " +
-                            descRec);
-                        //v = 8;
-                    }
-                    else {
-                        switch (language) {
-                            case "anglais":
-                                VoiceBot("Say a correct description", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Dire une correcte description", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("قل وصفا صحيحا", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("قل وصفا صحيحا", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Dire une correcte description", chatbox);
-                                break;
-                        }
-
-                    }
-                }
-
-                break;
-        case 8:
-           
-            if (textField !== "") {
-                num_rec="";
-        
-                if ((language == "arabe") || (language=="tounsi")) {
-                    var NumArray = textField.split(' ');
-                    for (let i = 0; i < NumArray.length; i++) {
-                        num_rec = num_rec + getNumLet(NumArray[i]);
-                        console.log("nummm", num_rec);
-                    }
-                } else {
-                    num_rec = textField.replaceAll(' ', '');
-         }
-
-               
-             
-                console.log("je suis la");
-                
-                
-                if (num_rec.length == 8) {
-                    switch (language) {
-                        case "anglais":
-                            VoiceBot("Hi send me your identity card number", chatbox);
-                            textField = "";
-                            v = 9;
-                            break;
-                        case "français":
-                            VoiceBot("Salut envoyez moi votre numéro de carte d`identité", chatbox);
-                            textField = "";
-                            v = 9;
-                            break;
-                        case "arabe":
-                            VoiceBot("مرحبًا ، أرسل لي رقم بطاقة هويتك", chatbox);
-                            textField = "";
-                            v = 9;
-                            break;
-                            case "tounsi":
-                                VoiceBot("مرحبًا ، أرسل  لي رقم بطاقة هويتك  ", chatbox);
-                                textField = "";
-                                v = 9;
-                                break;
-                    }
-                }
-                else {
-                    switch(language){
-                        case "anglais":
-                            VoiceBot("recheck", chatbox);
-                            break;
-                        case "français":
-                            VoiceBot("Revérifier", chatbox);
-                            break;
-                        case "arabe":
-                            VoiceBot("حاول مرة اخرى", chatbox);
-                            break;
-                            case "tounsi":
-                                VoiceBot("حاول مرة اخرى", chatbox);
-                                break;
-                        default:
-                            VoiceBot("Revérifier", chatbox);
-                            break;
-                    }
-                  
-                }
-            }
-            break;
-            case 9 :
-                if (textField !== "") {
-                    cin="";
-            
-                    if ((language == "arabe") || (language=="tounsi")) {
-                        var cinArray = textField.split(' ');
-                        for (let i = 0; i < cinArray.length; i++) {
-                            cin = cin + getNumLet(cinArray[i]);
-                            console.log("nummm", cin);
-                        }
-                    } else {
-                        cin = textField.replaceAll(' ', '');
-             }
-    
-                   
-                 
-                    console.log("je suis la");
-                    
-                    
-                    if (cin.length == 8) {
-                        suiviRecVoiceBot(num_rec,cin,chatbox);
-                   
-                    }
-                    else {
-                        switch(language){
-                            case "anglais":
-                                VoiceBot("recheck", chatbox);
-                                break;
-                            case "français":
-                                VoiceBot("Revérifier", chatbox);
-                                break;
-                            case "arabe":
-                                VoiceBot("حاول مرة اخرى", chatbox);
-                                break;
-                                case "tounsi":
-                                    VoiceBot("حاول مرة اخرى", chatbox);
-                                    break;
-                            default:
-                                VoiceBot("Revérifier", chatbox);
-                                break;
-                        }
-                      
-                    }
-                }
-                break;
-case 10:
-           
-        if (textField !== "") {
-            NomDoc =textField.replaceAll('é','e');
-                console.log("na9ra f ",NomDoc);
-                recognition.lang = "fr-FR";
-                 getDocument(NomDoc);
-       
-        
-
-        } 
-break;
-        }
+        verifRec(textField,chatbox);
+        verifAutoBatir(textField,chatbox);
         verifResPublic(textField,chatbox);
     };
     
