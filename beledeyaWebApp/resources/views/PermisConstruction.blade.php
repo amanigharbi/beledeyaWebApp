@@ -234,7 +234,7 @@
                                                             @break
                                                         @endswitch
                                                     </td>
-                                                    @if ($r->status >1) 
+                                                    @if ($autorisation->status >1) 
                                                         <td><button type="submit" class="" onclick="getPdf();"><i
                                                             class="fas fa-eye"></i></button>
                                                         </td>
