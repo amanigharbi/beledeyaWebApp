@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/downPdfDecision/{id}', 'PermisConstructionController@downPdfDecision')->name('downPdfDecision');
     Route::get('/ReseauPublics', 'ReseauPublicController@showView')->name('ReseauPublic');
     Route::post('/addDemande', 'ReseauPublicController@store');
+    Route::get('/checkDemande', 'ReseauPublicController@check');
     Route::get('/downPdfRes/{id}', 'ReseauPublicController@down')->name('downPdfRes');
     Route::get('/downPdfResAr/{id}', 'ReseauPublicController@downArabic')->name('downPdfResAr');
     Route::get('/downPdfDecisionRes/{id}', 'ReseauPublicController@downPdfDecisionRes')->name('downPdfDecisionRes');

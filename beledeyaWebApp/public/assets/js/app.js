@@ -45,6 +45,9 @@ var address = "";
 var surface ="";
 var prop = "";
 var num_autor = "";
+var type_res="";
+var type_soc="";
+var type =""
 args = {
     openButton: document.querySelector(".chatbox__button"),
     chatBox: document.querySelector(".chatbox__support"),
@@ -82,6 +85,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
+            getPDFBatir("address","nom","prenom","12345678","email","123","12345");
             
             break;
         case "arabe":
@@ -91,6 +95,7 @@ function modifyLanguage(lang) {
             messages.push(msg03);
             updateChatText(chatBox);
             readOutLoud(mess2, "chat-1", "chat");
+            getPDFBatir("بنزرت","الغربي","اماني","12345678","email","123","12345");
             break;
             case "tounsi":
                 mess3 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
@@ -269,20 +274,20 @@ function ajoutResVoiceBot() {
     for (var i = 1; i < 9; i++) {
         num_branch += Math.floor(Math.random() * 9);;
     }
-    console.log(num_autor);
+    console.log(num_branch);
 
     var data = {
-
-        'nom': "nomRes",
-        'prenom': "prenomRes",
-        'email': "emailRes",
-        'cin': "12345678",
-        'address': "adrRes",
-        'type': "typeRes",
-        'description': "descRes",
+     
+        'nomRes':  nomRes,
+        'prenomRes' :  prenomRes,
+        'emailRes': emailRes,
+        'cinRes': cinRes,
+        'adrRes': adrRes,
+        'typeRes': typeRes,
+        'descRes': descRes,
         'num_branch': num_branch,
     };
-
+  
     var url = "http://127.0.0.1:8080/work/consommation%20api/adddemendebranchement.php";
     $.ajax({
         type: 'POST',
@@ -297,6 +302,8 @@ function ajoutResVoiceBot() {
             "Access-Control-Allow-Headers": "*"
         },
         success: function (response, status, xhr) {
+            console.log("data ",response);
+            console.log("status ",status);
             switch (language) {
                 case "anglais":
                     VoiceBot("Request registered. your waiver is uploded", chatBox);
@@ -531,6 +538,153 @@ function suiviBatirVoiceBot(num_autor,cinBatir,chatbox) {
         }
     });
 }
+function suiviResVoiceBot(num_branch,cinRes,chatbox) {
+    var url = "http://127.0.0.1:8080/work/consommation%20api/suiviDemandeBranchement.php";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: { 'num_branch': num_branch ,
+        'cin': cinRes  
+    },
+        dataType: 'JSON',
+        encode: true,
+        mode: 'no-cors',
+        headers: {
+            "Access-Control-Allow-Origin": "127.0.0.1",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "*"
+        },
+        success: function (response, status, xhr) {
+            console.log("hello every baadi ",response);
+            switch (language) {
+                case "anglais":
+                    switch(response['status']){
+                        case "0":
+                            VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is delivered but not yet processed ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is being processed ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is accepted ", chatbox);
+                                if ((response['type']== 'Sonede') || (response['type']== 'الماء')) {
+                                    type = 'eau potable';
+                                    type_soc ='Société nationale d`exploitation et de distribution des eaux';
+                                    type_res ='réseau public de distribution d`eau';
+                                }
+                                if ((response['type'] == 'Steg') || (response['type']== 'الكهرباء و الغاز')) {
+                                    type = 'eclairage public';
+                                    type_soc ='Société tunisienne de l`électricité et du gaz';
+                                    type_res ='réseau public de distribution de l`électricité';
+                                }
+                                getPDFResPublicAccept(type,response['last_name'],response['first_name'],response['adresse'],type_soc,type_res,response['num_branch']);
+                            break;
+                            case "3":
+                                VoiceBot("Mr or Mrs "+response['last_name'] +' '+ response['first_name']+" your request is rejected ", chatbox);
+                            break;
+                    }
+                     
+                    break;
+                case "français":
+                    console.log("name ",response['first_name']);
+                    console.log("status ",response['status']);
+                    var status = response['status'];
+                    switch(status){
+                        case "0":
+                            VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est delivré mais pas encore traité ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est en cours de traitement ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est acceptée ", chatbox);
+                                if ((response['type']== 'Sonede') || (response['type']== 'الماء')) {
+                                    type = 'eau potable';
+                                    type_soc ='Société nationale d`exploitation et de distribution des eaux';
+                                    type_res ='réseau public de distribution d`eau';
+                                }
+                                if ((response['type'] == 'Steg') || (response['type']== 'الكهرباء و الغاز')) {
+                                    type = 'eclairage public';
+                                    type_soc ='Société tunisienne de l`électricité et du gaz';
+                                    type_res ='réseau public de distribution de l`électricité';
+                                }
+                                getPDFResPublicAccept(type,response['last_name'],response['first_name'],response['adresse'],type_soc,type_res,response['num_branch']);
+                                break;
+                            case "3":
+                                VoiceBot("Monsieur ou Madame "+response['last_name'] +' '+ response['first_name']+" votre demande est refusée ", chatbox);
+                            break;
+                    }
+                   
+                    break;
+                case "arabe":
+                    switch(response['status']){
+                        case "0":
+                            VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatbox);
+                            break;
+                            case "1":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" طلبك قيد المعالجة ", chatbox);
+                            break;
+                            case "2":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم قبول طلبك ", chatbox);
+                                if ((response['type']== 'Sonede') || (response['type']== 'الماء')) {
+                                    type = ' الماء الصالح للشراب ';
+                                    type_soc =' الشركة الوطنية لاستغلال و توزيع المياه ';
+                                    type_res =' الشبكة العمومية لتوزيع المياه ';
+                                }
+                                if ((response['type'] == 'Steg') || (response['type']== 'الكهرباء و الغاز')) {
+                                    type = ' الإنارة العامة ';
+                                    type_soc =' الشركة التونسية للكهرباء والغاز ';
+                                    type_res =' شبكة توزيع الكهرباء العامة ';
+                                }
+                                getPDFResPublicAccept(type,response['last_name'],response['first_name'],response['adresse'],type_soc,type_res,response['num_branch']);
+                            break;
+                            case "3":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم رفض طلبك ", chatbox);
+                              
+                            break;
+                    }
+                  
+                    break;
+                    case "tounsi":
+                        switch(response['status']){
+                            case "0":
+                                VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم تسليم مطالبتك ولكن لم تتم معالجتها بعد ", chatbox);
+                                break;
+                                case "1":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" طلبك قيد المعالجة ", chatbox);
+                                break;
+                                case "2":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم قبول طلبك ", chatbox);
+                                    if ((response['type']== 'Sonede') || (response['type']== 'الماء')) {
+                                        type = ' الماء الصالح للشراب ';
+                                        type_soc =' الشركة الوطنية لاستغلال و توزيع المياه ';
+                                        type_res =' الشبكة العمومية لتوزيع المياه ';
+                                    }
+                                    if ((response['type'] == 'Steg') || (response['type']== 'الكهرباء و الغاز')) {
+                                        type = ' الإنارة العامة ';
+                                        type_soc =' الشركة التونسية للكهرباء والغاز ';
+                                        type_res =' شبكة توزيع الكهرباء العامة ';
+                                    }
+                                    getPDFResPublicAccept(type,response['last_name'],response['first_name'],response['adresse'],type_soc,type_res,response['num_branch']);
+                                break;
+                                case "3":
+                                    VoiceBot("السيد او السيدة  "+response['last_name'] +' '+ response['first_name']+" تم رفض طلبك ", chatbox);
+                                  
+                                break;
+                        }
+                      
+                        break;
+               
+               
+                    
+                    
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Something went wrong!");
+        }
+    });
+}
 function getNumLet(s) {
     switch (s) {
         case 'واحد':
@@ -635,7 +789,7 @@ doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
 
 doc.save(NomRec+PrenomRec+".pdf");
 }
-function getPDFResPublicAccept(){
+function getPDFResPublicAccept(type,nom,prenom,adr,type_soc,type_res,num_branch){
    
     var doc = new jsPDF();
     
@@ -657,10 +811,10 @@ function getPDFResPublicAccept(){
     doc.text(10,15,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
      doc.setFontSize(19)
      doc.setTextColor(0, 0, 255)
-    doc.text(60,70,'ترخيص في ادخال الماء الصالح للشراب' )
+    doc.text(60,70,'ترخيص في ادخال '+type )
     doc.setFontSize(18)
     doc.setTextColor(0, 0, 0)
-    var p1 = doc.splitTextToSize('ان رئيسة بلدية منزل عبد الرحمان بعد اطلاعها على  المطلب الذي تقدم به السيد/السيدة الغربي اماني لتزويد محله/ها الكائن ب حي الاندلس بنزرت بالماء الصالح للشراب من طرف الشركة الوطنية لاستغلال و توزيع المياه',260);
+    var p1 = doc.splitTextToSize('ان رئيسة بلدية منزل عبد الرحمان بعد اطلاعها على  المطلب الذي تقدم به السيد/السيدة'+nom +' '+prenom+' لتزويد محله/ها الكائن ب'+adr+' '+type+' من طرف '+type_soc,260);
     doc.text(195,100,p1,{ align: "right",lang: 'ar'})
     var p2 = doc.splitTextToSize('وتبعا للجلسة المحلية لاسناد تراخيص الربط بالشبكات العمومية للبناءات المشيدة بدون ترخيص المنعقدة بمقر بلدية منزل عبد الرحمان بتاريخ 2022-05 -2',250);
      doc.text(195,130,p2,{ align: "right",lang: 'ar'})
@@ -668,10 +822,10 @@ function getPDFResPublicAccept(){
      doc.text(195,150,p3,{ align: "right",lang: 'ar'})
      var p4 = doc.splitTextToSize('و بعد تبعا لمحضر جلسة اللجنة المحلية لاسناد تراخيص الربط بشبكتي الماء الصالح للشراب و النور الكهربائي المنعقدة بتاريخ 16/12/2014 بمقر بلدية منزل عبد الرحمان',250);
      doc.text(195,170,p4,{ align: "right",lang: 'ar'})
-     doc.text(195,195,'يرخص للسيد/ة الغربي اماني',{ align: "right",lang: 'ar'})
-    doc.text(195,205,'في ربط محله/ها المذكور ب الشبكة العمومية لتوزيع المياه',{ align: "right",lang: 'ar'})
-    doc.text(195,215,' سلمت هذه الشهادة للادلاء بها لدى مصالح الشركة الوطنية لاستغلال و توزيع المياه ',{ align: "right",lang: 'ar'})
-    doc.text(195,225,' رقم الملف : 86113033 ',{ align: "right",lang: 'ar'})
+     doc.text(195,195,'يرخص للسيد/ة '+nom +' '+prenom,{ align: "right",lang: 'ar'})
+    doc.text(195,205,'في ربط محله/ها المذكور ب '+type_res,{ align: "right",lang: 'ar'})
+    doc.text(195,215,' سلمت هذه الشهادة للادلاء بها لدى مصالح '+type_soc,{ align: "right",lang: 'ar'})
+    doc.text(195,225,' رقم الملف : '+num_branch,{ align: "right",lang: 'ar'})
     doc.setFontSize(16)
     doc.text(35,245,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في')
     doc.text(50,255,'رئيس/رئيسة البلدية')
@@ -691,10 +845,10 @@ function getPDFResPublicAccept(){
     doc.text(140,15,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
     doc.setFontSize(19)
     doc.setTextColor(0, 0, 255)
-    doc.text(45,75,'Autorisation d`amener d`eclairage public')
+    doc.text(45,75,'Autorisation d`amener d`'+type)
     doc.setFontSize(12)
     doc.setTextColor(0, 0, 0)
-    var p1 = doc.splitTextToSize('Le maire de Menzel Abderrahmane, après examen de la demande présentée par M./Mme test test, d`approvisionner son commerce situé en 4 rue des andalous en eclairage public de la Société tunisienne de l`électricité et du gaz', 180);
+    var p1 = doc.splitTextToSize('Le maire de Menzel Abderrahmane, après examen de la demande présentée par M./Mme '+nom+' '+prenom+' d`approvisionner son commerce situé en '+adr+' en '+type+' de la '+type_soc, 180);
     doc.text(15,100,p1)
     var p2 = doc.splitTextToSize('Et selon la session locale d`attribution des licences de raccordement aux réseaux publics pour les bâtiments construits sans licence, tenue au siège de la municipalité de Manzil Abd al-Rahman le 2022-05-23.', 180);
     doc.text(15,120,p2)
@@ -702,19 +856,20 @@ function getPDFResPublicAccept(){
     doc.text(15,140,p3)
     var p4 = doc.splitTextToSize(' Et après, selon le procès-verbal de la séance de la commission locale d`attribution des autorisations de raccordement aux réseaux d`eau potable et d`éclairage électrique, qui s`est tenue le  16/12/2014 au siège de la commune de Manzil Abd al-Rahman', 180);
     doc.text(15,155,p4)
+    doc.text(15,175,'Autorisé à M.Mme '+nom + ' '+prenom)
     var p5 = doc.splitTextToSize('Raccordement de ses locaux précités au réseau public de réseau public de distribution de l`électricité', 180);
-    doc.text(15,175,p5)
-    var p6 = doc.splitTextToSize('Ce certificat a été délivré aux intérêts de la Société tunisienne de l`électricité et du gaz', 180);
-    doc.text(15,190,p6)
-    doc.text(15,200,'Numéro dossier : 8888888 ')
+    doc.text(15,190,p5)
+    var p6 = doc.splitTextToSize('Ce certificat a été délivré aux intérêts de la '+type_soc, 180);
+    doc.text(15,205,p6)
+    doc.text(15,215,'Numéro dossier : '+num_branch)
     doc.setFontSize(14)
-    doc.text(105,220,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
-    doc.text(115,230,'Maire de la municipalité')
+    doc.text(105,235,'Menzel Abderahmane le '+jour+'/'+mois+'/'+annee)
+    doc.text(115,245,'Maire de la municipalité')
     doc.setFontSize(10)
     doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
     
-    doc.save("test.pdf");
+    doc.save(nom+prenom+"Response.pdf");
     }
     function getPDFAcceptBatir(nom,prenom,address){
    
@@ -1850,7 +2005,7 @@ break;
             }
              
                     ajoutBatirVoiceBot();
-                    getPDFBatirPublic(address,nom,prenom,cin,email,surface,num_autor);
+                    getPDFBatir(address,nom,prenom,cin,email,surface,num_autor);
                     console.log("nom " +
                         nom +
                         " prenom " +
@@ -1987,7 +2142,7 @@ break;
            
   
 }
-function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
+function getPDFBatir(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
    
     var doc = new jsPDF();
     
@@ -2015,7 +2170,7 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
      doc.setFontSize(19)
     doc.setTextColor(0, 0, 0)
     doc.text(135,110,'رقم الملف : '+num_autor)
-    doc.text(150,125,'طلب تصريح البناء')
+    doc.text(145,125,'طلب تصريح البناء')
      doc.setFontSize(19)
      doc.setFont('Amiri-Italic', 'normal');
     doc.setTextColor(0, 0, 255)
@@ -2025,10 +2180,19 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
     doc.setTextColor(0, 0, 0)
      doc.text(57,155,+surface+' لقد تلقينا طلب تصريح البناء الخاص بك و الذي تبلغ مساحته ')
      doc.text(110,165,'سنحاول الرد عليك في أسرع وقت ممكن')
-    doc.text(18,175,' يمكنك متابعة طلبك من خلال هذا الرقم  '+num_autor +' للبقاء على اتصال مع الجميع')
+    doc.text(30,175,' يمكنك متابعة طلبك من خلال هذا الرقم  '+num_autor +' للبقاء على اتصال مع الجميع')
     doc.text(60,185,' من فضلك استقبل سيدتي ام سيدي '+Nom+' '+Prenom +',  أطيب التحيات')
+    doc.setTextColor(255, 0, 0)
+    doc.text(45,205,'يرجى إحضار هذه الوثيقة إلى البلدية مع الاوراق التالية لاتمام الاجراءات')
+    doc.setTextColor(0, 0, 0)
+    doc.text(40,215,'مطلب باسم السيدة رئيسة البلدية معرف بالامضاء في صورة اكثر من مالك *')
+    doc.text(145,225,'شهادة ملكية او عقد بيع *')
+    doc.text(150,235,' خمسة امثلة هندسية*')
+    doc.text(40,245,'شهادة خلاص الاداءات المتعلقة بالارض او العقار موضوع طلب الرخصة *')
+    doc.text(115,255,'الدخل السنوي او بطاقة اقامة بالخارج *')
     doc.setFontSize(16)
-    doc.text(35,215,'بلدية منزل عبد الرحمان')
+   
+    doc.text(35,280,'بلدية منزل عبد الرحمان')
     doc.setFontSize(10)
     doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
@@ -2057,14 +2221,108 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
     doc.text(15,125,'Nous avons bien reçu votre demande d`autoriation de batir de surface '+surface +' \n \n Nous essayons de vou répondre dés que possible.')
     doc.text(15,150,'Vous pouvez suivre votre demande a travers ce numéro '+num_autor +' pour restez en contact de tous.')
     doc.text(15,160,'Veuillez recevoir, Madame, ou Monsieur,'+Nom+' '+Prenom +',  nos salutations distinguées')
+    doc.setTextColor(255, 0, 0)
+    doc.text(15,190,'Merci d`apporter ce document à la municipalité accompagné des documents suivants \n pour terminer les procédures')
+    doc.setTextColor(0, 0, 0)
+    doc.text(15,205,'*Une demande au nom de madame le maire, identifiable par signature sous la forme \nde plus d`un propriétaire \n*Certificat de propriété ou contrat de vente \n*5 exemple de plan \n*Attestation de libération des paiements afférents au terrain ou à l`immeuble, objet \nde la demande de licence \n*Revenu annuel ou carte de séjour à l`étranger')
     doc.setFontSize(16)
-    doc.text(105,200,'Commune de Menzel Abderrahmane')
+    doc.setTextColor(0, 0, 0)
+    doc.text(105,245,'Commune de Menzel Abderrahmane')
     doc.setFontSize(10)
     doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
     }
     
     doc.save(Nom+Prenom+"Const.pdf");
     }
+    function getPDFResPublic(Adr,Nom,Prenom,NumCin,Email,type,desc,num_branch){
+   
+        var doc = new jsPDF();
+        
+        
+        if((language=="arabe")|| (language=="tounsi")){
+       
+    
+            doc.addFileToVFS('Amiri-Regular-normal.ttf', font);
+            doc.addFont('Amiri-Regular-normal.ttf', 'Amiri-Regular', 'normal');
+            doc.addFileToVFS('Amiri-Italic-normal.ttf', fontItalic);
+            doc.addFont('Amiri-Italic-normal.ttf', 'Amiri-Italic', 'normal');
+            doc.setFont('Amiri-Regular', 'normal');
+            doc.addImage(imgData, 'PNG', 165, 10, 25, 35)
+            doc.viewerPreferences({"Direction" : "RTL"}, true);
+            doc.text(120, 15, 'بلدية منزل عبد الرحمان')
+            doc.text(92, 22, 'الهاتف 72 570 125/ 72 571 295')
+            doc.text(118, 29, 'الفاكس   125 570 72')
+            doc.text(70, 35, 'communemenzelabderrahmen@gmail.com')
+            doc.text(105, 40, 'نهج المنجي سليم 7035 بنزرت')
+            doc.setTextColor(0, 0, 255)
+            doc.text(45,65,  ' السيد/السيد :'+Prenom+' '+Nom )
+            doc.text(45,72,' القاطن/القاطنة ب: '+Adr)
+            doc.text(45,79,Email+' :البريد الالكتروني ')
+            doc.text(30,87,annee+'/'+mois+'/'+jour+' منزل عبد الرحمان في ')
+             doc.setFontSize(19)
+            doc.setTextColor(0, 0, 0)
+            doc.text(135,110,'رقم الملف : '+num_branch)
+            doc.text(120,125,' طلب الاتصال بالشبكة العامة ل'+type)
+             doc.setFontSize(19)
+             doc.setFont('Amiri-Italic', 'normal');
+            doc.setTextColor(0, 0, 255)
+            doc.setFontSize(18)
+            doc.text(40,140,' السيدة/السيدة  '+Nom+' '+Prenom +' صاحب بطاقة تعريف وطنية عدد '+NumCin)
+            doc.setFont('Amiri-Regular', 'normal');
+            doc.setTextColor(0, 0, 0)
+             doc.text(30,155,' لقد تلقينا طلبكم للاتصال بالشبكات العامة من النوع '+type +' و الموضوع  '+desc)
+             doc.text(110,165,'سنحاول الرد عليك في أسرع وقت ممكن')
+            doc.text(25,175,' يمكنك متابعة طلبك من خلال هذا الرقم  '+num_branch +' للبقاء على اتصال مع الجميع')
+            doc.text(60,185,' من فضلك استقبل سيدتي ام سيدي '+Nom+' '+Prenom +',  أطيب التحيات')
+            doc.setTextColor(255, 0, 0)
+            doc.text(45,205,'يرجى إحضار هذه الوثيقة إلى البلدية مع الاوراق التالية لاتمام الاجراءات')
+            doc.setTextColor(0, 0, 0)
+            doc.text(40,215,'مطلب باسم السيدة رئيسة البلدية معرف بالامضاء في صورة اكثر من مالك *')
+            doc.text(145,225,'شهادة ملكية او عقد بيع *')
+
+            doc.setFontSize(16)
+           
+            doc.text(35,250,'بلدية منزل عبد الرحمان')
+            doc.setFontSize(10)
+            doc.text(20,290,'http://www.commune-menzel-abderrahmen.gov.tn')
+            }
+            else{
+                doc.addImage(imgData, 'PNG', 15, 10, 25, 30)
+            doc.setFontSize(10)
+            
+            doc.text(42, 15, 'Commune de MENZEL ABDERRAHMAN  \n Tel (+216) 72 570 125/ (+216) 72 571 295 \n Fax (+216) 72 570 125 \n communemenzelabderrahmen@gmail.com \n Rue El Mongi Slim 7035 menzel abdel rahmen ')
+            
+            doc.setTextColor(0, 0, 255)
+            doc.text(130,60,'Nom et Prénom : '+Nom+' '+Prenom)
+            doc.text(130,65,'Adresse : '+Adr)
+            doc.text(130,70,'Email :'+Email)
+            doc.text(130,75,'Menzel Abderhmane le '+jour+'/'+mois+'/'+annee)
+            doc.setFontSize(16)
+            doc.setTextColor(0, 0, 0)
+            doc.text(15,95,'Numéro dossier: '+num_branch)
+            doc.text(15,105,'Décharge de demande de branchement aux réseau publics de :'+type)
+            doc.setFontSize(16)
+            doc.setFontType('italic')
+            doc.setTextColor(0, 0, 255)
+            doc.setFontSize(12)
+            doc.text(15,115,'Monsieur/Madame '+Nom+' '+Prenom +' titulaire de cin '+NumCin)
+            doc.setFontType('normal')
+            doc.setTextColor(0, 0, 0)
+            doc.text(15,125,'Nous avons bien reçu votre votre demande de branchement aux réseau publics de type '+type +' \n \n et de description '+desc+' \n\nNous essayons de vou répondre dés que possible.')
+            doc.text(15,150,'Vous pouvez suivre votre demande a travers ce numéro '+num_branch +' pour restez en contact de tous.')
+            doc.text(15,160,'Veuillez recevoir, Madame, ou Monsieur,'+Nom+' '+Prenom +',  nos salutations distinguées')
+            doc.setTextColor(255, 0, 0)
+            doc.text(15,190,'Merci d`apporter ce document à la municipalité accompagné des documents suivants \n pour terminer les procédures')
+            doc.setTextColor(0, 0, 0)
+            doc.text(15,205,'*Une demande au nom de madame le maire, identifiable par signature sous la forme \nde plus d`un propriétaire \n\n*Certificat de propriété ou contrat de vente ')
+            doc.setFontSize(16)
+            doc.setTextColor(0, 0, 0)
+            doc.text(105,245,'Commune de Menzel Abderrahmane')
+            doc.setFontSize(10)
+            doc.text(125,290,'http://www.commune-menzel-abderrahmen.gov.tn')
+            }
+        doc.save(Nom+Prenom+"Demande.pdf");
+        }
     function verifResPublic(textField,chatbox){
         switch (v) {
            
@@ -2326,10 +2584,10 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
                      if((language=="arabe")||(language == "tounsi") ){
                         typeRes=getNumLet(textField);
                     switch (typeRes) {
-                        case "1":
+                        case 1:
                             typeRes = "الماء";
                             break;
-                        case "2":
+                        case 2:
                             typeRes = "الكهرباء و الغاز";
                             break;
                         default:
@@ -2417,7 +2675,8 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
                     if (typeof descRes === 'string' && descRes.trim().length >= 10) {
                         
                         ajoutResVoiceBot();
-                        // getPDF(adrRes,nomRes,prenomRes,cinRes,emailRes,typeRes,descRes,num_branch);
+                        getPDFResPublic(adrRes,nomRes,prenomRes,cinRes,emailRes,typeRes,descRes,num_branch);
+                       
                         console.log("nom " +
                             nomRes +
                             " prenom " +
@@ -2431,7 +2690,9 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
                             " type " +
                             typeRes +
                             " description " +
-                            descRes);
+                            descRes+
+                            " num " +
+                            num_branch);
                         //v = 8;
                     }
                     else {
@@ -2457,6 +2718,118 @@ function getPDFBatirPublic(Adr,Nom,Prenom,NumCin,Email,surface,num_autor){
                 }
     
                 break;
+                case 27:
+       
+                    if (textField !== "") {
+                        num_branch="";
+                
+                        if ((language == "arabe") || (language=="tounsi")) {
+                            var NumArray = textField.split(' ');
+                            for (let i = 0; i < NumArray.length; i++) {
+                                num_branch = num_branch + getNumLet(NumArray[i]);
+                                console.log("nummm", num_branch);
+                            }
+                        } else {
+                            num_branch = textField.replaceAll(' ', '');
+                 }
+            
+                       
+                     
+                        console.log("je suis la");
+                        
+                        
+                        if (num_branch.length == 8) {
+                            switch (language) {
+                                case "anglais":
+                                    VoiceBot("Hi send me your identity card number", chatbox);
+                                    textField = "";
+                                    v = 28;
+                                    break;
+                                case "français":
+                                    VoiceBot("Salut envoyez moi votre numéro de carte d`identité", chatbox);
+                                    textField = "";
+                                    v = 28;
+                                    break;
+                                case "arabe":
+                                    VoiceBot("مرحبًا ، أرسل لي رقم بطاقة هويتك", chatbox);
+                                    textField = "";
+                                    v = 28;
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("مرحبًا ، أرسل  لي رقم بطاقة هويتك  ", chatbox);
+                                        textField = "";
+                                        v = 28;
+                                        break;
+                            }
+                        }
+                        else {
+                            switch(language){
+                                case "anglais":
+                                    VoiceBot("recheck", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("حاول مرة اخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("حاول مرة اخرى", chatbox);
+                                        break;
+                                default:
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                            }
+                          
+                        }
+                    }
+                    break;
+                case 28 :
+                    if (textField !== "") {
+                  
+                
+                        // if ((language == "arabe") || (language=="tounsi")) {
+                        //     var cinArray = textField.split(' ');
+                        //     for (let i = 0; i < cinArray.length; i++) {
+                        //         cinBatir = cinBatir + getNumLet(cinArray[i]);
+                        //         console.log("nummm", cinBatir);
+                        //     }
+                        // } 
+                        // else{
+                            cinRes = textField.replaceAll(' ', '');
+                        // }
+        
+                       
+                     
+                        console.log("je suis la ",cinRes);
+                        
+                        
+                        if (cinRes.length == 8) {
+                        suiviResVoiceBot(num_branch,cinRes,chatbox);
+                       
+                        }
+                        else {
+                            switch(language){
+                                case "anglais":
+                                    VoiceBot("recheck", chatbox);
+                                    break;
+                                case "français":
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                                case "arabe":
+                                    VoiceBot("حاول مرة اخرى", chatbox);
+                                    break;
+                                    case "tounsi":
+                                        VoiceBot("حاول مرة اخرى", chatbox);
+                                        break;
+                                default:
+                                    VoiceBot("Revérifier", chatbox);
+                                    break;
+                            }
+                          
+                        }
+                    }
+                    break;
        
    
         }
@@ -2494,7 +2867,7 @@ function onSendButton(chatbox) {
         updateChatText(chatbox);
         console.log("je dis ",textField);
 
-         if ((textField.includes("réclamation")) || (textField.includes("شكوى"))|| (textField.includes("complaint")) || (textField.includes("reclamation")))
+         if ((textField.includes("réclamation")) || (textField.includes("نعدي شكوى")) || (textField.includes("اضافه شكوى")) || (textField.includes("complaint")) || (textField.includes("reclamation")))
         // if ((textField == "réclamation") || (textField == "شكوى")
         //     || (textField == "reclamation"))
              {
@@ -2525,7 +2898,7 @@ function onSendButton(chatbox) {
         }
         // if ((textField == "suivi réclamation")|| (textField == "اتباع")
         // || (textField == "check")) 
-        if ((textField.includes("suivi réclamation")) || (textField.includes("اتباع شكايه"))|| (textField.includes("check complaint")) || (textField.includes("check")) || (textField.includes("وين وصله الشكايه")))
+        if ((textField.includes("suivi réclamation")) || (textField.includes("اتباع الشكوى"))|| (textField.includes("check complaint")) || (textField.includes("check")) || (textField.includes("وين وصله الشكوى")))
            {
                 switch (language) {
                     case "anglais":
@@ -2635,7 +3008,7 @@ function onSendButton(chatbox) {
           
            
      }
-        if ((textField.includes("réseau public")) || (textField.includes("شبكة عامة"))|| (textField.includes("public network")) || (textField.includes("ماء و ضوء")))
+        if ((textField.includes("réseau public")) || (textField.includes("شبكة عامة"))|| (textField.includes("public network")) || (textField.includes("ماء وضوء")))
         {
             switch (language) {
                 case "anglais":
@@ -2661,7 +3034,33 @@ function onSendButton(chatbox) {
                         break;
             }
         }
-
+        if ((textField.includes("suivi demande réseau")) || (textField.includes("اتباع مطلب"))|| (textField.includes("check public ")) || (textField.includes("وين وصل المطلب")))
+        {
+             switch (language) {
+                 case "anglais":
+                     VoiceBot("Hi send me the file number you want to track", chatbox);
+                     textField = "";
+                     v = 27;
+                     break;
+                 case "français":
+                     VoiceBot("Salut envoyez moi le numéro de demande que vous voullez suivre", chatbox);
+                     textField = "";
+                     v = 27;
+                     break;
+                 case "arabe":
+                     VoiceBot("مرحبًا ، أرسل لي رقم المطالبة الذي تريد تتبعه", chatbox);
+                     textField = "";
+                     v = 27;
+                     break;
+                     case "tounsi":
+                         VoiceBot("مرحبًا ، أرسل لي رقم المطالبة الذي تريد تتبعه", chatbox);
+                         textField = "";
+                         v = 27;
+                         break;
+             }
+          
+           
+     }
         if (textField === "") {
             return;
         }
@@ -2764,7 +3163,7 @@ function readOutLoud(message, id, actor) {
         }</style><path d="M 0,400 C 0,400 0,200 0,200 C 23.306299870505185,180.39922334740555 46.61259974101037,160.79844669481113 72,165 C 97.38740025898963,169.20155330518887 124.85590090646369,197.20543656816113 145,204 C 165.1440990935363,210.79456343183887 177.9637966331349,196.37980703254436 204,198 C 230.0362033668651,199.62019296745564 269.2889125609967,217.27533530166144 300,219 C 330.7110874390033,220.72466469833856 352.8805531228782,206.51885176080998 370,219 C 387.1194468771218,231.48114823919002 399.18887494749026,270.6492576550986 421,255 C 442.81112505250974,239.35074234490136 474.36394708716057,168.88411761879547 499,158 C 523.6360529128394,147.11588238120453 541.3553367038678,195.81427186971962 564,226 C 586.6446632961322,256.1857281302804 614.2147060973682,267.85879490232605 640,245 C 665.7852939026318,222.14120509767392 689.7858389066589,164.75054852097597 715,150 C 740.2141610933411,135.24945147902403 766.641938275996,163.13901101377004 788,193 C 809.358061724004,222.86098898622996 825.6464079893568,254.69340742394397 851,236 C 876.3535920106432,217.30659257605603 910.7724297665761,148.08735929045406 936,126 C 961.2275702334239,103.91264070954593 977.2638729443386,128.9571554142397 999,154 C 1020.7361270556614,179.0428445857603 1048.1720784560691,204.08401905258714 1072,205 C 1095.8279215439309,205.91598094741286 1116.047813231385,182.7067683754117 1140,182 C 1163.952186768615,181.2932316245883 1191.6366686183915,203.0889074457659 1221,207 C 1250.3633313816085,210.9110925542341 1281.4055122950485,196.93760184152455 1305,195 C 1328.5944877049515,193.06239815847545 1344.7412822014148,203.16068518813583 1366,206 C 1387.2587177985852,208.83931481186417 1413.6293588992926,204.41965740593207 1440,200 C 1440,200 1440,400 1440,400 Z" stroke="none" stroke-width="0" fill="#ffffffff" class="transition-all duration-300 ease-in-out delay-150 path-0"></path></svg>
         `;
     }
-    console.log("voicess ",window.speechSynthesis.getVoices());
+    // console.log("voicess ",window.speechSynthesis.getVoices());
     window.speechSynthesis.speak(speech);
     speech.onend = function (event) {
         div.innerHTML = `<a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span>`;

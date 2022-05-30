@@ -257,6 +257,28 @@
 
                 <!-- Modal body -->
                 <div class="modal-body " style="width: auto">
+                    
+                    <form action="{{ asset('checkDemande') }}" method="GET" class="mx-auto" style="width: 80%">
+                        @csrf
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Numéro demande branchement:</label>
+                          <input type="text" class="form-control" name="num_branch"value="{{ old('num_branch') }}" required />
+                          @error('num_branch')
+                              {{ $message }}
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Numéro Cin</label>
+                            <input type="text" class="form-control" name="cin"value="{{ old('cin') }}" required />
+                            @error('cin')
+                                {{ $message }}
+                            @enderror
+                          </div>
+                          <button class="button-3" type="submit">Suivre</button>
+                      </form>
+                      <br><br>
+                      @if ($res != null && !session('error'))
+
                     <table class="table table-striped table-hover" >
                         <thead class="text-center">
                             <tr>
@@ -268,15 +290,15 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            @foreach ($res as $r)
+                          {{--   @foreach ($res as $r) --}}
                                 <tr>
-                                    <td>{{ $r->num_branch }}</td>
-                                    <td>{{ $r->type }}</td>
+                                    <td>{{ $res->num_branch }}</td>
+                                    <td>{{ $res->type }}</td>
                                     <td>
-                                        {{ $r->created_at }}
+                                        {{ $res->created_at }}
                                     </td>
                                     <td>
-                                        @switch($r->status)
+                                        @switch($res->status)
                                             @case('0')
                                                 <span class="badge badge-danger">New</span>
                                             @break
@@ -294,7 +316,7 @@
                                             @break
                                         @endswitch
                                     </td>
-                                    @if ($r->status ==2) 
+                                    @if ($res->status ==2) 
                                                         <td><button type="submit" class="" onclick="window.location.href='{{ asset('downPdfDecisionRes') }}/{{$r->id}}';"><i
                                                             class="fas fa-eye"></i></button>
                                                         </td>
@@ -305,9 +327,10 @@
                                                      </td>
                                                  @endif
                                 </tr>
-                            @endforeach
+                            {{-- @endforeach --}}
                         </tbody>
                     </table>
+                    @endif
                 </div>
 
                 <!-- Modal footer -->

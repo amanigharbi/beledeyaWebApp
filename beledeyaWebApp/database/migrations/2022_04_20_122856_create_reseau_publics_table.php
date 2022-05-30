@@ -15,7 +15,7 @@ class CreateReseauPublicsTable extends Migration
     {
         Schema::create('reseau_publics', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('UserId');
+            // $table->integer('UserId');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('cin');

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Mpdf\Http\Response;
 
 class ReseauPublicController extends Controller
 {
@@ -26,8 +27,7 @@ class ReseauPublicController extends Controller
     }
     public function showView(){
         
-        $res = ReseauPublic::where('UserId', Auth::user()->id)->get();
-
+        $res  = null;
         return view('ReseauPublic', compact('res'));
     }
 
@@ -57,8 +57,8 @@ try{
                 $result['email'] = $request['email'];
             }
            
-                $user =Auth::user();
-            $result['UserId'] = $user->id;
+                // $user =Auth::user();
+            // $result['UserId'] = $user->id;
             
             $digits_needed = 8;
 
@@ -305,6 +305,21 @@ try{
     {
         //
     }
+    public function check(Request $request)
+    {
+        $data = $request->validate($this->checkValid());
+        $res = ReseauPublic::where([['num_branch', $data['num_branch']], ['cin', $data['cin']]])->first();
+        if (!$res) {
+
+            return back()->with('error', 'Demande not found');
+        }
+        // dd($res);
+        return view('ReseauPublic', compact('res'));
+        try {
+        } catch (\Throwable $th) {
+            return back()->with('error', 'something went wrong');
+        }
+    }
     private function validationRules()
     {
         return [
@@ -316,6 +331,13 @@ try{
             'type' => 'required',
             'description' => 'string',
           
+        ];
+    }
+    private function checkValid()
+    {
+        return [
+            'cin' => 'required|numeric:8',
+            'num_branch' => 'required|numeric:8',
         ];
     }
 }

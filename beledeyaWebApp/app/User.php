@@ -39,8 +39,8 @@ class User extends Authenticatable
       /**
      * Database relations
      */
-    public function ReseauPublic()
-    {
-        return $this->hasMany("App\ReseauPublic", 'UserId',"id");
-    }
+    // public function ReseauPublic()
+    // {
+    //     return $this->hasMany("App\ReseauPublic", 'UserId',"id");
+    // }
 }
