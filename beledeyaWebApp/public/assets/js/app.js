@@ -85,8 +85,7 @@ function modifyLanguage(lang) {
             messages.push(msg02);
             updateChatText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
-            getPDFBatir("address","nom","prenom","12345678","email","123","12345");
-            
+          
             break;
         case "arabe":
            // mess2="عسلامة كيفاش نجموا نعاونك"
@@ -103,6 +102,9 @@ function modifyLanguage(lang) {
                  messages.push(msg04);
                  updateChatText(chatBox);
                  readOutLoud(mess3, "chat-1", "chat");
+                 getPDFRefusBatir("الغربي","اماني","منزل عبد الرحمان","وثائق منقوصة");
+                 getPDFAcceptBatir("الغربي","اماني","منزل عبد الرحمان");
+                 getPDFResPublicAccept("الماء الصالح للشراب","الغربي","اماني","بنزرت","الشركة الوطنية لاستغلال و توزيع المياه","الشبكة العمومية لتوزيع المياه","52165260");
                  break;
         default:
             readOutLoud("choisir une langue", "lang-chose", "chat");
@@ -2867,7 +2869,7 @@ function onSendButton(chatbox) {
         updateChatText(chatbox);
         console.log("je dis ",textField);
 
-         if ((textField.includes("réclamation")) || (textField.includes("نعدي شكوى")) || (textField.includes("اضافه شكوى")) || (textField.includes("complaint")) || (textField.includes("reclamation")))
+         if ((textField.includes("ajouter réclamation")) || (textField.includes("نعدي شكوى")) || (textField.includes("اضافه شكوى")) || (textField.includes("complaint")) || (textField.includes("reclamation")))
         // if ((textField == "réclamation") || (textField == "شكوى")
         //     || (textField == "reclamation"))
              {

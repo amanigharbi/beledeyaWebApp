@@ -317,7 +317,7 @@
                                         @endswitch
                                     </td>
                                     @if ($res->status ==2) 
-                                                        <td><button type="submit" class="" onclick="window.location.href='{{ asset('downPdfDecisionRes') }}/{{$r->id}}';"><i
+                                                        <td><button type="submit" class="" onclick="window.location.href='{{ asset('downPdfDecisionRes') }}/{{$res->id}}';"><i
                                                             class="fas fa-eye"></i></button>
                                                         </td>
                                                      

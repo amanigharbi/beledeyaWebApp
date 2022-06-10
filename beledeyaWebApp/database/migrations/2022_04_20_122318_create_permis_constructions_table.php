@@ -24,6 +24,7 @@ class CreatePermisConstructionsTable extends Migration
             $table->string('prop');
             $table->string('status')->default('0'); 
             $table->string('num_autor');
+            $table->string('response')->nullable();
             $table->timestamps();
         });
     }
