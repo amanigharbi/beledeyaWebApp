@@ -51,7 +51,14 @@
     cursor: pointer;
     padding-left: 50%;
 }
-
+.send__button_integration {
+    padding: 6px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding-left: 50%;
+}
 
 /* HEADER */
 .chatbox__header {
@@ -78,6 +85,9 @@
     margin-left: auto;
     
 
+}
+.messages__item--operator1 {
+    margin-left: auto;
 }
 
 .messages__item--visitor {
@@ -185,7 +195,7 @@
 .chatbox__send--footer {
     padding-left: 10px;
     padding-right: 10px;
-    background: white;
+    background: transparent;
     border: none;
     outline: none;
     border-radius: 100%;
@@ -198,7 +208,22 @@
     margin-left: auto;
 
 }
+.chatbox__send--footer_send {
+    padding-left: 15px;
+    padding-right: 15px;
+    /* background: white; */
+    border: none;
+    outline: none;
+    /* border-radius: 100%; */
+    /* border-top-left-radius: 100%; */
+    /* border-top-right-radius: 100%; */
+    /* border-bottom-left-radius: 100%; */
+    /* box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    float: right;
+    margin-left: auto;
 
+}
 .chatbox__button button,
 .chatbox__button button:focus,
 .chatbox__button button:visited {

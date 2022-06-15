@@ -126,7 +126,7 @@
                     </div>
                     <div class="chatbox__content--header">
                         <h4 class="chatbox__heading--header">Chat support</h4>
-                        <p class="chatbox__description--header">Hi. My name is Sam. How can I help you?</p>
+                        <p class="chatbox__description--header">Bonjour, bienvenue sur notre chat ! Allez-y et envoyez-moi un message. 😄</p>
 
                     </div>
                 </div>
@@ -136,9 +136,12 @@
 
                     </div>
                 </div>
+               
                 <div class="chatbox__footer">
 
-                    <input type="text" placeholder="Write a message...">
+                    <input type="text" id="myTextarea" placeholder="Ecrire votre message...">
+                    <button id="btnSend" class="chatbox__send--footer_send send__button_integration"><i class="fa fa-paper-plane"
+                        aria-hidden="true"></i></button>
                     <button id="button" class="chatbox__send--footer send__button"><i class="fa fa-microphone"
                             aria-hidden="true"></i></button>
                 </div>
@@ -218,6 +221,7 @@
     <script src="{{ asset('assets/js/popup.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app_integration.js') }}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

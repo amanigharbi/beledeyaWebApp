@@ -75,7 +75,7 @@ function modifyLanguage(lang) {
             mess0 = "Hi. My name is Sam. How can I help you?";
             let msg01 = { name: "welcome_Sam", message: mess0 };
             messages.push(msg01);
-            updateChatText(chatBox);
+            updateVoiceText(chatBox);
             readOutLoud(mess0, "chat-1", "chat");
             break;
         case "français":
@@ -83,7 +83,7 @@ function modifyLanguage(lang) {
             mess1 = "Salut. je suis Sam. comment puis-je vous aider?";
             let msg02 = { name: "welcome_Sam", message: mess1 };
             messages.push(msg02);
-            updateChatText(chatBox);
+            updateVoiceText(chatBox);
             readOutLoud(mess1, "chat-1", "chat");
           
             break;
@@ -92,7 +92,7 @@ function modifyLanguage(lang) {
             mess2 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
             let msg03 = { name: "welcome_Sam", message: mess2 };
             messages.push(msg03);
-            updateChatText(chatBox);
+            updateVoiceText(chatBox);
             readOutLoud(mess2, "chat-1", "chat");
             getPDFBatir("بنزرت","الغربي","اماني","12345678","email","123","12345");
             break;
@@ -100,7 +100,7 @@ function modifyLanguage(lang) {
                 mess3 = "مرحبا. اسمي سام كيف يمكنني مساعدتك؟";
                  let msg04 = { name: "welcome_Sam", message: mess3 };
                  messages.push(msg04);
-                 updateChatText(chatBox);
+                 updateVoiceText(chatBox);
                  readOutLoud(mess3, "chat-1", "chat");
                  getPDFRefusBatir("الغربي","اماني","منزل عبد الرحمان","وثائق منقوصة");
                  getPDFAcceptBatir("الغربي","اماني","منزل عبد الرحمان");
@@ -125,7 +125,7 @@ function toggleState(chatbox) {
         msg = "Choisir une langue";
         let msg0 = { name: "langue", message: msg };
         messages.push(msg0);
-        updateChatText(chatbox);
+        updateVoiceText(chatbox);
         readOutLoud(msg, "lang-chose", "chat");
     } else {
         chatbox.classList.remove("chatbox--active");
@@ -145,10 +145,10 @@ function validateEmail(email) {
 }
 //message voicebot
 function VoiceBot(msg, chatbox) {
-    let msg2 = { name: "Sam", message: msg };
+    let msg2 = { name: "Voice", message: msg };
     messages.push(msg2);
     chatRepId++;
-    updateChatText(chatbox);
+    updateVoiceText(chatbox);
     readOutLoud(msg, "chat-" + chatRepId, "chat");
 }
 //consommation api
@@ -1131,10 +1131,10 @@ function delay(time) {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    let msg2 = { name: "Sam", message: data };
+                    let msg2 = { name: "Voice", message: data };
                     messages.push(msg2);
                     chatRepId++;
-                    updateChatText(chatbox);
+                    updateVoiceText(chatbox);
                     readOutLoud(data, "chat-" + chatRepId, "chat");
                     textField.value = "";
                 })
@@ -2864,9 +2864,9 @@ function onSendButton(chatbox) {
     console.log("aaaa " + recognition.lang);
     recognition.onresult = function (e) {
         let textField = e.results[0][0].transcript;
-        let msg1 = { name: "User", message: textField };
+        let msg1 = { name: "visitor", message: textField };
         messages.push(msg1);
-        updateChatText(chatbox);
+        updateVoiceText(chatbox);
         console.log("je dis ",textField);
 
          if ((textField.includes("ajouter réclamation")) || (textField.includes("نعدي شكوى")) || (textField.includes("اضافه شكوى")) || (textField.includes("complaint")) || (textField.includes("reclamation")))
@@ -3174,7 +3174,7 @@ function readOutLoud(message, id, actor) {
 /** 
  * cette fonction nous permet de modifier la partie de chatbot (design) 
  */
-function updateChatText(chatbox) {
+function updateVoiceText(chatbox) {
     var html = "";
     messages
         .slice()
@@ -3206,11 +3206,11 @@ function updateChatText(chatbox) {
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-1','chat')" id="chat-1"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
                     html += `  <p  id="a_visitor"> Bot ` + heure + `:` + minute + `  </p>`
                     break;
-                case "Sam":
+                case "Voice":
                     html += `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` + item.message + `','chat-` + chatRepId + `','chat')" id="chat-` + chatRepId + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
                     html += `  <p  id="a_visitor"> Bot ` + heure + `:` + minute + `  </p>`
                     break;
-                case "User":
+                case "visitor":
                     html += `  <p  id="a_operator"> Moi ` + heure + `:` + minute + ` ✓ </p>`
                     html += `<div class="messages__item messages__item--operator" onClick="readOutLoud('` + item.message + `','speech-` + id + `','user')" id="speech-` + id + `"><a id="a_link" href="#"><i class="fas fa-play"></i></a><span id="span">` + test + `</span></div>`;
                     id++;
