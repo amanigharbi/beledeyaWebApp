@@ -86,8 +86,9 @@
                                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         {{ Str::length(auth::user()->name) > 8 ? Str::substr(auth::user()->name, 0, 5) . '...' : auth::user()->name }}
                                     </a>
+                                 
                                     <ul class="dropdown-menu   text-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#"> <i class="fa fa-user">
+                                        <li><a class="dropdown-item" href="{{ route('profile') }}/{{ auth::user()->id }}"> <i class="fa fa-user">
                                                     Profile</i></a></li>
                                         <li><a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
                                                   document.getElementById('logout-form').submit();"><i
@@ -95,6 +96,7 @@
                                                     {{ __('Logout') }}
                                                 </i></a></li>
                                     </ul>
+                                   
                                 </li>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">

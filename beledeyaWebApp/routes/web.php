@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/downPdfDecisionRes/{id}', 'ReseauPublicController@downPdfDecisionRes')->name('downPdfDecisionRes');
 
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profile','UserController@show')->name('profile');
 });
 
 
@@ -81,6 +82,8 @@ Route::group(
         Route::resource('/ReseauPublic', 'ReseauPublicController');
         // autorisation batir
         Route::resource('/PermisConstructions', 'PermisConstructionController');
+      
+
   
     }
 );

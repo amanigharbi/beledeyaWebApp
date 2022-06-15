@@ -9,10 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailBox;
+use App\User;
 
 class UserController extends Controller
 {
-
+  
+       /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $permisConstruction
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $userProfile, $id)
+    {
+        $userProfile = User::find($id);
+  
+        return view('auth.profile', compact('userProfile'));
+    }
     /**
      * Show email verification page
      */
