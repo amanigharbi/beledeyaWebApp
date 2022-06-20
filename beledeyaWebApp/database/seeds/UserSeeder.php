@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserSeeder extends Seeder
 {
@@ -19,15 +20,21 @@ class UserSeeder extends Seeder
             'emailConfirmed' => 'true',
             'password' => '$2y$10$7/Bqh2o8Ev6Qfqn5yfa1rO/pf4iyOudu.Kcb5gaBFH9OPYa3JZjci', // 123456789
             'role' => "admin",
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+
         ]);
 
         // Create User
         DB::table('users')->insert([
-            'name' => 'user',
+            'name' => 'user user',
             'email' => 'user@user.com',
             'emailConfirmed' => 'true',
             'password' => '$2y$10$7/Bqh2o8Ev6Qfqn5yfa1rO/pf4iyOudu.Kcb5gaBFH9OPYa3JZjci', // 123456789
             'role' => "user",
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
+
         ]);
     }
 }

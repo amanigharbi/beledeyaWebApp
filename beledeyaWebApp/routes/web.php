@@ -53,7 +53,8 @@ Route::group(['middleware' => ['auth', 'verifyEmail', 'user']], function () {
     Route::get('/downPdfDecisionRes/{id}', 'ReseauPublicController@downPdfDecisionRes')->name('downPdfDecisionRes');
 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/profile','UserController@show')->name('profile');
+    // Route::get('/profile','UserController@show')->name('profile');
+    Route::resource('/profile', 'UserController');
 });
 
 

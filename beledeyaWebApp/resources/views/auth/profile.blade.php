@@ -1,69 +1,176 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/profile_css.css') }}">
 @extends('layouts.main')
-<style>
-    				                
-body{margin-top:20px;}
-.avatar{
-width:200px;
-height:200px;
-}				              
-    </style>
 @section('content')
-<div class="container bootstrap snippets bootdey">
-    <h1 class="text-primary">Edit Profile</h1>
-      <hr>
-	<div class="row">
-      <!-- left column -->
-      <div class="col-md-3">
-        <div class="text-center">
-          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
-          <h6>Upload a different photo...</h6>
-          
-          <input type="file" class="form-control">
-        </div>
+
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; ">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      
+      <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white">Hello {{$userProfile->name}}</h1>
+        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+        <a href="#editProfile" class="btn btn-info">Edit profile</a>
       </div>
       
-      <!-- edit form column -->
-      <div class="col-md-9 personal-info">
-        <div class="alert alert-info alert-dismissable">
-          <a class="panel-close close" data-dismiss="alert">×</a> 
-          <i class="fa fa-coffee"></i>
-          This is an <strong>.alert</strong>. Use this to show important messages to the user.
+    </div>
+    
+  </div>
+  
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="#">
+                <img src="{{ asset('assets/images/client-image.jpg') }}" class="rounded-circle">
+              </a>
+            </div>
+          </div>
         </div>
-        <h3>Personal info</h3>
-        
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <label class="col-lg-3 control-label">First name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value={{$userProfile->name}}>
-            </div>
-          </div>
-         
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Email:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" value="{{$userProfile->email}}">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Time Zone:</label>
-            <div class="col-lg-8">
-              <div class="ui-select">
-                <select id="user_time_zone" class="form-control">
-                  <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                  <option value="Alaska">(GMT-09:00) Alaska</option>
-                  <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                  <option value="Arizona">(GMT-07:00) Arizona</option>
-                  <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                  <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                  <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                  <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                </select>
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          {{-- <div class="d-flex justify-content-between">
+            <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
+            <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+          </div> --}}
+        </div>
+        <div class="card-body pt-0 pt-md-4">
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                {{-- <div>
+                  <span class="heading">Email confirmé</span>
+                  <span class="description">{{$userProfile->emailConfirmed}}</span>
+                </div> --}}
+                <div>
+                  <span class="heading">Role</span>
+                  <span class="description">{{$userProfile->role}}</span>
+                </div>
+                <div>
+                  <span class="heading">Social</span>
+                  <span class="description">{{$userProfile->social}}</span>
+                </div>
               </div>
             </div>
           </div>
-        </form>
+          <div class="text-center">
+            <h3>
+              {{$userProfile->name}}
+              {{-- <span class="font-weight-light">, 27</span> --}}
+            </h3>
+            <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i>{{$userProfile->email}}
+            </div>
+            <div class="h5 mt-4">
+              <i class="ni business_briefcase-24 mr-2"></i>Crée en - <span class="font-weight-light">{{$userProfile->created_at}}</span>
+           <br> 
+              <i class="ni business_briefcase-24 mr-2"></i>Editée en - <span class="font-weight-light">{{$userProfile->updated_at}}</span>
+            </div>
+           
+            <hr class="my-4">
+<p> Compte sur Commune de Menzel Abdelrahmane</p>          
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="col-xl-8 order-xl-1" id="editProfile">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Edition de compte</h3>
+            </div>
+            
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="{{ route('profile.update', $userProfile->id) }}" method="POST">
+            @csrf @method('PATCH')
+            <h6 class="heading-small text-muted_2 mb-4">Information d'utilisateur</h6>
+          
+            @if (session('success'))
+            <div class="alert alert-success alert-dismissable">
+              <a class="panel-close close" data-dismiss="alert">×</a> 
+              <i class="fa fa-check"></i>
+              <strong>Modification avec succès !</strong>. {{ session('success') }}.
+            </div>
+    
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger alert-dismissable">
+              <a class="panel-close close" data-dismiss="alert">×</a> 
+              <i class="fa fa-warning"></i>
+              <strong>OPS !</strong>. {{ session('error') }}.
+            </div>
+            
+            @endif
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="input-username">Nom & Prénom</label>
+                    <input type="text" id="input-username" name="name" class="form-control form-control-alternative"  value="{{$userProfile->name}}">
+                
+                  </div>
+                      @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Adresse email</label>
+                    <input type="email" id="input-email" name="email" class="form-control form-control-alternative" placeholder="email" value="{{$userProfile->email}}">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="input-first-name">Mot de passe</label>
+                    <input type="password" name="mdp_1" class="form-control form-control-alternative" placeholder="Mot de passe" >
+                    @error('mdp_1')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="input-last-name">Confirmer Mot de passe</label>
+                    <input type="password" name="mdp_2" class="form-control form-control-alternative" placeholder="Confirmer mot de passe" >
+                  @error('mdp_2')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4">
+            <div class="col-12 text-right">
+              <button type="submit" class="btn btn-sm btn-primary" >Editer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<hr>
+</div>
+@endsection
