@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -52,7 +52,26 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+                        {{-- <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Language <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ asset('/lang') }}/en"><img src="{{asset('img/us.png')}}" width="30px" height="20x"> English</a>
+                                    <a class="dropdown-item" href="{{ asset('/lang') }}/ar"><img src="{{asset('img/ar.png')}}" width="30px" height="20x"> عربية</a>
+                                    <a class="dropdown-item" href="{{ asset('/lang') }}/fr"><img src="{{asset('img/fr.png')}}" width="30px" height="20x"> Français</a>
+  
+                                </div>
+                            </li>
+                        </ul> --}}
                         <!-- ***** Logo Start ***** -->
+                        <div style="float: left; color: #!important;">
+                            <a href="{{ asset('/lang') }}/en" class="{{ \App::getLocale() == 'en' ? 'active' : '' }}">English</a>
+                                <a href="{{ asset('/lang') }}/ar" class="{{ \App::getLocale() == 'ar' ? 'active' : '' }}">عربية</a>
+                                <a href="{{ asset('/lang') }}/fr" class="{{ \App::getLocale() == 'fr' ? 'active' : '' }}">Français</a>
+                         
+                        </div>
                         <a href="{{ asset('/') }}" class="logo">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
@@ -103,6 +122,7 @@
                                     @csrf
                                 </form>
                             @endif
+                         
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>

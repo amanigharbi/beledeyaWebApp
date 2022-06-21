@@ -23,7 +23,14 @@ Route::group([
 });
 
 
-
+/**
+ * Language
+ */
+Route::get('lang/{locale}', function($locale){
+    app()->setLocale($locale);
+    session()->put('locale',$locale);
+    return redirect()->back();
+});
 Auth::routes();
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
