@@ -68,6 +68,16 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+                        {{-- <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <i class="fa fa-globe"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Action</a>
+                              <a class="dropdown-item" href="#">Another action</a>
+                              <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                          </div> --}}
                         <div class="lang">
                             <a href="{{ asset('/lang') }}/en" class="{{(\App::getLocale()=="en") ? 'active' : '' }}">{{__('main.en')}} </a>|
                             <a href="{{ asset('/lang') }}/ar" class="{{(\App::getLocale()=="ar") ? 'active' : '' }}"> {{__('main.ar')}} </a>|

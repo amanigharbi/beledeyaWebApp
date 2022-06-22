@@ -35,4 +35,5 @@ return [
     'Confirmation code'=>'Confirmation code',
     'Verify' =>'Verify',
     'Resend the code' =>'Resend the code',
+    'Send Password Reset Link'=>'Send Password Reset Link',
 ];

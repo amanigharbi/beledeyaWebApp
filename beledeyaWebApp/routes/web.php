@@ -31,8 +31,7 @@ Route::get('lang/{locale}', function($locale){
     app()->setLocale($locale);
     session()->put('locale',$locale);
     // dd(app()->getLocale());
-    // return redirect()->back();
-    return view('auth.login');
+    return redirect()->back();
 });
 
 Auth::routes();

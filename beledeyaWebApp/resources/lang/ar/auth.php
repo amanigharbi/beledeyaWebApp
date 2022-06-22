@@ -35,4 +35,5 @@ return [
     'Confirmation code'=>'تأكيد الرمز',
     'Verify' =>'تاكيد',
     'Resend the code' =>'أعد إرسال الرمز',
+    'Send Password Reset Link'=>'إرسال رابط إعادة تعيين كلمة السر',
 ];

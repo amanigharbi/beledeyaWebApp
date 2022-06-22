@@ -11,7 +11,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h2 class="text-light">{{__('main.title')}}</h2>
-                                    <p class="text-light">
+                                    <p class="text-light {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
                                         {{__('main.p_municipality')}}
                                     </p>
                                 </div>

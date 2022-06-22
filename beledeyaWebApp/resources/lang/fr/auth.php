@@ -35,4 +35,5 @@ return [
     'Confirmation code'=>'Code de confirmation',
     'Verify' =>'Vérifier',
     'Resend the code' =>'Renvoyer le code',
+    'Send Password Reset Link'=>'Envoyer le lien de réinitialisation du mot de passe',
 ];
