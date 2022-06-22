@@ -10,20 +10,19 @@
                       <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                           <div class="row">
                               <div class="col-lg-12">
-                                  <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel Abderrahmen</h2>
+                                  <h2 class="text-light">{{__('main.title')}}</h2>
                                   <p class="text-light">
-                                      Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située à une soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte. Elle fait partie de l'agglomération de Bizerte
-                                      dont elle n'est séparée que de quelques kilomètres...
+                                     {{__('main.p_municipality')}}
                                   </p>
                               </div>
                               <div class="col-lg-12">
                                 
                                   <div class="col-lg-12">
                                       <div class="white-button first-button scroll-to-section">
-                                          <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
+                                          <a href="#contact">{{__('main.More information')}}<i class="fab fa-apple"></i></a>
                                       </div>
                                       <div class="white-button scroll-to-section">
-                                          <a href="#contact">contact <i class="fab fa-google-play"></i></a>
+                                          <a href="#contact">{{__('main.contact')}} <i class="fab fa-google-play"></i></a>
                                       </div>
                                   </div>
                               </div>
@@ -48,9 +47,9 @@
                             <div class="row">
                                 <div class="col-lg-8 offset-lg-2">
                                     <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
-                                        <h4>La commune de <em>MENZEL ABDERRAHMAN </em> met à votre </h4><h4> disposition une variété des <em>services</em> en ligne.</h4>
+                                        <h4>{{__('main.title_services_1')}} </h4><h4> {{__('main.title_services_2')}}</em> en ligne.</h4>
                                         <img src="{{ asset('assets/images/heading-line-dec.png') }}" alt="">
-                                        <p>Dans le cadre d'instaurer une administration électronique , moderne et interactive.</p>
+                                        <p>{{__('main.title_services_3')}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,40 +59,40 @@
                               <div class="col-lg-3">
                                 <div class="service-item first-service">
                                   <div class="icon"></div>
-                                  <h4>Espace des Réclamations</h4>
+                                  <h4>{{__('main.Complaints Area')}}</h4>
                                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                                   <div class="text-button">
-                                    <a href="{{route('reclamation')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="{{route('reclamation')}}">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-lg-3">
                                 <div class="service-item second-service">
                                   <div class="icon"></div>
-                                  <h4>Accés aux documents administratifs</h4>
+                                  <h4>{{__('main.Access to administrative documents')}}</h4>
                                   <p>You are allowed to use the Chain App Dev HTML template. Feel free to modify or edit this layout.</p>
                                   <div class="text-button">
-                                    <a href="{{route('documents')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="{{route('documents')}}">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-lg-3">
                                 <div class="service-item third-service">
                                   <div class="icon"></div>
-                                  <h4>Autorisation de batir</h4>
+                                  <h4>{{__('main.Building permit')}}</h4>
                                   <p>If this template is beneficial for your work, please support us <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">a little via PayPal</a>. Thank you.</p>
                                   <div class="text-button">
-                                    <a href="{{route('PermisConstruction')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="{{route('PermisConstruction')}}">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-lg-3">
                                 <div class="service-item fourth-service">
                                   <div class="icon"></div>
-                                  <h4>Taxe locative</h4>
+                                  <h4>{{__('main.Rental tax')}}</h4>
                                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                                   <div class="text-button">
-                                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="#">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>
@@ -101,20 +100,20 @@
                               <div class="col-lg-3 test">
                                 <div class="service-item five-service">
                                   <div class="icon"></div>
-                                  <h4>Higiène</h4>
+                                  <h4>{{__('main.Hygiene')}}</h4>
                                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                                   <div class="text-button">
-                                    <a href="#">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="#">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-lg-3">
                                 <div class="service-item six-service">
                                   <div class="icon"></div>
-                                  <h4>Branchement au réseaux publics</h4>
+                                  <h4>{{__('main.Connection to public networks')}}</h4>
                                   <p>Lorem ipsum dolor consectetur adipiscing elit sedder williamsburg photo booth quinoa and fashion axe.</p>
                                   <div class="text-button">
-                                    <a href="{{route('ReseauPublic')}}">Accéder <i class="fa fa-arrow-right"></i></a>
+                                    <a href="{{route('ReseauPublic')}}">{{__('main.access')}} <i class="fa fa-arrow-right"></i></a>
                                   </div>
                                 </div>
                               </div>

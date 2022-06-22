@@ -29,5 +29,10 @@ return [
     'Sign up' => 'اشتراك',
     'You have an account' => 'لديك حساب',
     'Signin now!' => '!قم بتسجيل دخولك الآن',
-
+    'Confirm your email' => 'قم بتأكيد بريدك الإلكتروني',
+    'You will recive a confirmation code in your mailbox' => 'سوف تتلقى رمز التأكيد في صندوق البريد الخاص بك',
+    'please enter this code here to confirm your account' => 'الرجاء إدخال هذا الرمز هنا لتأكيد حسابك',
+    'Confirmation code'=>'تأكيد الرمز',
+    'Verify' =>'تاكيد',
+    'Resend the code' =>'أعد إرسال الرمز',
 ];

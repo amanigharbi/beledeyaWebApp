@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,7 +27,24 @@
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 
+    <style>
 
+        .lang a {
+            text-decoration: none;
+            color: black!important;
+            font-size: medium;
+        }
+        
+         .lang a:hover {
+            color: rgb(170, 76, 76)!important;
+        }
+        
+        .lang .active {
+            color: #981b1b !important;
+            font-weight: bold;
+        }
+        
+        </style>
 </head>
 
 <body>
@@ -52,6 +68,11 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+                        <div class="lang">
+                            <a href="{{ asset('/lang') }}/en" class="{{(\App::getLocale()=="en") ? 'active' : '' }}">{{__('main.en')}} </a>|
+                            <a href="{{ asset('/lang') }}/ar" class="{{(\App::getLocale()=="ar") ? 'active' : '' }}"> {{__('main.ar')}} </a>|
+                            <a href="{{ asset('/lang') }}/fr" class="{{(\App::getLocale()=="fr") ? 'active' : '' }}"> {{__('main.fr')}}</a>
+                        </div>
                         {{-- <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -66,12 +87,7 @@
                             </li>
                         </ul> --}}
                         <!-- ***** Logo Start ***** -->
-                        <div style="float: left; color: #!important;">
-                            <a href="{{ asset('/lang') }}/en" class="{{ \App::getLocale() == 'en' ? 'active' : '' }}">English</a>
-                                <a href="{{ asset('/lang') }}/ar" class="{{ \App::getLocale() == 'ar' ? 'active' : '' }}">عربية</a>
-                                <a href="{{ asset('/lang') }}/fr" class="{{ \App::getLocale() == 'fr' ? 'active' : '' }}">Français</a>
-                         
-                        </div>
+                       
                         <a href="{{ asset('/') }}" class="logo">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
@@ -79,25 +95,25 @@
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="{{ route('welcome') }}#top"
-                                    class="{{ \Request::route()->getName() == 'welcome' ? 'active' : '' }}">Accueil</a>
+                                    class="{{ \Request::route()->getName() == 'welcome' ? 'active' : '' }}">{{__('main.home')}}</a>
                             </li>
                             <li class="scroll-to-section"><a href="{{ route('home') }}#services"
-                                    class="{{ \Request::is('home*') ? 'active' : '' }}">Services</a></li>
+                                    class="{{ \Request::is('home*') ? 'active' : '' }}">{{__('main.services')}}</a></li>
                             <li class="scroll-to-section"><a href="{{ route('documents') }}"
-                                    class="{{ \Request::is('documents*') ? 'active' : '' }}">Documents</a></li>
+                                    class="{{ \Request::is('documents*') ? 'active' : '' }}">{{__('main.documents')}}</a></li>
                             <li class="scroll-to-section"><a href="{{ route('reclamation') }}"
-                                    class="{{ \Request::is('reclamation*') ? 'active' : '' }}">Réclamations</a>
+                                    class="{{ \Request::is('reclamation*') ? 'active' : '' }}">{{__('main.complaints')}}</a>
                             </li>
                             <li class="scroll-to-section"><a href="{{ route('ReseauPublic') }}"
-                                    class="{{ \Request::is('ReseauPublic*') ? 'active' : '' }}">Réseau Publique</a>
+                                    class="{{ \Request::is('ReseauPublic*') ? 'active' : '' }}">{{__('main.publicNetwork')}}</a>
                             </li>
                             <li class="scroll-to-section"><a href="{{ route('about') }}"
-                                    class="{{ \Request::is('about*') ? 'active' : '' }}">A propos</a></li>
+                                    class="{{ \Request::is('about*') ? 'active' : '' }}">{{__('main.about')}}</a></li>
 
                             @if (!auth::user())
                                 <li>
                                     <div class="gradient-button"><a id="modal_trigger" href="{{ route('login') }}"><i
-                                                class="fa fa-sign-in-alt"></i> Se connecter</a></div>
+                                                class="fa fa-sign-in-alt"></i> {{__('main.log in')}}</a></div>
                                 </li>
                             @else
                                 <li class="nav-item dropdown">
@@ -108,11 +124,11 @@
                                  
                                     <ul class="dropdown-menu   text-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                         <li><a class="dropdown-item" href="{{ asset('profile') }}/{{ auth::user()->id }}"> <i class="fa fa-user">
-                                                    Profile</i></a></li>
+                                            {{__('main.profile')}}</i></a></li>
                                         <li><a class="dropdown-item " href="{{ route('logout') }}" onclick="event.preventDefault();
                                                   document.getElementById('logout-form').submit();"><i
                                                     class="fa fa-sign-out-alt">
-                                                    {{ __('Logout') }}
+                                                    {{ __('main.logout') }}
                                                 </i></a></li>
                                     </ul>
                                    
@@ -125,7 +141,7 @@
                          
                         </ul>
                         <a class='menu-trigger'>
-                            <span>Menu</span>
+                            <span>{{__('main.menu')}}</span>
                         </a>
                         <!-- ***** Menu End ***** -->
                     </nav>
@@ -145,8 +161,8 @@
                             alt="image">
                     </div>
                     <div class="chatbox__content--header">
-                        <h4 class="chatbox__heading--header">Chat support</h4>
-                        <p class="chatbox__description--header">Bonjour, bienvenue sur notre chat ! Allez-y et envoyez-moi un message. 😄</p>
+                        <h4 class="chatbox__heading--header">{{__('main.Support chat')}}</h4>
+                        <p class="chatbox__description--header">{{__('main.Hello, welcome to our chat! Go ahead and send me a message')}}</p>
 
                     </div>
                 </div>
@@ -159,7 +175,7 @@
                
                 <div class="chatbox__footer">
 
-                    <input type="text" id="myTextarea" placeholder="Ecrire votre message...">
+                    <input type="text" id="myTextarea" placeholder="{{__('main.Write your message')}}">
                     <button id="btnSend" class="chatbox__send--footer_send send__button_integration"><i class="fa fa-paper-plane"
                         aria-hidden="true"></i></button>
                     <button id="button" class="chatbox__send--footer send__button"><i class="fa fa-microphone"
@@ -176,36 +192,34 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-widget">
-                        <h4>Nos contacts</h4>
-                        <p>Rue El Mongi Slim 7035 menzel abdel rahmen</p>
-                        <p><a href="#">Tel (+216) 72 570 125/ (+216) 72 571 29</a></p>
-                        <p><a href="#">Fax (+216) 72 570 125</a></p>
+                        <h4>{{__('main.Our contacts')}}</h4>
+                        <p>{{__('main.adr')}}</p>
+                        <p><a href="#">{{__('main.tel')}}</a></p>
+                        <p><a href="#">{{__('main.fax')}}</a></p>
                         <p><a href="#">communemenzelabderrahmen@gmail.com</a></p>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-widget">
-                        <h4>A propos</h4>
-                        <li><a href="#">Accueil</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Documents</a></li>
-                        <li><a href="#">Réclamations</a></li>
+                        <h4>{{__('main.about')}}</h4>
+                        <li><a href="{{ route('welcome') }}#top">{{__('main.home')}}</a></li>
+                        <li><a href="{{ route('home') }}#services">{{__('main.services')}}</a></li>
+                        <li><a href="{{ route('documents') }}">{{__('main.documents')}}</a></li>
+                        <li><a href="{{ route('reclamation') }}">{{__('main.complaints')}}</a></li>
+                        <li><a href="{{ route('ReseauPublic') }}">{{__('main.publicNetwork')}}</a></li>
                         </ul>
 
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="footer-widget">
-                        <h4>Liens Utiles</h4>
+                        <h4>{{__('main.Useful links')}}</h4>
                         <ul>
-                            <li><a href="https://www.tunisie.gov.tn/index.php?lang=french">Portail du gouvernement
-                                    Tunisien</a></li>
-                            <li><a href="https://www.interieur.gov.tn/">Ministère de l'Intérieur Tunisien</a></li>
-                            <li><a href="https://www.cpscl.com.tn/">Caisses des prêts et de soutien des collectivités
-                                    Locales</a></li>
-                            <li><a href="https://www.emploi.nat.tn/fo/Fr/global.php">Agence Nationale pour l'Emploi et
-                                    le Travail</a></li>
-                            <li><a href="https://www.cfad.tn/">Centre de Formation et d'Appui à la Décentralisation</a>
+                            <li><a href="https://www.tunisie.gov.tn/index.php?lang=french">{{__('main.Tunisian government portal')}}</a></li>
+                            <li><a href="https://www.interieur.gov.tn/">{{__('main.Tunisian Ministry of Interior')}}</a></li>
+                            <li><a href="https://www.cpscl.com.tn/">{{__('main.Local authorities loan and support funds')}}</a></li>
+                            <li><a href="https://www.emploi.nat.tn/fo/Fr/global.php">{{__('main.National Agency for Employment and Labor')}}</a></li>
+                            <li><a href="https://www.cfad.tn/">{{__('main.Decentralization Training and Support Center')}}</a>
                             </li>
                         </ul>
 
@@ -213,7 +227,7 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-widget">
-                        <h4>About Our Company</h4>
+                        <h4>{{__('main.About Our Company')}}</h4>
                         <div class="logo">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="">
                         </div>
@@ -223,7 +237,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="copyright-text">
-                        <p>Copyright © 2022 Beledeya Menzel Abd Rahmen. All Rights Reserved.
+                        <p>{{__('main.Copyright © 2022 Beledeya Menzel Abd Rahmen. All Rights Reserved')}}
                         </p>
                     </div>
                 </div>

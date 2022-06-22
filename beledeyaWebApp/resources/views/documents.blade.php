@@ -60,20 +60,19 @@
                       <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                           <div class="row">
                               <div class="col-lg-12">
-                                  <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel Abderrahmen</h2>
+                                  <h2 class="text-light">{{__('main.title')}}</h2>
                                   <p class="text-light">
-                                      Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située à une soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte. Elle fait partie de l'agglomération de Bizerte
-                                      dont elle n'est séparée que de quelques kilomètres...
+                                      {{__('main.p_municipality')}}
                                   </p>
                               </div>
                               <div class="col-lg-12">
                                 
                                   <div class="col-lg-12">
                                       <div class="white-button first-button scroll-to-section">
-                                          <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
+                                          <a href="#contact">{{__('main.More information')}}<i class="fab fa-apple"></i></a>
                                       </div>
                                       <div class="white-button scroll-to-section">
-                                          <a href="#contact">contact <i class="fab fa-google-play"></i></a>
+                                          <a href="#contact">{{__('main.contact')}} <i class="fab fa-google-play"></i></a>
                                       </div>
                                   </div>
                               </div>
@@ -94,19 +93,19 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Documents administratifs</h2>
+                    <h2 class="heading-section">{{__('main.Administrative documents')}}</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="text-center mb-4">Télecharger le document que vous avez besoin</h4>
+                    <h4 class="text-center mb-4">{{__('main.Upload the document you need')}}</h4>
                     <div class="table-wrap">
                         <table class="table">
                             <thead class="thead-primary">
                                 <tr>
-                                    <th>Nom document</th>
-                                    <th>Date de publication</th>
-                                    <th>Action</th>
+                                    <th>{{__('main.document name')}}</th>
+                                    <th>{{__('main.Publication date')}}</th>
+                                    <th>{{__('main.action')}}</th>
 
                                 </tr>
                             </thead>
@@ -120,12 +119,12 @@
                                                 <p class="text-primary d-inline p-2">
                                                     <a class="btn btn-primary btn-sm mt-3"
                                                         href="{{ asset('storage') }}/{{ $d->file }}"
-                                                        target="_blank">Preview
+                                                        target="_blank">{{__('main.preview')}}
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 </p>
                                             @else
-                                                <span class="badge badge-danger">Not attached</span>
+                                                <span class="badge badge-danger">{{__('main.Not attached')}}</span>
                                             @endif
                                         </td>
                                     </tr>

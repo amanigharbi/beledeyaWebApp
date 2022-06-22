@@ -4,8 +4,8 @@
         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
             <div class="card w-50 m-auto auth">
                 <div class="card-header">
-                    <h1 class="text-center">Confirm your email</h1>
-                    <p class="text-light text-center">You will recive a confirmation code in your mailbox <b>{{auth::user()->email}} </b> please enter this code here to confirm your account</p>
+                    <h1 class="text-center">{{__('auth.Confirm your email')}}</h1>
+                    <p class="text-light text-center">{{__('auth.You will recive a confirmation code in your mailbox')}} <b>{{auth::user()->email}} </b> {{__('auth.please enter this code here to confirm your account')}}</p>
                 </div>
 
                 <div class="card-body">
@@ -18,7 +18,7 @@
                                     {{ session('error') }}
                                 </div>
                                 @endif
-                                <input type="text" class="form-control text-danger text-center" name="code" required autofocus placeholder="Confirmation code" />
+                                <input type="text" class="form-control text-danger text-center" name="code" required autofocus placeholder="{{__('auth.Confirmation code')}}" />
                                 @error('code')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -30,11 +30,11 @@
                         <div class="form-group text-center">
                             <br />
                             <button type="submit" class="btn btn-block">
-                                Verify
+                                {{__('auth.Verify')}}
                             </button>
                             <br />
                             <br />
-                            <a href="{{asset('newCode')}}">Resend the code</a>
+                            <a href="{{asset('newCode')}}">{{__('auth.Resend the code')}}</a>
                         </div>
                     </form>
                 </div>

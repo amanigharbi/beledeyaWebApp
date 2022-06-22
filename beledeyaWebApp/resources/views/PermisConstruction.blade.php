@@ -10,23 +10,19 @@
                                 data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h2 class="text-light">Bienvenue sur le site officiel de la commune de Menzel
-                                            Abderrahmen</h2>
+                                        <h2 class="text-light">{{__('main.title')}}</h2>
                                         <p class="text-light">
-                                            Menzel Abderrahmane (arabe : منزل عبد الرحمان) est une ville située à une
-                                            soixantaine de kilomètres au nord de Tunis, sur la rive nord du lac de Bizerte.
-                                            Elle fait partie de l'agglomération de Bizerte
-                                            dont elle n'est séparée que de quelques kilomètres...
+                                         {{__('main.p_municipality')}}
                                         </p>
                                     </div>
                                     <div class="col-lg-12">
 
                                         <div class="col-lg-12">
                                             <div class="white-button first-button scroll-to-section">
-                                                <a href="#contact">Plus d'information<i class="fab fa-apple"></i></a>
+                                                <a href="#contact">{{__('main.More information')}}<i class="fab fa-apple"></i></a>
                                             </div>
                                             <div class="white-button scroll-to-section">
-                                                <a href="#contact">contact <i class="fab fa-google-play"></i></a>
+                                                <a href="#contact">{{__('main.contact')}} <i class="fab fa-google-play"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +55,7 @@
         @if (session('success') && session('permisConsId') && session('permisConsIdAr'))
         <script>
             swal({
-                title: "Good job!",
+                title: "{{__('main.Good job!')}}",
                 text: "{{ Session::get('success') }}",
                 icon: "success",
                 button: "download pdf",
@@ -84,22 +80,22 @@
                 <div class="col-md-3 register-left">
                     <img src="https://i.ibb.co/52TKsdc/construction-removebg-preview.png" alt="construction">
 
-                    <h3>Bienvenue Dans l'espace d'autorisation de batir</h3>
+                    <h3>{{__('main.Welcome to the building permit area')}}</h3>
                 </div>
                 <div class="col-md-9 register-right">
                     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                aria-controls="home" aria-selected="true">Ajouter</a>
+                                aria-controls="home" aria-selected="true">{{__('main.add')}}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="true">Suivre</a>
+                                aria-controls="profile" aria-selected="true">{{__('main.track')}}</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <h3 class="register-heading">Ajouter une Demande d'autorisation de batir</h3>
+                            <h3 class="register-heading">{{__('main.Add a building permit request')}}</h3>
 
                             <form action="{{ asset('addDemandeConst') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -107,59 +103,59 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="first_name"
-                                                placeholder="Prénom *" value="{{ old('first_name') }}" required />
+                                                placeholder="{{__('main.firstname')}} *" value="{{ old('first_name') }}" required />
                                             @error('first_name')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="last_name" placeholder="Nom *"
+                                            <input type="text" class="form-control" name="last_name" placeholder="{{__('main.lastname')}} *"
                                                 value="{{ old('last_name') }}" required />
                                             @error('last_name')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="cin" placeholder="Cin *"
+                                            <input type="text" class="form-control" name="cin" placeholder="{{__('main.ID card')}} *"
                                                 value="{{ old('cin') }}" required />
                                             @error('cin')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control" name="email" placeholder="Email "
+                                            <input type="email" class="form-control" name="email" placeholder="{{__('main.email')}} "
                                                 value="{{ old('email') }}" />
                                             @error('email')
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                        <button class="btnRegister" type="submit">Ajouter</button>
+                                        <button class="btnRegister" type="submit">{{__('main.add')}}</button>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="adresse"
-                                                placeholder="Adresse * " value="{{ old('adresse') }}" required />
+                                                placeholder="{{__('main.address')}} * " value="{{ old('adresse') }}" required />
                                             @error('adresse')
                                                 {{ $message }}
                                             @enderror
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="surface" placeholder="Surface *"
+                                            <input type="text" class="form-control" name="surface" placeholder="{{__('main.Surface')}} *"
                                                 value="{{ old('surface') }}" required />
                                             @error('surface')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                         <div class="maxl">
-                                            <label> Le terrain jouxte-t-il une propriété publique?</label><br />
+                                            <label> {{__('main.Does the land adjoin public property?')}}</label><br />
                                             <label class="radio inline">
-                                                <input type="radio" name="prop" value="oui" checked />
-                                                <span> Oui </span>
+                                                <input type="radio" name="prop" value="{{__('main.Yes')}}" checked />
+                                                <span> {{__('main.Yes')}} </span>
                                             </label>
                                             <label class="radio inline">
-                                                <input type="radio" name="prop" value="non" />
-                                                <span>Non </span>
+                                                <input type="radio" name="prop" value="{{__('main.No')}}" />
+                                                <span>{{__('main.No')}} </span>
                                             </label>
                                             @error('prop')
                                                 {{ $message }}
@@ -170,7 +166,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <h3 class="register-heading">Suivre Demande d'autorisation de batir</h3>
+                            <h3 class="register-heading">{{__('main.Track Application for building permit')}}</h3>
 
                             <div class="row register-form">
                                 <div class="col-md-5">
@@ -178,21 +174,21 @@
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="num_autor"
-                                                placeholder="Numéro Demande d'autorisation *"
+                                                placeholder="{{__('main.Authorization request number')}} *"
                                                 value="{{ old('num_autor') }}" required />
                                             @error('num_autor')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="cin" placeholder="Numéro CIN *"
+                                            <input type="text" class="form-control" name="cin" placeholder="{{__('main.Cin number')}} *"
                                                 value="{{ old('cin') }}" required />
                                             @error('cin')
                                                 {{ $message }}
                                             @enderror
                                         </div>
 
-                                        <button class="btnRegister" type="submit">Suivre</button>
+                                        <button class="btnRegister" type="submit">{{__('main.track')}}</button>
                                     </form>
                                 </div>
                                 <div class="col-md-7">
@@ -200,11 +196,11 @@
                                         <table class="table">
                                             <thead class="thead-light">
                                                 <tr class="text-center">
-                                                    <th>N° Demande</th>
-                                                    <th>Date de publication</th>
-                                                    <th>Status</th>
+                                                    <th>{{__('main.Request No')}}</th>
+                                                    <th>{{__('main.Publication date')}}</th>
+                                                    <th>{{__('main.Status')}}</th>
                                                     @if ($autorisation->status > 1)
-                                                        <th>Document</th>
+                                                        <th>{{__('main.document')}}</th>
                                                     @endif
                                                 </tr>
                                             </thead>
@@ -218,19 +214,19 @@
                                                     <td>
                                                         @switch($autorisation->status)
                                                             @case('0')
-                                                                <span class="badge badge-danger">New</span>
+                                                                <span class="badge badge-danger">{{__('main.new')}}</span>
                                                             @break
 
                                                             @case('1')
-                                                                <span class="badge badge-warning text-white">In progress</span>
+                                                                <span class="badge badge-warning text-white">{{__('main.Inprogress')}}</span>
                                                             @break
 
                                                             @case('2')
-                                                                <span class="badge badge-success text-white">Accepted</span>
+                                                                <span class="badge badge-success text-white">{{__('main.accepted')}}</span>
                                                             @break
 
                                                             @case('3')
-                                                                <span class="badge badge-danger text-white">Rejected</span>
+                                                                <span class="badge badge-danger text-white">{{__('main.rejected')}}</span>
                                                             @break
                                                         @endswitch
                                                     </td>

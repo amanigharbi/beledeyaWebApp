@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
   
        /**
      * Display the specified resource.

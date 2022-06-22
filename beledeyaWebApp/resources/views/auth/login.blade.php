@@ -1,5 +1,5 @@
-@extends('layouts.main')
 
+@extends('layouts.main')
 @section('content')
 <div class="fadeIn login-bg" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
     <div class="container">
@@ -20,7 +20,7 @@
                                             </div>
                                             <!-- form-group// -->
                                             <div class="form-group">
-                                                <input placeholder="{{ __('auth.password') }} id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" />
+                                                <input placeholder="{{ __('auth.password') }}" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" />
                                         
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <a href="{{ url('auth/google') }}"><i class="fab fa-google"></i></a>
-                                            </div>
+                                            </div>                                     
                                         </div>
                                         </div>
                                         

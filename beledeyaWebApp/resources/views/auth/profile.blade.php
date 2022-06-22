@@ -11,9 +11,9 @@
     <div class="row">
       
       <div class="col-lg-7 col-md-10">
-        <h1 class="display-2 text-white">Hello {{$userProfile->name}}</h1>
-        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-        <a href="#editProfile" class="btn btn-info">Edit profile</a>
+        <h1 class="display-2 text-white">{{__('main.Hello')}} {{$userProfile->name}}</h1>
+        <p class="text-white mt-0 mb-5">{{__('main.p_profile')}}</p>
+        <a href="#editProfile" class="btn btn-info">{{__('main.editProfile')}}</a>
       </div>
       
     </div>
@@ -50,11 +50,11 @@
                   <span class="description">{{$userProfile->emailConfirmed}}</span>
                 </div> --}}
                 <div>
-                  <span class="heading">Role</span>
+                  <span class="heading">{{__('main.role')}}</span>
                   <span class="description">{{$userProfile->role}}</span>
                 </div>
                 <div>
-                  <span class="heading">Social</span>
+                  <span class="heading">{{__('main.social')}}</span>
                   <span class="description">{{$userProfile->social}}</span>
                 </div>
               </div>
@@ -69,13 +69,13 @@
               <i class="ni location_pin mr-2"></i>{{$userProfile->email}}
             </div>
             <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i>Crée en - <span class="font-weight-light">{{$userProfile->created_at}}</span>
+              <i class="ni business_briefcase-24 mr-2"></i>{{__('main.Created at')}} - <span class="font-weight-light">{{$userProfile->created_at}}</span>
            <br> 
-              <i class="ni business_briefcase-24 mr-2"></i>Editée en - <span class="font-weight-light">{{$userProfile->updated_at}}</span>
+              <i class="ni business_briefcase-24 mr-2"></i>{{__('main.Updated at')}} - <span class="font-weight-light">{{$userProfile->updated_at}}</span>
             </div>
            
             <hr class="my-4">
-<p> Compte sur Commune de Menzel Abdelrahmane</p>          
+<p> {{__('main.Account on commune of Menzel Abderahmane')}}</p>          
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Edition de compte</h3>
+              <h3 class="mb-0">{{__('main.Account editing')}}</h3>
             </div>
             
           </div>
@@ -93,13 +93,13 @@
         <div class="card-body">
           <form action="{{ route('profile.update', $userProfile->id) }}" method="POST">
             @csrf @method('PATCH')
-            <h6 class="heading-small text-muted_2 mb-4">Information d'utilisateur</h6>
+            <h6 class="heading-small text-muted_2 mb-4">{{__('main.USER INFORMATION')}}</h6>
           
             @if (session('success'))
             <div class="alert alert-success alert-dismissable">
               <a class="panel-close close" data-dismiss="alert">×</a> 
               <i class="fa fa-check"></i>
-              <strong>Modification avec succès !</strong>. {{ session('success') }}.
+              <strong>{{__('main.Change successfully')}} !</strong>. {{ session('success') }}.
             </div>
     
             @endif
@@ -115,7 +115,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group focused">
-                    <label class="form-control-label" for="input-username">Nom & Prénom</label>
+                    <label class="form-control-label" for="input-username">{{__('main.fullname')}}</label>
                     <input type="text" id="input-username" name="name" class="form-control form-control-alternative"  value="{{$userProfile->name}}">
                 
                   </div>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-email">Adresse email</label>
+                    <label class="form-control-label" for="input-email">{{__('main.email')}}</label>
                     <input type="email" id="input-email" name="email" class="form-control form-control-alternative" placeholder="email" value="{{$userProfile->email}}">
                     @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -140,8 +140,8 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group focused">
-                    <label class="form-control-label" for="input-first-name">Mot de passe</label>
-                    <input type="password" name="mdp_1" class="form-control form-control-alternative" placeholder="Mot de passe" >
+                    <label class="form-control-label" for="input-first-name">{{__('main.password')}}</label>
+                    <input type="password" name="mdp_1" class="form-control form-control-alternative" placeholder="{{__('main.password')}}" >
                     @error('mdp_1')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -151,8 +151,8 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group focused">
-                    <label class="form-control-label" for="input-last-name">Confirmer Mot de passe</label>
-                    <input type="password" name="mdp_2" class="form-control form-control-alternative" placeholder="Confirmer mot de passe" >
+                    <label class="form-control-label" for="input-last-name">{{__('main.Confirm password')}}</label>
+                    <input type="password" name="mdp_2" class="form-control form-control-alternative" placeholder="{{__('main.Confirm password')}}" >
                   @error('mdp_2')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -164,7 +164,7 @@
             </div>
             <hr class="my-4">
             <div class="col-12 text-right">
-              <button type="submit" class="btn btn-sm btn-primary" >Editer</button>
+              <button type="submit" class="btn btn-sm btn-primary" >{{__('main.edit')}}</button>
             </div>
           </form>
         </div>

@@ -29,5 +29,10 @@ return [
     'Sign up' => 'S’inscrire',
     'You have an account' => 'Vous avez un compte',
     'Signin now!' => 'Connectez vous maintenant!',
-
+    'Confirm your email' => 'confirmez votre email',
+    'You will recive a confirmation code in your mailbox' => 'Vous recevrez un code de confirmation dans votre boîte mail',
+    'please enter this code here to confirm your account' => 'veuillez entrer ce code ici pour confirmer votre compte',
+    'Confirmation code'=>'Code de confirmation',
+    'Verify' =>'Vérifier',
+    'Resend the code' =>'Renvoyer le code',
 ];
