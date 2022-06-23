@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir=" {{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +12,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"/>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>commune menzel abderrahmen</title>
+    <title>{{__('main.municipality')}}</title>
     <link rel="icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
 
     <!-- Bootstrap core CSS -->
@@ -26,29 +26,56 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-
-    <style>
-
-        .lang a {
-            text-decoration: none;
-            color: black!important;
-            font-size: medium;
-        }
-        
-         .lang a:hover {
-            color: rgb(170, 76, 76)!important;
-        }
-        
-        .lang .active {
-            color: #981b1b !important;
-            font-weight: bold;
-        }
-        
-        </style>
 </head>
 
 <body>
+<section id="sp-top-bar">
+    <div class="row">
+<div id="sp-top2" class="col-sm-4 col-md-4">
+    <div class="sp-column">
+<ul class="social-icons">
+<li><a target="_blank" href="https://www.facebook.com/com.mzl.abderrahmen"><i class="fab fa-facebook"></i></a></li>
+<li><a target="_blank" href="https://twitter.com/#"><i class="fab fa-twitter"></i></a></li>
+<li><a target="_blank" href="https://plus.google.com/#"><i class="fab fa-google"></i></a></li>
+<li><a target="_blank" href="https://pinterest.com/#"><i class="fab fa-pinterest"></i></a></li>
+<li><a target="_blank" href="https://youtube.com/#"><i class="fab fa-youtube"></i></a></li>
+<li><a target="_blank" href="https://linkedin.com/#"><i class="fab fa-linkedin-in"></i></a></li>
+</ul>
+    </div>
+</div>
+<div id="sp-user1" class="col-sm-6 col-md-6">
+        <ul class="sp-column2">
+            <li class="sp-contact-phone"><i class="fa fa-phone"><a href="tel:+72 571 265">+72 571 265</a></i></li>
+            <li class="sp-contact-email"><i class="fa fa-envelope"><a href="mailto:commune.menzelabdelrahmen@gmail.com">commune.menzelabdelrahmen@gmail.com</a></i></li>
 
+        </ul>
+    
+</div>
+<div class="col-sm-auto col-md-auto">
+    
+        <ul class="sp-column3">
+            <li dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
+                <a href="{{ asset('/lang') }}/ar" class="{{(\App::getLocale()=="ar") ? 'active' : '' }}">
+                     <img src="{{ asset('assets/images/ar.gif') }}" alt="العربية" title="العربية" style="width: auto; height:auto;">
+                     </a>
+            </li>
+            <li dir="{{(\App::getLocale()=="en") ? 'ltr' : '' }}">
+                <a href="{{ asset('/lang') }}/en" class="{{(\App::getLocale()=="en") ? 'active' : '' }}">
+                     <img src="{{ asset('assets/images/en.gif') }}" alt="English (UK)" title="English (UK)" style="width: auto; height:auto;">
+                     </a>
+            </li>
+            <li dir="{{(\App::getLocale()=="fr") ? 'ltr' : '' }}">
+                <a href="{{ asset('/lang') }}/fr" class="{{(\App::getLocale()=="fr") ? 'active' : '' }}">
+                     <img src="{{ asset('assets/images/fr.png') }}" alt="French (FR)" title="French (FR)" style="width: 20px; height:20px;">
+                     </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+</section>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -63,42 +90,14 @@
     <!-- ***** Preloader End ***** -->
 
     <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <nav class="main-nav">
-                        {{-- <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fa fa-globe"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div> --}}
-                        <div class="lang">
-                            <a href="{{ asset('/lang') }}/en" class="{{(\App::getLocale()=="en") ? 'active' : '' }}">{{__('main.en')}} </a>|
-                            <a href="{{ asset('/lang') }}/ar" class="{{(\App::getLocale()=="ar") ? 'active' : '' }}"> {{__('main.ar')}} </a>|
-                            <a href="{{ asset('/lang') }}/fr" class="{{(\App::getLocale()=="fr") ? 'active' : '' }}"> {{__('main.fr')}}</a>
-                        </div>
-                        {{-- <ul class="navbar-nav ml-auto">
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Language <span class="caret"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ asset('/lang') }}/en"><img src="{{asset('img/us.png')}}" width="30px" height="20x"> English</a>
-                                    <a class="dropdown-item" href="{{ asset('/lang') }}/ar"><img src="{{asset('img/ar.png')}}" width="30px" height="20x"> عربية</a>
-                                    <a class="dropdown-item" href="{{ asset('/lang') }}/fr"><img src="{{asset('img/fr.png')}}" width="30px" height="20x"> Français</a>
-  
-                                </div>
-                            </li>
-                        </ul> --}}
+                    <nav class="main-nav"  >
                         <!-- ***** Logo Start ***** -->
                        
-                        <a href="{{ asset('/') }}" class="logo">
+                        <a href="{{ asset('/') }}" class="{{(\App::getLocale()=="ar") ? 'logo_ar' : 'logo' }}">
                             <img src="{{ asset('assets/images/logo.png') }}" alt="Menzel Abdelrahmane">
                         </a>
                         <!-- ***** Logo End ***** -->
@@ -162,8 +161,8 @@
     <!-- ***** Header Area End ***** -->
   
     @yield('content')
-    <div class="container">
-        <div class="chatbox">
+    <div class="container" >
+        <div class="chatbox" >
             <div class="chatbox__support">
                 <div class="chatbox__header">
                     <div class="chatbox__image--header">
@@ -183,7 +182,7 @@
                     </div>
                 </div>
                
-                <div class="chatbox__footer">
+                <div class="chatbox__footer" >
 
                     <input type="text" id="myTextarea" placeholder="{{__('main.Write your message')}}">
                     <button id="btnSend" class="chatbox__send--footer_send send__button_integration"><i class="fa fa-paper-plane"
@@ -197,8 +196,8 @@
             </div>
         </div>
     </div>
-    <footer id="contact">
-        <div class="container">
+    <footer id="contact" >
+        <div class="container" >
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer-widget">

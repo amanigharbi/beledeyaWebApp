@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+<div class="{{(\App::getLocale()=="ar") ? 'main-banner_ar' : 'main-banner' }} wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s"  dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-6 align-self-center text-light">
-                        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                        <div class="left-content show-up header-text wow  fadeInLeft" data-wow-duration="1s" data-wow-delay="1s" >
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h2 class="text-light">{{__('main.title')}}</h2>
@@ -39,20 +39,20 @@
         </div>
     </div>
 </div>
-    <div id="services" class="services section">
+    <div id="services" class="services section" >
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h4>{{__('main.title_services_1')}} </h4>
-                        <h4>{{__('main.title_services_2')}}</h4>
+                        <h4>{{__('main.title_services_1_1')}} <em> {{__('main.title_services_1_2')}} </em> {{__('main.title_services_1_3')}}</h4>
+                        <h4>{{__('main.title_services_2_1')}} <em>{{__('main.title_services_2_2')}}</em></h4>
                         <img src="{{ asset('assets/images/heading-line-dec.png') }}" alt="">
                         <p>{{__('main.title_services_3')}}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="service-item first-service">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 test">
+                <div class="col-lg-3 {{(\App::getLocale()=="ar") ? 'test_ar' : 'test' }}">
                     <div class="service-item five-service">
                         <div class="icon"></div>
                         <h4>{{__('main.Hygiene')}}</h4>

@@ -4,7 +4,7 @@
 <div class="col-sm-12 col-md-6 col-lg-12">
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Add new document</h4>
+        <h4 class="card-title">{{__('main.Add new document')}}</h4>
         @if (session('success'))
         {{ session('success') }}
     @endif
@@ -15,7 +15,7 @@
             @csrf
             <div class="form-group">
                 <input type="name" class="form-control" id="nametext" name="name"
-                    placeholder="Name document" value="{{ old('name') }}" required></div>
+                    placeholder="{{__('main.document name')}}" value="{{ old('name') }}" required></div>
                     <div class="form-group">
                         @error('name')
                                         {{ $message }}
@@ -26,7 +26,7 @@
                 @enderror
                 </div>
             <div class="text-right">
-                <button class="btn btn-rounded btn-danger" type="submit">Envoyer</button>
+                <button class="btn btn-rounded btn-danger" type="submit">{{__('main.Send')}}</button>
             </div>
         </form>
     </div></div>
@@ -34,15 +34,15 @@
 <div class="col-sm-12 col-md-6 col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">List of documents</h4>
+            <h4 class="card-title">{{__('main.List of documents')}}</h4>
 
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Date publication</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">{{__('main.document name')}}</th>
+                            <th scope="col">{{__('main.Publication date')}}</th>
+                            <th scope="col">{{__('main.action')}}</th>
 
                         </tr>
                     </thead>
@@ -59,18 +59,18 @@
                                         <p class="text-primary">
                                             <a class="btn btn-primary btn-sm mt-3"
                                                 href="{{ asset('storage') }}/{{ $d->file }}"
-                                                target="_blank" role="button">Preview
+                                                target="_blank" role="button">{{__('main.preview')}}
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </p>
                                     @else
-                                        <span class="badge badge-danger">Not attached</span>
+                                        <span class="badge badge-danger">{{__('main.Not attached')}}</span>
                                     @endif                          
                               
                                     <p class="text-primary ">
                                         <form class="trash" action="{{ route('document.destroy', $d->id) }}"
                                             method="POST">@csrf
-                                            @method('DELETE')<button type="submit" class="btn btn btn-danger btn-sm mt-3">Delete <i class="fa fa-trash"></i></button>
+                                            @method('DELETE')<button type="submit" class="btn btn btn-danger btn-sm mt-3">{{__('main.Delete')}} <i class="fa fa-trash"></i></button>
                                         </form>
                                     </p>
                                     </div>

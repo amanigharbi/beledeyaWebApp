@@ -7,7 +7,7 @@
                             data-wow-delay="1s">
                                 <div class="card w-50 m-auto auth">
 
-                <div class="card-header"> <h1 class="text-center">{{__('auth.ResetPassword')}}</h1></div>
+                <div class="card-header"> <h1 class="text-center ">{{__('auth.ResetPassword')}}</h1></div>
 
                 <div class="card-body">
                     @if (session('status'))

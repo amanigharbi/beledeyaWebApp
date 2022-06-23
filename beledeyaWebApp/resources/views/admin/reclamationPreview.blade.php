@@ -12,7 +12,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="True">&times;</span>
                           </button>
-                         <h4 class="alert-heading">Well done!</h4>
+                         <h4 class="alert-heading">{{__('main.Well done!')}}</h4>
                           <p>   {{ session('success') }}</p>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="True">&times;</span>
                       </button>
-                     <h4 class="alert-heading">OPS!</h4>
+                     <h4 class="alert-heading">{{__('main.ops')}}</h4>
                       <p>   {{ session('error') }}</p>
                 </div>
             </div>
@@ -40,18 +40,18 @@
             <div class="col-9 align-self-center">
                 @switch($reclamation->status)
                     @case('0')
-                        <span class="badge badge-danger">New</span>
+                        <span class="badge badge-danger">{{__('main.new')}}</span>
                     @break
 
                     @case('1')
-                        <span class="badge badge-warning text-white">In progress</span>
+                        <span class="badge badge-warning text-white">{{__('main.Inprogress')}}</span>
                     @break
 
                     @case('2')
-                        <span class="badge badge-success text-white">Resolved</span>
+                        <span class="badge badge-success text-white">{{__('main.Resolved')}}</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Reclamation N°:
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">{{__('main.Complaint no')}}:
                     {{ $reclamation->num_rec }} : {{ $reclamation->type }}
                 </h3>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col-3 align-self-center text-right">
                     <a class="btn btn-success btn-sm mt-3" href="{{ asset('reclamations') }}/{{ $reclamation->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form').submit();">
-                        Mark as resolved
+                        {{__('main.Mark as resolved')}}
                         <i class="fa fa-check"></i>
                     </a>
                     <form id="update-form" action="{{ route('reclamations.update', $reclamation->id) }}" method="POST"
@@ -75,7 +75,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Full name</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.fullname')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $reclamation->first_name }}
                                         {{ $reclamation->last_name }}</h3>
@@ -89,7 +89,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cin</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.ID card')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $reclamation->cin }}</h3>
                                 </div>
@@ -101,7 +101,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Attached file</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.Attached file')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     @if ($reclamation->photo)
                                         <p class="text-primary">
@@ -112,7 +112,7 @@
                                             </a>
                                         </p>
                                     @else
-                                        <span class="badge badge-danger">Not attached</span>
+                                        <span class="badge badge-danger">{{__('main.Not attached')}}</span>
                                     @endif
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Email</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.email')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $reclamation->email }}</p>
                                 </div>
@@ -138,7 +138,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Address</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.address')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $reclamation->adresse }}</p>
                                 </div>
@@ -151,7 +151,7 @@
         </div>
         <div class="card">
             <div class="card-body collapse show">
-                <h4 class="card-title">Descriptions</h4>
+                <h4 class="card-title">{{__('main.Descriptions')}}</h4>
                 <p class="card-text">{{ $reclamation->sujet }}</p>
             </div>
         </div>

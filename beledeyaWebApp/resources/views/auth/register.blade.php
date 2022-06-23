@@ -1,17 +1,17 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="fadeIn login-bg" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+<div class="fadeIn login-bg" id="top" data-wow-duration="1s" data-wow-delay="0.5s" >
     <div class="container">
         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
                             data-wow-delay="1s">
-                                <div class="card w-50 m-auto auth">
-                                    <div class="card-body">
-                                        <form method="POST" action="{{ route('register') }}">
+                                <div class="card w-50 m-auto auth" >
+                                    <div class="card-body" >
+                                        <form method="POST" action="{{ route('register') }}" class="{{(\App::getLocale()=="ar") ? 'text-center' : '' }}">
                                             @csrf
                                             <h1 class="text-center">{{__('auth.Sign up')}}</h1>
                                             <div class="form-group offset-md-3">
-                                                <label for="name" class="col-md-auto col-form-label text-md-right">{{ __('auth.fullname') }}</label>
+                                                <label for="name" class="col-md-auto col-form-label text-md-right ">{{ __('auth.fullname') }}</label>
                         
                                                 <div class="col-md-8">
                                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>

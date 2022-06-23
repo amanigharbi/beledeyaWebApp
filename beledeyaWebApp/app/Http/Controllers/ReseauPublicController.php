@@ -89,10 +89,10 @@ try{
             session(['resAr' => $reseauPublic->id]);
         }
             session(['resId' => $reseauPublic->id]);
-            return back()->with('success', 'demande de branchement aux réseaux publics ajoutée! télécharger votre décharge');
+            return back()->with('success', __('main.request for connection to public networks added! upload your waiver'));
                
                   } catch (\Throwable $th) {
-            return back()->with('error', 'Vérifier!');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
     public function down($id){
@@ -265,10 +265,10 @@ try{
         $reseauPublic = ReseauPublic::find($id);
         $reseauPublic->status = "3";
         $reseauPublic->save();
-            return back()->with('success', 'Marked as rejected');
+            return back()->with('success', __('main.Marked as rejected'));
       
            } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -289,7 +289,7 @@ try{
             $reseauPublic->save();
 
            
-            return back()->with('success', 'Marked as accepted');
+            return back()->with('success', __('main.Marked as accepted'));
              } catch (\Throwable $th) {
             return back()->with('error', 'Opss! something went wrong');
         }
@@ -311,13 +311,13 @@ try{
         $res = ReseauPublic::where([['num_branch', $data['num_branch']], ['cin', $data['cin']]])->first();
         if (!$res) {
 
-            return back()->with('error', 'Demande not found');
+            return back()->with('error', __('main.Request not found'));
         }
         // dd($res);
         return view('ReseauPublic', compact('res'));
         try {
         } catch (\Throwable $th) {
-            return back()->with('error', 'something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
     private function validationRules()

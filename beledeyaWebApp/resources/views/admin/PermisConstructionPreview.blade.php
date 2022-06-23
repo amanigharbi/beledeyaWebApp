@@ -11,7 +11,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="True">&times;</span>
                   </button>
-                 <h4 class="alert-heading">Well done!</h4>
+                 <h4 class="alert-heading">{{__('main.Well done!')}}</h4>
                   <p>   {{ session('success') }}</p>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="True">&times;</span>
               </button>
-             <h4 class="alert-heading">OPS!</h4>
+             <h4 class="alert-heading">{{__('main.ops')}}</h4>
               <p>   {{ session('error') }}</p>
         </div>
     </div>
@@ -40,21 +40,21 @@
             <div class="col-9 align-self-center">
                 @switch($permisConstruction->status)
                     @case('0')
-                        <span class="badge badge-danger">New</span>
+                        <span class="badge badge-danger">{{__('main.new')}}</span>
                     @break
 
                     @case('1')
-                        <span class="badge badge-warning text-white">In progress</span>
+                        <span class="badge badge-warning text-white">{{__('main.Inprogress')}}</span>
                     @break
 
                     @case('2')
-                        <span class="badge badge-success text-white">Accepted</span>
+                        <span class="badge badge-success text-white">{{__('main.accepted')}}</span>
                     @break
                     @case('3')
-                        <span class="badge badge-danger text-white">Rejected</span>
+                        <span class="badge badge-danger text-white">{{__('main.rejected')}}</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande d'autorisation de batir N°
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">{{__('main.Application for building permit No')}}
                     {{ $permisConstruction->num_autor }} 
                 </h3>
             </div>
@@ -68,7 +68,7 @@
                     <a class="btn waves-effect waves-light btn-rounded btn-success" href="{{ asset('PermisConstructions') }}/{{ $permisConstruction->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form').submit();">
                         
-                        <i class="fa fa-check">Accept</i>
+                        <i class="fa fa-check">{{__('main.Accept')}}</i>
                     </a>
                     <form id="update-form" action="{{ route('PermisConstructions.update', $permisConstruction->id) }}" method="POST"
                         style="display: none;">
@@ -93,7 +93,7 @@
             <td>
             @if (($permisConstruction->status != '3') && ($permisConstruction->status != '2'))
             <button class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal" data-target="#myModal"> 
-                Reject
+                {{__('main.Reject')}}
                 <i class="fa fa-ban"></i>
             </button>
             <!-- The Modal -->
@@ -111,7 +111,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Full name</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.fullname')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->first_name }}
                                         {{ $permisConstruction->last_name }}</h3>
@@ -125,7 +125,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cin</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.ID card')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->cin }}</h3>
                                 </div>
@@ -140,7 +140,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Email</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.email')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->email }}</p>
                                 </div>
@@ -168,7 +168,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Surface</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.Surface')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->surface }}</p>
                                 </div>
@@ -182,7 +182,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Propriete?</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.Property?')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->prop }}</p>
                                 </div>
@@ -198,7 +198,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title">Reason of reject</h1>
+                <h1 class="modal-title">{{__('main.Reason of reject')}}</h1>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
@@ -207,7 +207,7 @@
                     @csrf @method('GET')
                   
                     <div class="form-group">
-                        <label class="control-label">Reason</label>
+                        <label class="control-label">{{__('main.Reasons')}}</label>
                         <div>
                             <input type="text" class="form-control input-lg" name="raison" value="" required>
                             @error('raison')
@@ -218,9 +218,9 @@
                   
                     <div class="form-group">
                         <div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">{{__('main.close')}}</button>
                             <button type="submit" class="btn btn-success">
-                                Save
+                                {{__('main.Save')}}
                             </button>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
             <div class="card-body">
                 <div class="d-flex d-lg-flex d-md-block align-items-center">
                     <div>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Reasson of Reject</h6>
+                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.Reason of reject')}}</h6>
                         <div class="d-inline-flex align-items-center">
                             <p class="text-dark mt-3 font-weight-medium">{{ $permisConstruction->response }}</p>
                         </div>

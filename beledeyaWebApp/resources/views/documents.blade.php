@@ -51,56 +51,56 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
-  <div class="container">
-      <div class="row">
-          <div class="col-lg-12">
-              <div class="row">
-                  <div class="col-lg-6 align-self-center text-light">
-                      <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                          <div class="row">
-                              <div class="col-lg-12">
-                                  <h2 class="text-light">{{__('main.title')}}</h2>
-                                  <p class="text-light">
-                                      {{__('main.p_municipality')}}
-                                  </p>
-                              </div>
-                              <div class="col-lg-12">
-                                
-                                  <div class="col-lg-12">
-                                      <div class="white-button first-button scroll-to-section">
-                                          <a href="#contact">{{__('main.More information')}}<i class="fab fa-apple"></i></a>
-                                      </div>
-                                      <div class="white-button scroll-to-section">
-                                          <a href="#contact">{{__('main.contact')}} <i class="fab fa-google-play"></i></a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                      <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                          <img src="{{ asset('assets/images/slider-dec.png') }}" alt="" />
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+<div class="{{(\App::getLocale()=="ar") ? 'main-banner_ar' : 'main-banner' }} wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s"  dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6 align-self-center text-light">
+                        <div class="left-content show-up header-text wow  fadeInLeft" data-wow-duration="1s" data-wow-delay="1s" >
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h2 class="text-light">{{__('main.title')}}</h2>
+                                    <p class="text-light {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
+                                        {{__('main.p_municipality')}}
+                                    </p>
+                                </div>
+                                <div class="col-lg-12">
+                                  
+                                    <div class="col-lg-12">
+                                        <div class="white-button first-button scroll-to-section">
+                                            <a href="#contact">{{__('main.More information')}}<i class="fab fa-apple"></i></a>
+                                        </div>
+                                        <div class="white-button scroll-to-section">
+                                            <a href="#contact">{{__('main.contact')}} <i class="fab fa-google-play"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                            <img src="{{ asset('assets/images/slider-dec.png') }}" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-    <section class="ftco-section">
+    <section class="ftco-section" >
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
                     <h2 class="heading-section">{{__('main.Administrative documents')}}</h2>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-12">
                     <h4 class="text-center mb-4">{{__('main.Upload the document you need')}}</h4>
-                    <div class="table-wrap">
-                        <table class="table">
+                    <div class="table-wrap" >
+                        <table class="table"  dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
                             <thead class="thead-primary">
                                 <tr>
                                     <th>{{__('main.document name')}}</th>

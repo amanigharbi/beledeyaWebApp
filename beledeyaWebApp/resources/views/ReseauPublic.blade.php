@@ -66,18 +66,18 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+<div class="{{(\App::getLocale()=="ar") ? 'main-banner_ar' : 'main-banner' }} wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s"  dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-6 align-self-center text-light">
-                        <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+                        <div class="left-content show-up header-text wow  fadeInLeft" data-wow-duration="1s" data-wow-delay="1s" >
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h2 class="text-light">{{__('main.title')}}</h2>
-                                    <p class="text-light">
-                                       {{__('main.p_municipality')}}
+                                    <p class="text-light {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
+                                        {{__('main.p_municipality')}}
                                     </p>
                                 </div>
                                 <div class="col-lg-12">
@@ -110,7 +110,7 @@
                 title: "{{__('main.Good job!')}}",
                 text: "{{ Session::get('success') }}",
                 icon: "success",
-                button: "download pdf",
+                button: "{{__('main.download pdf')}}",
                 dangerMode: true,
 
             }).then((value) => {
@@ -124,7 +124,7 @@
             title: "{{__('main.Good job!')}}",
             text: "{{ Session::get('success') }}",
             icon: "success",
-            button: "download pdf",
+            button: "{{__('main.download pdf')}}",
             dangerMode: true,
 
         }).then((value) => {
@@ -138,7 +138,7 @@
     @if (session('error'))
         <script>
             swal({
-                title: "OPS!",
+                title: "{{__('main.ops')}}",
                 text: "{{ Session::get('error') }}",
                 icon: "warning",
                 dangerMode: true,
@@ -146,7 +146,7 @@
         </script>
     @endif
 
-    <div class="container register">
+    <div class="container register"  dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
         <div class="row">
             <div class="col-md-3 register-left">
                 <img src="https://i.ibb.co/bb1YsqB/res-Public-removebg-preview.png" alt="res-Public-removebg-preview" />
@@ -244,12 +244,12 @@
     </div>
 
     <!-- The Modal -->
-    <div class="modal" id="myModal" >
+    <div class="modal" id="myModal" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
         <div class="modal-dialog modal-lg " >
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header table-title">
-                    <h2>{{__('main.Track requests')}}></h2>
+                    <h2>{{__('main.Track requests')}}</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 

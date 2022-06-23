@@ -9,19 +9,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Reclamations</h4>
-                        <h6 class="card-subtitle">these are the list of complaints sent by the inhabitants!
+                        <h4 class="card-title">{{__('main.complaints')}}</h4>
+                        <h6 class="card-subtitle">{{__('main.these are the list of complaints sent by the inhabitants!')}}
                         </h6>
                         <br>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Full name</th>
-                                        <th scope="col">Cin</th>
-                                        <th scope="col">Sujet</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">{{__('main.fullname')}}</th>
+                                        <th scope="col">{{__('main.ID card')}}</th>
+                                        <th scope="col">{{__('main.Topic')}}</th>
+                                        <th scope="col">{{__('main.Status')}}</th>
+                                        <th scope="col">{{__('main.action')}}</th>
 
                                     </tr>
                                 </thead>
@@ -34,15 +34,15 @@
                                             <td>
                                                 @switch($r->status)
                                                     @case('0')
-                                                        <span class="badge badge-danger">New</span>
+                                                        <span class="badge badge-danger">{{__('main.new')}}</span>
                                                     @break
 
                                                     @case('1')
-                                                        <span class="badge badge-warning text-white">In progress</span>
+                                                        <span class="badge badge-warning text-white">{{__('main.Inprogress')}}</span>
                                                     @break
 
                                                     @case('2')
-                                                        <span class="badge badge-success text-white">Resolved</span>
+                                                        <span class="badge badge-success text-white">{{__('main.Resolved')}}</span>
                                                     @break
                                                 @endswitch
                                             <td>

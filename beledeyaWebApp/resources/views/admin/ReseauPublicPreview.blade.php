@@ -11,7 +11,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="True">&times;</span>
                   </button>
-                 <h4 class="alert-heading">Well done!</h4>
+                 <h4 class="alert-heading">{{__('main.Well done!')}}</h4>
                   <p>   {{ session('success') }}</p>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="True">&times;</span>
               </button>
-             <h4 class="alert-heading">OPS!</h4>
+             <h4 class="alert-heading">{{__('main.ops')}}</h4>
               <p>   {{ session('error') }}</p>
         </div>
     </div>
@@ -39,21 +39,21 @@
             <div class="col-9 align-self-center">
                 @switch($ReseauPublic->status)
                     @case('0')
-                        <span class="badge badge-danger">New</span>
+                        <span class="badge badge-danger">{{__('main.new')}}</span>
                     @break
 
                     @case('1')
-                        <span class="badge badge-warning text-white">In progress</span>
+                        <span class="badge badge-warning text-white">{{__('main.Inprogress')}}</span>
                     @break
 
                     @case('2')
-                        <span class="badge badge-success text-white">Accepted</span>
+                        <span class="badge badge-success text-white">{{__('main.accepted')}}</span>
                     @break
                     @case('3')
-                        <span class="badge badge-danger text-white">Rejected</span>
+                        <span class="badge badge-danger text-white">{{__('main.rejected')}}</span>
                     @break
                 @endswitch
-                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Demande N°
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">{{__('main.Request No')}}
                     {{ $ReseauPublic->num_branch }} : {{ $ReseauPublic->type }}
                 </h3>
             </div>
@@ -62,7 +62,7 @@
                 <div class="col-8 align-self-center ">
                     <a class="btn btn-success btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form').submit();">
-                        Accept
+                        {{__('main.Accept')}}
                         <i class="fa fa-check"></i>
                     </a>
                     <form id="update-form" action="{{ route('ReseauPublic.update', $ReseauPublic->id) }}" method="POST"
@@ -75,7 +75,7 @@
                 <div class="col-8 align-self-center ">
                     <a class="btn btn-danger btn-sm mt-3" href="{{ asset('ReseauPublic') }}/{{ $ReseauPublic->id }}"
                         onclick="event.preventDefault(); document.getElementById('update-form2').submit();">
-                        Reject
+                        {{__('main.Reject')}}
                         <i class="fa fa-ban"></i>
                     </a>
                     <form id="update-form2" action="{{ route('ReseauPublic.edit', $ReseauPublic->id) }}" method="POST"
@@ -92,7 +92,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Full name</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.fullname')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->first_name }}
                                         {{ $ReseauPublic->last_name }}</h3>
@@ -106,7 +106,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cin</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.ID card')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <h3 class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->cin }}</h3>
                                 </div>
@@ -121,7 +121,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Email</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.email')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->email }}</p>
                                 </div>
@@ -134,7 +134,7 @@
                     <div class="card-body">
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Address</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{__('main.address')}}</h6>
                                 <div class="d-inline-flex align-items-center">
                                     <p class="text-dark mt-3 font-weight-medium">{{ $ReseauPublic->adresse }}</p>
                                 </div>
@@ -147,7 +147,7 @@
         </div>
         <div class="card">
             <div class="card-body collapse show">
-                <h4 class="card-title">Descriptions</h4>
+                <h4 class="card-title">{{__('main.Descriptions')}}</h4>
                 <p class="card-text">{{ $ReseauPublic->description }}</p>
             </div>
         </div>

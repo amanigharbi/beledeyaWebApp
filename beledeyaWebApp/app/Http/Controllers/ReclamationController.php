@@ -89,9 +89,9 @@ class ReclamationController extends Controller
        
         
            session(['recId' => $reclamation->id]);
-              return back()->with('success','Réclamation ajoutée. Merci de télécharger votre décharge');            
+              return back()->with('success',__('main.Complaint added. Please upload your waiver'));            
         } catch (\Throwable $th) {
-            return back()->with('error', 'Ops!Something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -169,12 +169,12 @@ class ReclamationController extends Controller
             $rec = Reclamation::where([['num_rec', $data['numRec']], ['cin', $data['cin']]])->first();
             if(!$rec){
                 
-                return back()->with('error', 'Réclamation not found');
+                return back()->with('error', __('main.Claim not found'));
             }
             return view('reclamation',compact('rec'));
             try {
             } catch (\Throwable $th) {
-            return back()->with('error', 'something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -201,9 +201,9 @@ class ReclamationController extends Controller
         try {
             $reclamation->status = "2";
             $reclamation->save();
-            return back()->with('success', 'Marked as resolved');
+            return back()->with('success', __('main.Marked as resolved'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 

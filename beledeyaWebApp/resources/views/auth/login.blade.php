@@ -5,7 +5,7 @@
     <div class="container">
         <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s"
                             data-wow-delay="1s">
-                                <div class="card w-50 m-auto auth">
+                                <div class="card w-50 m-auto auth " dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
                                     <div class="card-body">
                                         <form method="POST" action="{{ route('login') }}">
                                             @csrf
@@ -34,7 +34,7 @@
                                                         <button type="submit" class="btn btn-primary btn-block">{{ __('auth.login') }}</button>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 text-right">
+                                                <div class="col-md-6 {{(\App::getLocale()=="ar") ? 'text-left' : 'text-right' }}">
                                                     <a href="{{ route('password.request') }}">
                                                         {{ __('auth.Forget Your Password ?') }}
                                                     </a>

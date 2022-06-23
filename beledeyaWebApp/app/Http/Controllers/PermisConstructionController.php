@@ -80,9 +80,9 @@ class PermisConstructionController extends Controller
             }
 
             session(['permisConsId' => $permisConstruction->id]);
-            return back()->with('success', 'Demande de batir ajoutée. Merci de télécharger votre décharge');
+            return back()->with('success', __('main.Building request added. Please upload your waiver'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Vérifier!');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
     public function down($id)
@@ -244,9 +244,9 @@ class PermisConstructionController extends Controller
             $permisConstruction->response = $request['raison'];
             $permisConstruction->status = "3";
             $permisConstruction->save();
-            return back()->with('success', 'Marked as rejected');
+            return back()->with('success', __('main.Marked as rejected'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -266,9 +266,9 @@ class PermisConstructionController extends Controller
             $permisConstruction->save();
 
 
-            return back()->with('success', 'Marked as accepted');
+            return back()->with('success', __('main.Marked as accepted'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -288,12 +288,12 @@ class PermisConstructionController extends Controller
         $autorisation = PermisConstruction::where([['num_autor', $data['num_autor']], ['cin', $data['cin']]])->first();
         if (!$autorisation) {
 
-            return back()->with('error', 'Demande de batir not found');
+            return back()->with('error', __('main.Building request not found'));
         }
         return view('PermisConstruction', compact('autorisation'));
         try {
         } catch (\Throwable $th) {
-            return back()->with('error', 'something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
     private function validationRules()

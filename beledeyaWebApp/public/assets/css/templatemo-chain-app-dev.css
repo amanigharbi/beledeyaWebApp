@@ -349,7 +349,7 @@ header
 }
 
 .header-area .main-nav {
-  min-height: 80px;
+  min-height: 180px;
   background: transparent;
 }
 
@@ -362,7 +362,7 @@ header
 }
 
 .header-area .main-nav .logo {
-  line-height: 100px;
+  line-height: 95px;
   float: left;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
@@ -931,7 +931,14 @@ Banner Style
   position: relative;
   overflow: hidden;
 }
-
+.main-banner_ar {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 390px 0px 0px 30px !important;
+  position: relative;
+  overflow: hidden;
+}
 .main-banner:after {
   content: '';
   background-image: url(../images/slider-left-dec.png);
@@ -943,6 +950,18 @@ Banner Style
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+.main-banner_ar:after {
+  content: '';
+  background-image: url(../images/slider-left-dec.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);
 }
 
 .login-bg{
@@ -1029,7 +1048,47 @@ Banner Style
   background-color: #f14b4b;
   color: #fff !important;
 }
+.main-banner_ar .left-content {
+  margin-right: 15px;
+}
 
+.main-banner_ar .left-content h2 {
+  z-index: 2;
+  position: relative;
+  font-weight: 700;
+  line-height: 70px;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.main-banner_ar .left-content p {
+  margin-bottom: 45px;
+  color: #2a2a2a;
+  font-weight: 400;
+}
+
+.main-banner_ar .left-content .first-button {
+  margin-right: 15px;
+}
+
+.main-banner_ar .left-content .white-button {
+  display: inline-block;
+}
+
+.main-banner_ar .right-image {
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+.main-banner_ar .right-image img {
+  max-width: 710px;
+}
+
+.main-banner_ar .left-content .white-button a {
+  background-color: #f14b4b;
+  color: #fff !important;
+}
 /* 
 ---------------------------------------------
 Services Style
@@ -1164,7 +1223,8 @@ Services Style
 .test {
   margin-left: 25%;}
 
-
+  .test_ar {
+    margin-right: 25%;}
 
 /*
 ---------------------------------------------
@@ -2384,4 +2444,12 @@ a .active {
 .main-nav .logo {
   width: 7%;
   margin-left: 5%;
+}
+.main-nav .logo_ar {
+  width: 25%;
+float: right;
+}
+.logo_ar img {
+  width:25%;
+  overflow: hidden;
 }

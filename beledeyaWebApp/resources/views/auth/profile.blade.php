@@ -1,16 +1,17 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/css/profile_css.css') }}">
+
 @extends('layouts.main')
 @section('content')
 
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; ">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; " >
   <!-- Mask -->
   <span class="mask bg-gradient-default opacity-8"></span>
   <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
-    <div class="row">
+  <div class="container-fluid d-flex align-items-center " >
+    <div class="row ">
       
-      <div class="col-lg-7 col-md-10">
+      <div class="{{(\App::getLocale()=="ar") ? 'col-lg-auto' : 'col-lg-7' }} col-md-10 {{(\App::getLocale()=="ar") ? 'text-r' : '' }}" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}" >
         <h1 class="display-2 text-white">{{__('main.Hello')}} {{$userProfile->name}}</h1>
         <p class="text-white mt-0 mb-5">{{__('main.p_profile')}}</p>
         <a href="#editProfile" class="btn btn-info">{{__('main.editProfile')}}</a>
@@ -22,7 +23,7 @@
   
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
   <div class="row">
     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
       <div class="card card-profile shadow">
