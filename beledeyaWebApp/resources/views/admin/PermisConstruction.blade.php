@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
@@ -9,11 +9,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">{{__('main.Building permit application')}}</h4>
-                        <h6 class="card-subtitle">{{__('main.these are the list of Building permit application sent by the inhabitants!')}}
+                        <h4 class="card-title {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">{{__('main.Building permit application')}}</h4>
+                        <h6 class="card-subtitle {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">{{__('main.these are the list of Building permit application sent by the inhabitants!')}}
                         </h6>
                         <br>
-                        <div class="table-responsive">
+                        <div class="table-responsive {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
                             <table class="table">
                                 <thead>
                                     <tr>

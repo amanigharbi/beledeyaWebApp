@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="col-sm-12 col-md-6 col-lg-12">
+<div class="col-sm-12 col-md-6 col-lg-12" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">{{__('main.Add new document')}}</h4>
+        <h4 class="card-title {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">{{__('main.Add new document')}}</h4>
         @if (session('success'))
         {{ session('success') }}
     @endif
@@ -25,18 +25,18 @@
                     {{ $message }}
                 @enderror
                 </div>
-            <div class="text-right">
+            <div class="{{(\App::getLocale()=="ar") ? 'text-left' : '' }}">
                 <button class="btn btn-rounded btn-danger" type="submit">{{__('main.Send')}}</button>
             </div>
         </form>
     </div></div>
 </div>
-<div class="col-sm-12 col-md-6 col-lg-12">
+<div class="col-sm-12 col-md-6 col-lg-12" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">{{__('main.List of documents')}}</h4>
+            <h4 class="card-title {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">{{__('main.List of documents')}}</h4>
 
-            <div class="table-responsive">
+            <div class="table-responsive {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
                 <table class="table">
                     <thead>
                         <tr>

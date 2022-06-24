@@ -5,7 +5,7 @@
     @if (session('success'))
         
         
-        <div classs="container p-2">
+        <div classs="container p-2" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
             <div class="row no-gutters">
                 <div class="col-lg-3 col-md-12 ml-auto">
                     <div class="alert alert-success fade show" role="alert">

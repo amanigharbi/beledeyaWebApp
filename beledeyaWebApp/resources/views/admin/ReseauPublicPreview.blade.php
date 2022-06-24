@@ -146,7 +146,7 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-body collapse show">
+            <div class="card-body collapse show {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">
                 <h4 class="card-title">{{__('main.Descriptions')}}</h4>
                 <p class="card-text">{{ $ReseauPublic->description }}</p>
             </div>
