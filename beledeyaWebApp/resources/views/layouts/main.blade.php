@@ -164,7 +164,7 @@
     <div class="container" >
         <div class="chatbox" >
             <div class="chatbox__support">
-                <div class="chatbox__header">
+                <div class="chatbox__header" dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
                     <div class="chatbox__image--header">
                         <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png"
                             alt="image">
@@ -182,7 +182,7 @@
                     </div>
                 </div>
                
-                <div class="chatbox__footer" >
+                <div class="chatbox__footer " dir="{{(\App::getLocale()=="ar") ? 'rtl' : 'ltr' }}">
 
                     <input type="text" id="myTextarea" placeholder="{{__('main.Write your message')}}">
                     <button id="btnSend" class="chatbox__send--footer_send send__button_integration"><i class="fa fa-paper-plane"

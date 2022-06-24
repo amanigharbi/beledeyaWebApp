@@ -5,6 +5,10 @@
 var SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
 var language = "";
+var ar="";
+var fr="";
+var en="";
+var tn="";
 var button = document.getElementById("button");
 button.addEventListener("click", (start) => {
     recognition.start();
@@ -67,6 +71,28 @@ sendButton.addEventListener("click", () => onSendButton(chatBox));
  * si on click sur francais la langue devienne francais et le robot parle en francais
  * si on click sur anglais la langue devienne anglais et le robot parle en anglais
  */
+function getLanguageLocale(){
+    var ENARFR =document.querySelector('html').getAttribute('lang');
+    console.log('here ',ENARFR);
+    if(ENARFR=="en"){
+        en= "English";
+        fr="French";
+        ar="Arabic";
+        tn="Tunisia";
+    }
+    if(ENARFR=="fr"){
+        en= "Anglais";
+        fr="Frençais";
+        ar="Arabe";
+        tn="Tunisie";
+    }
+    if(ENARFR=="ar"){
+        en= "انجليزي";
+        fr="فرنسي";
+        ar="عربي";
+        tn="تونسي";
+    }
+}
 function modifyLanguage(lang) {
     language = lang;
     console.log("language " + language);
@@ -121,7 +147,7 @@ function toggleState(chatbox) {
 
     if (this.state) {
         chatbox.classList.add("chatbox--active");
-
+        getLanguageLocale();
         msg = "Choisir une langue";
         let msg0 = { name: "langue", message: msg };
         messages.push(msg0);
@@ -3186,16 +3212,16 @@ function updateVoiceText(chatbox) {
                 case "langue":
                     html +=
                         `<div class="messages__item messages__item--visitor" onClick="modifyLanguage('anglais')">` +
-                        "anglais" +
+                    en +
                         `</div>` +
                         `<div class="messages__item messages__item--visitor"  onClick="modifyLanguage('français')">` +
-                        "français" +
+                        fr +
                         `</div>` +
                         `<div class="messages__item messages__item--visitor" onClick="modifyLanguage('arabe')">` +
-                        "arabe" +
+                        ar +
                         `</div>` +
                         `<div class="messages__item messages__item--visitor" onClick="modifyLanguage('tounsi')">` +
-                        "tounsi" +
+                        tn +
                         `</div>` +
                         `<div class="messages__item messages__item--visitor" onClick="readOutLoud('` +
                         item.message +
