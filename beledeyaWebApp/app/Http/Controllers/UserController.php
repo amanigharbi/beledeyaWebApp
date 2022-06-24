@@ -11,13 +11,18 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MailBox;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
 {
-    
-  
+    // function admin 
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.userProfiles', compact('users'));
+    }
        /**
      * Display the specified resource.
      *
@@ -27,9 +32,95 @@ class UserController extends Controller
     public function show(User $userProfile,$id)
     {
          $userProfile = User::find($id);
-  
+            if($userProfile ->role =="user"){
         return view('auth.profile', compact('userProfile'));
     }
+    if($userProfile ->role =="admin"){
+        return view('admin.profile', compact('userProfile'));
+    }
+    }
+       /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $result = $request->validate($this->validationRules());
+     
+            $curTime = new \DateTime();
+            $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+            $result['created_at'] =$curTime;
+            $result['updated_at'] =$curTime; 
+            $result['social'] ="email";
+            $result['emailConfirmed'] =true;
+            for ($i = 0; $i < 8; $i++) {
+                $n = rand(0, strlen($alphabet)-1);
+                $pass[$i] = $alphabet[$n];
+            }
+                $result['password'] =implode($pass);
+            User::create($result);
+            return back()->with('success', __('main.User add!'));
+            try {} catch (\Throwable $th) {
+            return back()->with('error', __('main.Ops!Something went wrong'));
+        }
+    }
+ public function action(Request $request)
+    {
+    	if($request->ajax())
+    	{
+    		if($request->action == 'edit')
+    		{
+    			$users = array(
+    				'name'	=>	$request->name,
+    				'email'		=>	$request->email,
+    				'role'		=>	$request->role
+    			);
+    			DB::table('users')
+    				->where('id', $request->id)
+    				->update($users);
+    		}
+    		if($request->action == 'delete')
+    		{
+    			DB::table('users')
+    				->where('id', $request->id)
+    				->delete();
+    		}
+    		return response()->json($request);
+    	}
+    }
+
+    public function edit(Request $request,  User $user,$id)
+    {
+        $request->validate($this->validationUser());
+        try {
+            $curTime = new \DateTime();
+
+            $user = User::find($request->pk);
+
+            $user->name = $request['name'];
+            $user->email = $request['email'];
+            $user->role = $request['role'];
+            $user->updated_at = $curTime;
+            $user->save();
+            return back()->with('success', __('main.User edited'));
+        } catch (\Throwable $th) {
+            return back()->with('error', __('main.Ops!Something went wrong'));
+        }
+    }
+    public function destroy(User $user, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return back()->with('success', __('main.user deleted!'));
+        } catch (\Throwable $th) {
+            return back()->with('error', __('main.Ops user not found!'));
+        }
+    }
+
      /**
      * Update the specified resource in storage.
      *
@@ -45,7 +136,7 @@ class UserController extends Controller
             $userEdit = User::find($id);
             // dd(is_numeric($request['name']));
 if(is_numeric($request['name'])){
-    return back()->with('error', 'Opss!Name must be a string');
+    return back()->with('error', __('validation.string', ['attribute' => 'Name']));
         }else
         {
             $userEdit->name = $request['name'];
@@ -57,29 +148,29 @@ if(is_numeric($request['name'])){
             if((Str::length($request['mdp_2'])>0)){
             if($request['mdp_2']==$request['mdp_1']){
                 if(Hash::check($request->mdp_1,$userEdit->password )){
-                    return back()->with('error', 'Opss! Old password and new password cant be same');
+                    return back()->with('error', __('passwords.Opss! Old password and new password cant be same'));
                 }
                 else{
                     if(Str::length($request['mdp_1'])>=8){
             $userEdit->password = Hash::make($request['mdp_1']);
         }else{
-            return back()->with('error', 'Opss! password size must be at least 8 characters');
+            return back()->with('error', __('passwords.password'));
         }
         }
         }
         else{
-            return back()->with('error', 'Opss! Retape the same password');
+            return back()->with('error', __('passwords.Opss! Retape the same password'));
 
         }
     }
     else{
-        return back()->with('error', 'Opss! Retape the password');
+        return back()->with('error', __('passwords.Opss! Retape the same password'));
     }
 }
             $userEdit->save();
-            return back()->with('success', 'User updated');
+            return back()->with('success', __('main.User updated'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
     /**
@@ -116,13 +207,13 @@ if(is_numeric($request['name'])){
                     auth::user()->save();
                     return redirect(('/home'));
                 } else {
-                    return back()->with('error', 'Confirmation code unvalid');
+                    return back()->with('error', __('passwords.Confirmation code unvalid'));
                 }
             } else {
-                return back()->with('error', 'Please insert the confirmation code');
+                return back()->with('error', __('passwords.Please insert the confirmation code'));
             }
         } catch (\Throwable $th) {
-            return back()->with('error', 'Something went wrong!');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -137,9 +228,23 @@ if(is_numeric($request['name'])){
 
         return redirect('verifyEmail');
     }
-    public function profile(){
-        
+    private function validationRules()
+    {
+        return [
+            'name' => 'required|string',
+            'email' => 'required',
+            'role' => 'required',
+
+            
+        ];
     }
+    private function validationUser()
+    {
+        return [
+            'name' => 'string', 
+        ];
+    }
+    
     // private function validation()
     // {
     //     return [

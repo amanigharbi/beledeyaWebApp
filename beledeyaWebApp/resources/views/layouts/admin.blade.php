@@ -17,6 +17,7 @@
     <link href="{{ asset('admin/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{ asset('admin/dist/css/style.min.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -72,21 +73,7 @@
                         <li class="nav-item d-none d-md-block">
                             <a class="nav-link" href="javascript:void(0)">
                                 <div class="customize-input">
-                                    {{-- <select class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                        
-                                            <a href="{{ asset('/lang') }}/en" >
-                                                <option class="{{(\App::getLocale()=="en") ? 'selected' : '' }}" value="EN"> EN</option>
-                                                </a>
-                                           
-                                                    <a href="{{ asset('/lang') }}/ar" >
-                                                        <option class="{{(\App::getLocale()=="ar") ? 'selected' : '' }}" value="AR"> AR</option>
-                                                        </a>
-                                                   
-                                                        <option class="{{(\App::getLocale()=="fr") ? 'selected' : '' }}" value="FR"> <a href="{{ asset('/lang') }}/fr" >
-                                                                FR</option>
-                                                                </a>
-                                                           
-                                    </select> --}}
+                             
                                     <div class="dropdown show">
                                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{__('main.Language')}} <i class="fa fa-globe"></i>
@@ -99,16 +86,7 @@
                                         </div>
                                       </div>
                                     
-{{-- <div class="dropdown" >
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{__('main.Language')}}
-      </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-    <a class="dropdown-item" href="{{ asset('/lang') }}/en">EN</a>
-    <a class="dropdown-item" href="{{ asset('/lang') }}/ar">AR</a>
-    <a class="dropdown-item" href="{{ asset('/lang') }}/fr">FR</a>
-    </div>
-  </div> --}}
+
                                 </div>
                             </a>
                         </li>
@@ -128,7 +106,10 @@
                                         data-feather="chevron-down" class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
+                                <a class="dropdown-item" href="{{ asset('profile_admin') }}"><i data-feather="user"
+                                    class="svg-icon mr-2 ml-1"></i>
+                                {{__('main.Users')}}</a>
+                                <a class="dropdown-item" href="{{ asset('profile_admin') }}/{{ auth::user()->id }}"><i data-feather="settings"
                                         class="svg-icon mr-2 ml-1"></i>
                                     {{__('main.Account Setting')}}</a>
                                 <div class="dropdown-divider"></div>

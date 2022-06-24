@@ -185,5 +185,27 @@ return [
     "Document number" =>"Document number",
     "Account Setting" =>"Account Setting",
     "Add new document"=>"Add new document",
+    //profile
+    "Users" => "Users",
+    "Users list" => "Users list",
+    "google" => "Google",
+    "add new user" => "Add new user",
+    "Select role" => "Select Role",
+
+    "emailConfirmed" => "Email Confirmed",
+    "success" => "Success",
+    "EditUser" => "Edit User",
+    "User edited" => "User edited",
+    "Personal Details" => "Personal Details",
+    "Document deleted!" => "Document deleted!",
+    "Document add!" => "Document add!",
+    "Ops Document not found!" => "Ops Document not found!",
+    "User add!" => "User add!",
+    "user deleted!" => "user deleted!",
+    "Ops user not found!" => "Ops user not found!",
+    "User updated" => "User updated",
+    "Im" => "I'm",
+    "The administrator of municipality of Menzel Abdelrahmane"=>"The administrator of municipality of Menzel Abdelrahmane.",
+
  
 ];

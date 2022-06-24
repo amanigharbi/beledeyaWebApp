@@ -13,10 +13,13 @@ return [
     |
     */
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'password' => 'Passwords must be at least eight characters',
     'reset' => 'Your password has been reset!',
     'sent' => 'We have e-mailed your password reset link!',
     'token' => 'This password reset token is invalid.',
     'user' => "We can't find a user with that e-mail address.",
-
+    'Opss! Old password and new password cant be same' =>'Opss! Old password and new password cant be same',
+    'Opss! Retape the same password'=>'Opss! Retape the same password',
+    'Confirmation code unvalid'=>'Confirmation code unvalid',
+    'Please insert the confirmation code'=>'Please insert the confirmation code',
 ];

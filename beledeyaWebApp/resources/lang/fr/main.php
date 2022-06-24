@@ -184,4 +184,26 @@ return [
     "Document number" =>"Numéro de document",
     "Account Setting" =>"Paramètre du compte",
     "Add new document"=>"Ajouter un nouveau document",
+    //profile
+    "Users" => "Utilisateurs",
+    "Users list" => "Liste des utilisateurs",
+    "google" => "Google",
+    "add new user" => "Ajouter un nouvel utilisateur",
+    "Select role" => "Sélectionnez un rôle",
+
+    "emailConfirmed" => "E-mail confirmé",
+    "success" => "Succès",
+    "EditUser" => "Modifier l'utilisateur",
+    "User edited" => "Utilisateur modifié",
+    "Personal Details" => "Détails personnels",
+    "Document deleted!" => "Document supprimé!",
+    "Document add!" => "document ajouté !",
+    "Ops Document not found!" => "Document introuvable !",
+    "User add!" => "Utilisateur ajouté",
+    "user deleted!" => "Utilisateur supprimé!",
+    "Ops user not found!" => "Utilisateur introuvable",
+    "User updated" => "Utilisateur modifié",
+    "Im" => "Je suis",
+    "The administrator of municipality of Menzel Abdelrahmane"=>"L'administrateur de la commune de Menzel Abdelrahmane.",
+    
 ];

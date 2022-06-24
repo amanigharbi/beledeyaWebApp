@@ -185,5 +185,27 @@ return [
     "Document number" =>"رقم المستند",
     "Account Setting" =>"إعدادات الحساب",
     "Add new document"=>"أضف وثيقة جديدة",
+    
+    //profile
+    "Users" => "المستخدمون",
+    "Users list" => "قائمة المستخدمين",
+    "google" => "جوجل",
+    "add new user" => "إضافة مستخدم جديد",
+    "Select role" => "حدد الدور",
+
+    "emailConfirmed" => "تم تأكيد البريد الإلكتروني",
+    "success" => "النجاح",
+    "EditUser" => "تحرير العضو",
+    "User edited" => "تم تحرير المستخدم",
+    "Personal Details" => "تفاصيل شخصية",
+    "Document deleted!" => "تم حذف المستند!",
+    "Document add!" => "وثيقة تضاف!",
+    "Ops Document not found!" => "عذرًا! المستند غير موجود!",
+    "User add!" => "إضافة المستخدم!",
+    "user deleted!" => "تم حذف المستخدم!",
+    "Ops user not found!" => "عفوًا! المستخدم ليس موجود!",
+    "User updated" => "تم تحديث المستخدم",
+    "Im" => "انا",
+    "The administrator of municipality of Menzel Abdelrahmane"=>"- مدير بلدية منزل عبد الرحمان.",
 
 ];

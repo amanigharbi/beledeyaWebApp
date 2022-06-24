@@ -43,9 +43,9 @@ class DocumentsController extends Controller
             $result['date']=$curTime->format("Y-m-d H:i:s");
             $result['file'] = $result['file']->store('uploads', 'public');
             Documents::create($result);
-            return back()->with('success', 'Document add!');
+            return back()->with('success', __('main.Document add!'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Opss! something went wrong');
+            return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
 
@@ -95,9 +95,9 @@ class DocumentsController extends Controller
             $documents = Documents::findOrFail($id);
             $documents->delete();
 
-            return back()->with('success', 'Document deleted!');
+            return back()->with('success', __('main.Document deleted!'));
         } catch (\Throwable $th) {
-            return back()->with('error', 'Ops Document not found!');
+            return back()->with('error', __('main.Ops Document not found!'));
         }
     }
     private function validationRules()

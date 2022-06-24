@@ -18,5 +18,9 @@ return [
     'sent' => 'Nous vous avons envoyé votre lien de réinitialisation de mot de passe par e-mail!',
     'token' => 'Ce mot de passe de réinitialisation de mot de passe n’est pas valide.',
     'user' => "Nous ne trouvons pas d'utilisateur avec cette adresse e-mail.",
+    'Opss! Old password and new password cant be same' =>'Ouf ! L’ancien mot de passe et le nouveau mot de passe ne peuvent pas être identiques',
+    'Opss! Retape the same password'=>'Ouf ! Retapez le même mot de passe',
+    'Confirmation code unvalid'=>'Code de confirmation invalide',
+    'Please insert the confirmation code'=>'Veuillez insérer le code de confirmation',
 
 ];

@@ -6,11 +6,21 @@
     <div class="card-body">
         <h4 class="card-title {{(\App::getLocale()=="ar") ? 'text-right' : '' }}">{{__('main.Add new document')}}</h4>
         @if (session('success'))
-        {{ session('success') }}
-    @endif
-    @if (session('error'))
-        {{ session('error') }}
-    @endif
+        <div class="alert alert-success alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a> 
+          <i class="fa fa-check"></i>
+          <strong>{{__('main.success')}} !</strong>. {{ session('success') }}.
+        </div>
+
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a> 
+          <i class="fa fa-warning"></i>
+          <strong>OPS !</strong>. {{ session('error') }}.
+        </div>
+        
+        @endif
         <form class="mt-5" action="{{ route('document.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
