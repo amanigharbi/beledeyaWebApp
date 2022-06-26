@@ -6,9 +6,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center mb-4">
-                    <h4 class="card-title">{{__('main.Users list')}}</h4>
+                    <h4 class="card-title">{{__('main.Users list')}}</h4><br><br>
                     @if (session('success'))
-                    <div class="alert alert-success alert-dismissable">
+                    <div class="alert alert-success alert-dismissable ml-auto">
                       <a class="panel-close close" data-dismiss="alert">×</a> 
                       <i class="fa fa-check"></i>
                       <strong>{{__('main.success')}} !</strong>. {{ session('success') }}.
@@ -16,7 +16,7 @@
             
                     @endif
                     @if (session('error'))
-                    <div class="alert alert-danger alert-dismissable">
+                    <div class="alert alert-danger alert-dismissable ml-auto">
                       <a class="panel-close close" data-dismiss="alert">×</a> 
                       <i class="fa fa-warning"></i>
                       <strong>OPS !</strong>. {{ session('error') }}.
@@ -88,7 +88,9 @@
                                 </td>
                                 <td class="font-weight-medium text-dark border-top-0 px-2 py-4 text-center">
                                     <li style="display: inline;" >
-                                    <a href="" data-toggle="modal" data-target="#myModal2" ><i class="fa fa-edit"></i></a>
+                                    <i class="fa fa-edit"
+                                    data-toggle="modal" data-target="#myModal2" 
+                                        onclick="updateBDonModal('{{$u->id}}','{{$u->name}}','{{$u->email}}','{{$u->role}}','{{route('profile_admin.edit',$u->id)}}')"></i></a>
                                     <form class="trash" action="{{ route('profile_admin.destroy', $u->id) }}"
                                         method="POST">@csrf
                                         @method('DELETE')<button type="submit" class="btn btn btn-danger btn-sm mt-2"> <i class="fa fa-trash"></i></button>
@@ -101,33 +103,19 @@
                         </tbody>
                     </table>
                 </div>
-                {{-- <div class="table-responsive">
-                    @csrf
-                    <table id="editable" class="table table-bordered table-striped">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>email</th>
-                          <th>role</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($users as $row)
-                        <tr>
-                          <td>{{ $row->id }}</td>
-                          <td>{{ $row->name }}</td>
-                          <td>{{ $row->email }}</td>
-                          <td>{{ $row->role }}</td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                    </table> 
-                  </div>--}}
+         
             </div>
         </div>
     </div>
 </div>
+<script>
+function updateBDonModal(id, name,email,role, route) {
+    document.getElementById("name").value = name;
+    document.getElementById("email").value = email;
+    document.getElementById("role").value = role;
+    document.getElementById("bDonForm").action = route ;
+}
+</script>
 
 {{-- model add new user --}}
 <div class="modal" id="myModal">
@@ -197,14 +185,14 @@
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
                         <div class="modal-body">
-                             
-                            <form role="form" action=""  method="POST" >
+                        
+                            <form form method="post" enctype="multipart/form-data" id="bDonForm" >
                                 @csrf  @method('GET')
                               
                                 <div class="form-group">
                                     <label class="control-label">{{__('main.fullname')}}</label>
                                     <div>
-                                        <input type="text" class="form-control input-lg" name="name" value="{{$u->name}}">
+                                        <input type="text" class="form-control input-lg" name="name" id="name" value="{{$u->name}}">
                                         @error('name')
                                         {{ $message }}
                                     @enderror
@@ -213,7 +201,7 @@
                                 <div class="form-group">
                                     <label class="control-label">{{__('main.email')}}</label>
                                     <div>
-                                        <input type="email" class="form-control input-lg" name="email" value="{{$u->email}}">
+                                        <input type="email" class="form-control input-lg" name="email" id="email" value="{{$u->email}}">
                                         @error('email')
                                         {{ $message }}
                                     @enderror
@@ -222,7 +210,7 @@
                                 <div class="form-group">
                                     <label class="control-label">{{__('main.role')}}</label>
                                     <div>
-                                        <select class="form-control" name="role" value="{{$u->role}}">
+                                        <select class="form-control" name="role" id="role" value="{{$u->role}}">
                                             <option class="hidden" selected disabled>{{__('main.Select role')}}</option>
                                             <option value="admin">admin</option>
                                             <option value="user">user</option>       

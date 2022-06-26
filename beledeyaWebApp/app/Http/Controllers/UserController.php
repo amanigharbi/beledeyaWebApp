@@ -66,38 +66,15 @@ class UserController extends Controller
             return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
- public function action(Request $request)
-    {
-    	if($request->ajax())
-    	{
-    		if($request->action == 'edit')
-    		{
-    			$users = array(
-    				'name'	=>	$request->name,
-    				'email'		=>	$request->email,
-    				'role'		=>	$request->role
-    			);
-    			DB::table('users')
-    				->where('id', $request->id)
-    				->update($users);
-    		}
-    		if($request->action == 'delete')
-    		{
-    			DB::table('users')
-    				->where('id', $request->id)
-    				->delete();
-    		}
-    		return response()->json($request);
-    	}
-    }
+
 
     public function edit(Request $request,  User $user,$id)
     {
         $request->validate($this->validationUser());
-        try {
+      
             $curTime = new \DateTime();
 
-            $user = User::find($request->pk);
+            $user = User::find($id);
 
             $user->name = $request['name'];
             $user->email = $request['email'];
@@ -105,7 +82,7 @@ class UserController extends Controller
             $user->updated_at = $curTime;
             $user->save();
             return back()->with('success', __('main.User edited'));
-        } catch (\Throwable $th) {
+            try {  } catch (\Throwable $th) {
             return back()->with('error', __('main.Ops!Something went wrong'));
         }
     }
@@ -193,6 +170,9 @@ if(is_numeric($request['name'])){
 
         return view('auth.verifyEmail');
     }
+/**
+ * statistique function
+ */
 
     /**
      * Confirm verify

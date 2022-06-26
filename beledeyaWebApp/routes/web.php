@@ -95,7 +95,7 @@ Route::group(
         Route::resource('/PermisConstructions', 'PermisConstructionController');
         //profile
         Route::resource('/profile_admin','UserController');
-        Route::post('profile_admin/action', 'UserController@action')->name('profile_admin.action');
+        Route::resource('/dashboard','DashboardController');
       
 
   

@@ -207,5 +207,8 @@ return [
     "User updated" => "تم تحديث المستخدم",
     "Im" => "انا",
     "The administrator of municipality of Menzel Abdelrahmane"=>"- مدير بلدية منزل عبد الرحمان.",
-
+    "Number of users" => "عدد المستخدمين",
+    "Number of complaints"=>"عدد الشكاوى",
+    "Number of requests for connection to public networks"=>"عدد الطلبات للشبكات العامة",
+    "Number of building permit applications"=>"عدد طلبات تصاريح البناء",
 ];

@@ -206,6 +206,8 @@ return [
     "User updated" => "User updated",
     "Im" => "I'm",
     "The administrator of municipality of Menzel Abdelrahmane"=>"The administrator of municipality of Menzel Abdelrahmane.",
-
- 
+    "Number of users" => "Number of users",
+    "Number of complaints"=>"Number of complaints",
+    "Number of requests for connection to public networks"=>"Number of requests for public networks",
+    "Number of building permit applications"=>"Number of building permit applications",
 ];
