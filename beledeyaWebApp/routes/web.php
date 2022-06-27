@@ -96,6 +96,7 @@ Route::group(
         //profile
         Route::resource('/profile_admin','UserController');
         Route::resource('/dashboard','DashboardController');
+        // Route::get('echarts', [DashboardController::class,'echart']);
       
 
   
