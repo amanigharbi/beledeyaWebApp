@@ -234,33 +234,5 @@ function updateBDonModal(id, name,email,role, route) {
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-            <script type="text/javascript">
-                $(document).ready(function(){
-                   
-                  $.ajaxSetup({
-                    headers:{
-                      'X-CSRF-Token' : $("input[name=_token]").val()
-                    }
-                  });
-                
-                  $('#editable').Tabledit({
-                    url:'{{route('profile_admin.action') }}',
-                    // dataType:"json",
-                    
-                    columns:{
-                      identifier:[0, 'id'],
-                      editable:[[1, 'name'], [2, 'email'], [3, 'role', '{"1":"admin", "2":"user"}']]
-                    },
-                    restoreButton:false,
-                    onSuccess:function(data, textStatus, jqXHR)
-                    {
-                      if(data.action == 'delete')
-                      {
-                        $('#'+data.id).remove();
-                      }
-                    }
-                  });
-                
-                });  
-                </script>
+        
 @endsection
