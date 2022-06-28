@@ -149,7 +149,18 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript">
+var pieColors = (function () {
+    var colors = [],
+        base = Highcharts.getOptions().colors[5],
+        i;
 
+    for (i = 0; i < 10; i += 1) {
+        // Start out with a darkened base color (negative brighten), and end
+        // up with a much brighter color
+        colors.push(Highcharts.color(base).brighten((i - 3) / 7).get());
+    }
+    return colors;
+}());
         $(document).ready(function() {
             var count_rec =  <?php echo json_encode($count_rec); ?>;
             var count_res =  <?php echo json_encode($count_res); ?>;
@@ -179,7 +190,7 @@
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
-                        // colors: pieColors,
+                         colors: pieColors,
                             dataLabels: {
                             enabled: true,
                               color: '#000000',
@@ -337,23 +348,26 @@
             }
             });
             options.series[0].data = myarray;
-            options.plotOptions.pie.colors=['red','orange','green']; 
+             options.plotOptions.pie.colors=['rgb(132, 0, 19)','rgb(169,20,56)','#247F57']; 
             options_res.series[0].data = myarray2;
-            options_res.plotOptions.pie.colors=['cyan','orange','green','red']; 
+             options_res.plotOptions.pie.colors=['rgb(132, 0, 19)','rgb(169,20,56)','#247F57','rgb(205,56,92']; 
             options_permis.series[0].data = myarray3;
-            options_permis.plotOptions.pie.colors=['cyan','orange','green','red'];         
+             options_permis.plotOptions.pie.colors=['rgb(132, 0, 19)','rgb(169,20,56)','#247F57','rgb(205,56,92'];         
             
             chart = new Highcharts.Chart(options);
             chart2 = new Highcharts.Chart(options_res);
             chart3 = new Highcharts.Chart(options_permis);
             
         });
+  
+
         $(function(){
         Highcharts.chart('bar-chart', {
             chart: {
-                type: 'column'
+                type: 'column',
+    
             },
-            title: {
+           title: {
                 text: '{{__('main.percentage')}} '
             },
             xAxis: {
@@ -365,6 +379,7 @@
                 title: {
                     text: '{{__('main.Users')}}'
                 }
+
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key} {{__('main.Users')}}</span><table>',
@@ -379,8 +394,14 @@
                     pointPadding: 0.2,
                     borderWidth: 0
                 }
+
+            
+ 
+
             },
             series: <?= $data ?>
+ 
+    
             
         });
     });
